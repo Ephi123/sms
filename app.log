@@ -528,3 +528,42 @@ Caused by: org.hibernate.query.SemanticException: Cannot compare left expression
 2024-09-23T15:26:55.543+03:00  INFO 16256 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2024-09-23T15:26:55.547+03:00  INFO 16256 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2024-09-23T15:26:55.552+03:00  INFO 16256 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-09-23T16:17:25.101+03:00  INFO 16925 --- [restartedMain] fileManagment.file.FileApplication       : Starting FileApplication using Java 22.0.2 with PID 16925 (/home/ephi/Downloads/file/target/classes started by ephi in /home/ephi/Downloads/file)
+2024-09-23T16:17:25.106+03:00  INFO 16925 --- [restartedMain] fileManagment.file.FileApplication       : The following 1 profile is active: "dev"
+2024-09-23T16:17:25.237+03:00  INFO 16925 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-09-23T16:17:25.238+03:00  INFO 16925 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-09-23T16:17:26.341+03:00  INFO 16925 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-09-23T16:17:26.475+03:00  INFO 16925 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 124 ms. Found 10 JPA repository interfaces.
+2024-09-23T16:17:27.658+03:00  INFO 16925 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8085 (http)
+2024-09-23T16:17:27.689+03:00  INFO 16925 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-09-23T16:17:27.690+03:00  INFO 16925 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-09-23T16:17:27.744+03:00  INFO 16925 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-09-23T16:17:27.745+03:00  INFO 16925 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2505 ms
+2024-09-23T16:17:27.959+03:00  INFO 16925 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-09-23T16:17:28.012+03:00  INFO 16925 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.2.Final
+2024-09-23T16:17:28.047+03:00  INFO 16925 --- [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-09-23T16:17:28.379+03:00  INFO 16925 --- [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-09-23T16:17:28.407+03:00  INFO 16925 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-09-23T16:17:28.618+03:00  INFO 16925 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@281aac8d
+2024-09-23T16:17:28.620+03:00  INFO 16925 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-09-23T16:17:28.651+03:00  WARN 16925 --- [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-09-23T16:17:30.673+03:00  INFO 16925 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-09-23T16:17:31.945+03:00  INFO 16925 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-09-23T16:17:32.232+03:00  INFO 16925 --- [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-09-23T16:17:33.805+03:00  INFO 16925 --- [restartedMain] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name apiAuthenticationProvider
+2024-09-23T16:17:34.254+03:00 DEBUG 16925 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, LogoutFilter, JwtAuthorizationFilter, AuthenticationFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, ExceptionTranslationFilter, AuthorizationFilter
+2024-09-23T16:17:34.594+03:00  INFO 16925 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-09-23T16:17:34.632+03:00  INFO 16925 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8085 (http) with context path '/'
+2024-09-23T16:17:34.646+03:00  INFO 16925 --- [restartedMain] fileManagment.file.FileApplication       : Started FileApplication in 10.839 seconds (process running for 12.545)
+2024-09-23T16:24:50.968+03:00  INFO 16925 --- [http-nio-8085-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-09-23T16:24:52.248+03:00  INFO 16925 --- [http-nio-8085-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-09-23T16:24:53.667+03:00  INFO 16925 --- [http-nio-8085-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1389 ms
+2024-09-23T16:24:58.339+03:00 DEBUG 16925 --- [http-nio-8085-exec-2] o.s.security.web.FilterChainProxy        : Securing POST /user/login
+2024-09-23T16:26:05.682+03:00  INFO 16925 --- [http-nio-8085-exec-2] fileManagment.file.cache.CacheStore      : Retrieving from Cache  with keyephrembereket36@gmail.com
+2024-09-23T16:26:06.322+03:00  INFO 16925 --- [http-nio-8085-exec-2] fileManagment.file.cache.CacheStore      : Storing Records in Cache for keyephrembereket36@gmail.com
+2024-09-23T16:26:06.615+03:00  INFO 16925 --- [http-nio-8085-exec-2] fileManagment.file.cache.CacheStore      : Retrieving from Cache  with keyephrembereket36@gmail.com
+2024-09-23T16:26:30.749+03:00  INFO 16925 --- [http-nio-8085-exec-2] fileManagment.file.cache.CacheStore      : Removing from Cache with keyephrembereket36@gmail.com
+2024-09-23T16:26:34.156+03:00  INFO 16925 --- [http-nio-8085-exec-2] f.file.service.impl.JwtImpl              : cookies add
+2024-09-23T16:27:30.120+03:00  INFO 16925 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-09-23T16:27:30.697+03:00  INFO 16925 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-09-23T16:27:30.863+03:00  INFO 16925 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

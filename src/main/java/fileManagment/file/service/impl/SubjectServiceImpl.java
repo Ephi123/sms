@@ -10,9 +10,12 @@ import fileManagment.file.repository.SubjectRepo;
 import fileManagment.file.service.SubjectService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.function.BiFunction;
 
 import static fileManagment.file.util.SubjectUtil.createSubjectEntity;
@@ -31,6 +34,16 @@ public class SubjectServiceImpl implements SubjectService {
         var  gradeEntity = getGrade(grade);
         var fieldEntity= getField(filed);
         return subjectRepo.save(createSubjectEntity(subjectName.apply(subject,gradeEntity),gradeEntity,fieldEntity));
+    }
+
+    @Override
+    public List<SubjectEntity> getSubjectByGrade(int grade) {
+        return null;
+    }
+
+    @Override
+    public Page<SubjectEntity> getAllSubject(int page, int size) {
+        return  subjectRepo.findAll(PageRequest.of(page,size));
     }
 
     private GradeEntity getGrade(int grade) {

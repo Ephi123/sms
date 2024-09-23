@@ -2,18 +2,16 @@ package fileManagment.file.controller;
 
 
 import fileManagment.file.domain.Response;
-import fileManagment.file.requestDto.SectionRequest;
+import fileManagment.file.entity.SubjectEntity;
+
 import fileManagment.file.requestDto.SubjectRequest;
 import fileManagment.file.service.SubjectService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 import static fileManagment.file.util.RequestUtil.getResponse;
@@ -30,4 +28,11 @@ public class SubjectController {
         return ResponseEntity.created(getUrRI("section/id")).body(getResponse(request, Map.of(), "Subject is created ", CREATED));
 
     }
+
+    @GetMapping
+    public ResponseEntity<Response> getAllSubject(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size, HttpServletRequest request){
+           Page<SubjectEntity> subjects =subjectService.getAllSubject(page,size);
+        return ResponseEntity.created(getUrRI("section/id")).body(getResponse(request, Map.of("subjects",subjects), "Subject is created ", CREATED));
+    }
 }
+

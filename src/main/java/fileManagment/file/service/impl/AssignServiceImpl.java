@@ -65,6 +65,7 @@ public class AssignServiceImpl implements AssignService {
       }
 
     @Override
+    @PreAuthorize("hasRole('USER')")
     public List<UserEntity> freeTeachers(String sec) {
      List<UserEntity> allTeachers =  userRepo.findUsersByRole(Authority.TEACHER.name()).orElseThrow(() -> new ApiException("Teacher is not register"));
          Iterator<UserEntity> iterator = allTeachers.iterator();

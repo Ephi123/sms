@@ -1,6 +1,7 @@
 package fileManagment.file.controller;
 
 import fileManagment.file.domain.Response;
+import fileManagment.file.repository.SectionRepo;
 import fileManagment.file.requestDto.SectionRequest;
 import fileManagment.file.requestDto.UserRequest;
 import fileManagment.file.service.SectionService;
@@ -25,7 +26,7 @@ public class SectionController {
     private final SectionService sectionService;
 
     @PostMapping("/register")
-    public ResponseEntity<Response> sectionRegister(@RequestBody  SectionRequest section, HttpServletRequest request) {
+    public ResponseEntity<Response> sectionRegister(@RequestBody SectionRequest section, HttpServletRequest request) {
 
         var sec = sectionService.createSection(section.getRoom(), section.getBlock(), section.getGrade(), section.getFieldCode());
         return ResponseEntity.created(getUrRI("section/id")).body(getResponse(request, Map.of("section", sec), "section is created ", CREATED));
