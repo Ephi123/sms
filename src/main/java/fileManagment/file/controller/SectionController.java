@@ -1,22 +1,14 @@
 package fileManagment.file.controller;
-
 import fileManagment.file.domain.Response;
-import fileManagment.file.repository.SectionRepo;
 import fileManagment.file.requestDto.SectionRequest;
-import fileManagment.file.requestDto.UserRequest;
 import fileManagment.file.service.SectionService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.net.URI;
 import java.util.Map;
-
 import static fileManagment.file.util.RequestUtil.getResponse;
 import static fileManagment.file.util.RequestUtil.getUrRI;
-import static java.util.Collections.emptyMap;
 import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
