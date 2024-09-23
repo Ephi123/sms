@@ -1,0 +1,20 @@
+#server
+ACTIVE_PROFILE: dev
+CONTAINER_PORT: 8085
+
+#database
+POSTGRESQL_HOST: 127.0.0.1
+POSTGRESQL_PORT:  5432
+POSTGRESQL_DATABASE:  docs
+POSTGRESQL_USERNAME: ephi
+POSTGRESQL_PASSWORD: 123
+
+#mail
+EMAIL_HOST: smtp.gmail.com
+EMAIL_PORT: 587
+EMAIL_ID: smssystem178@gmail.com
+EMAIL_PASSWORD: ipnctkfeudlefyts
+VERIFY_EMAIL_HOST: http://localhost:8085
+#jwt
+JWT_EXPIRATION: 432_000_000
+JWT_SECRET: incorrect12dahawssahawassaksksksksklskskskskslskklkkkkkkkkkkkkkkkkkkkkkkkllskdkdlskddld

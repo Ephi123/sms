@@ -1,0 +1,2 @@
+--INSERT INTO users(id,created_at,created_by, update_at, updated_by, account_non_expired,account_non_locked,email,enable,mfa,user_id,first_name,last_name)
+--VALUES(0,now(),0,now(),0,TRUE,TRUE,'system@gmail.com',TRUE,FALSE,'system_id','system','system');
