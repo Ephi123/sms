@@ -17,18 +17,18 @@ import static java.util.Collections.emptyMap;
 import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
-@RequestMapping(path = {"/assigns"})
+@RequestMapping(path = {"/assign"})
 @RequiredArgsConstructor
 public class AssignController {
    private final AssignService assignService;
-    @PostMapping("/register")
+    @PostMapping
     public ResponseEntity<Response> assignTeachers(@RequestBody AssignRequest assignRequest,  HttpServletRequest request){
        assignService.assignTeacher(assignRequest.getTeacher(),assignRequest.getSection(),assignRequest.getSubject());
         return ResponseEntity.created(getUrRI("")).body(getResponse(request,emptyMap(),"Teacher is assigned",CREATED));
 
 
     }
-    @GetMapping("/teachers/{room}")
+    @GetMapping("/{room}")
     public ResponseEntity<Response> freeTeacher(@PathVariable("room") String section ,HttpServletRequest request){
         List<UserEntity> teachers = assignService.freeTeachers(section);
         return ResponseEntity.created(getUrRI("")).body(getResponse(request, Map.of("teachers",teachers),"Teacher is assigned",CREATED));

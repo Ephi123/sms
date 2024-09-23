@@ -1,9 +1,12 @@
 package fileManagment.file.entity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import fileManagment.file.constant.Constant;
 import fileManagment.file.domain.EthiopianCalendar;
 import jakarta.persistence.*;
 import lombok.*;
+
+import static fileManagment.file.constant.Constant.*;
 
 @Entity
 @Table(name = "assigns")
@@ -29,9 +32,5 @@ public class AssignsEntity extends Auditable{
     @JoinColumn(name = "teacher_id",referencedColumnName ="id")
     private UserEntity teacher;
 
-    @PrePersist
-    public void beforePersist(){
-        setAcademicYear(EthiopianCalendar.ethiopianYear());
-    }
 
 }

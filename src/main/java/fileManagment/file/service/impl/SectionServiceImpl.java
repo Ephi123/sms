@@ -14,6 +14,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -43,8 +45,9 @@ public class SectionServiceImpl implements SectionService {
     }
 
     @Override
-    public List<SectionEntity> findsSections() {
-        return sectionRepo.findAll();
+    @PreAuthorize("hasRole('USER')")
+    public Page<SectionEntity> findsSections(int page, int size) {
+        return sectionRepo.findAll(PageRequest.of(page,size));
     }
 
     @Override

@@ -6,12 +6,12 @@ import fileManagment.file.entity.SubjectEntity;
 import fileManagment.file.entity.UserEntity;
 
 public class AssignsUtil {
-    public static AssignsEntity createAssignEntity(SubjectEntity subject, SectionEntity  section, UserEntity teacher,int  acYear){
+    public static AssignsEntity createAssignEntity(SubjectEntity subject, SectionEntity  section, UserEntity teacher,int ay){
         return AssignsEntity.builder()
                 .teacher(teacher)
                 .section(section)
                 .subject(subject)
-                .academicYear(acYear)
+                .academicYear(ay)
                 .build();
     }
 }

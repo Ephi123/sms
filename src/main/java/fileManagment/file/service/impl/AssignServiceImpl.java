@@ -1,5 +1,6 @@
 package fileManagment.file.service.impl;
 import fileManagment.file.apiException.ApiException;
+import fileManagment.file.constant.Constant;
 import fileManagment.file.domain.EthiopianCalendar;
 import fileManagment.file.entity.AssignsEntity;
 import fileManagment.file.entity.SectionEntity;
@@ -44,7 +45,7 @@ public class AssignServiceImpl implements AssignService {
     public AssignsEntity assignTeacher(String userId,String sec,String sub) {
         try{
 
-            if(assignTeacherRepo.isTeacherAssigned(userId,sec,sub,ACADEMIC_YEAR)) {
+            if(assignTeacherRepo.isTeacherAssigned(userId,sec,sub,EthiopianCalendar.ethiopianYear())) {
                 handleErrorResponse(request, response, new ApiException("Teacher is assigned"), HttpStatus.CONFLICT);
                 throw new ApiException("Teacher is assigned");
             }
@@ -53,7 +54,7 @@ public class AssignServiceImpl implements AssignService {
             SectionEntity section= getSection(sec);
             UserEntity teacher = getTeacher(userId);
 
-            return assignTeacherRepo.save(createAssignEntity(subject,section,teacher,ACADEMIC_YEAR));
+            return assignTeacherRepo.save(createAssignEntity(subject,section,teacher, ACADEMIC_YEAR));
 
         }
 
