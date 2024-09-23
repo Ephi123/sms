@@ -37,11 +37,13 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
+    @PreAuthorize("hasRole('USER')")
     public List<SubjectEntity> getSubjectByGrade(int grade) {
         return null;
     }
 
     @Override
+    @PreAuthorize("hasRole('USER')")
     public Page<SubjectEntity> getAllSubject(int page, int size) {
         return  subjectRepo.findAll(PageRequest.of(page,size));
     }

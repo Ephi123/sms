@@ -5,6 +5,7 @@ import fileManagment.file.entity.RoleEntity;
 import fileManagment.file.entity.UserEntity;
 import fileManagment.file.enumeration.LoginType;
 import fileManagment.file.securityDto.User;
+import org.springframework.data.domain.Page;
 
 public interface UserService {
     UserEntity createUser(String firstName,String lastName,String email,String authority,Integer age,String address, String gender,String userId);
@@ -16,4 +17,6 @@ public interface UserService {
     User getUserByUserEmail(String email);
 
     CredentialEntity getUserCredentialById(Long id);
+
+    Page<UserEntity> allUsers(String role,int page,int size);
 }

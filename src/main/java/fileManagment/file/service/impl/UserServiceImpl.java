@@ -23,6 +23,9 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -135,6 +138,12 @@ public class UserServiceImpl implements UserService {
     public CredentialEntity getUserCredentialById(Long id) {
           return credentialRepo.getCredentialByUserEntityId(id).orElseThrow(() -> new ApiException("credential not found"));
 
+    }
+
+    @Override
+    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
+    public Page<UserEntity> allUsers(String role, int page, int size) {
+        return userRepo.findUsersByRolePageable(role, PageRequest.of(page,size, Sort.by("firstName")));
     }
 
 
