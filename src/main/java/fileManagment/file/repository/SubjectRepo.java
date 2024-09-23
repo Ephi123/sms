@@ -4,7 +4,10 @@ import fileManagment.file.entity.SubjectEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface SubjectRepo extends JpaRepository<SubjectEntity,Long> {
     boolean existsBySubjectName(String subject);
+    Optional<SubjectEntity> findBySubjectName(String subject);
 }

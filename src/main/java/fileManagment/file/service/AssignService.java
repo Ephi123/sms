@@ -5,5 +5,5 @@ import fileManagment.file.entity.AssignsEntity;
 
 public interface AssignService {
 
-    AssignsEntity assignTeacher();
+    AssignsEntity assignTeacher(String userId,String sec,String sub);
 }
