@@ -47,8 +47,6 @@ public class UserController {
     public ResponseEntity<Response> verify(@RequestParam("token") String token,HttpServletRequest request){
         userService.verifyUser(token);
         return ResponseEntity.ok().body(getResponse(request,emptyMap(),"you are verified",OK));
-
-
     }
 
 

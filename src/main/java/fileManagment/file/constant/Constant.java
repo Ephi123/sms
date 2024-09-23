@@ -1,5 +1,7 @@
 package fileManagment.file.constant;
 
+import fileManagment.file.domain.EthiopianCalendar;
+
 public  class Constant {
     public static final String CHARACTER="qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890!@#$%^&*_+=?><";
     public static final int STRENGTH = 12;
@@ -18,4 +20,5 @@ public  class Constant {
     public static final String TEACHER_AUTHORITY = "teachers:authority";
     public static final String STUDENT_AUTHORITY = "read:time table,read:subject";
     public static final String REGISTRAR_AUTHORITY = "";
+    public static final int ACADEMIC_YEAR = EthiopianCalendar.ethiopianYear();
 }

@@ -1,12 +1,15 @@
 package fileManagment.file.repository;
 
 import fileManagment.file.entity.AssignsEntity;
+import fileManagment.file.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface AssignTeacherRepo extends JpaRepository<AssignsEntity,Long> {
@@ -22,5 +25,12 @@ public interface AssignTeacherRepo extends JpaRepository<AssignsEntity,Long> {
             "JOIN a.section sec " +
             "WHERE sec.room = :sec AND a.academicYear = :ay")
     List<AssignsEntity> findBySection(@Param("sec") String sec,@Param("ay") Integer accYear);
+
+    @Query("SELECT t FROM AssignsEntity a " +
+            "JOIN a.section sec " +
+            "JOIN a.teacher t " +
+            "WHERE sec.room = :sec AND a.academicYear = :ay")
+    Optional<List<UserEntity>> findByTeacher(@Param("sec") String sec, @Param("ay") Integer accYear);
+
 
 }

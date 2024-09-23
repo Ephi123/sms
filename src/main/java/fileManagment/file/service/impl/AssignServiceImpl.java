@@ -5,6 +5,7 @@ import fileManagment.file.entity.AssignsEntity;
 import fileManagment.file.entity.SectionEntity;
 import fileManagment.file.entity.SubjectEntity;
 import fileManagment.file.entity.UserEntity;
+import fileManagment.file.enumeration.Authority;
 import fileManagment.file.repository.AssignTeacherRepo;
 import fileManagment.file.repository.SectionRepo;
 import fileManagment.file.repository.SubjectRepo;
@@ -18,6 +19,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
+import java.util.Iterator;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+
+import static fileManagment.file.constant.Constant.ACADEMIC_YEAR;
 import static fileManagment.file.util.AssignsUtil.createAssignEntity;
 import static fileManagment.file.util.RequestUtil.handleErrorResponse;
 
@@ -36,8 +43,8 @@ public class AssignServiceImpl implements AssignService {
     @PreAuthorize("hasRole('USER')")
     public AssignsEntity assignTeacher(String userId,String sec,String sub) {
         try{
-            int acYear = EthiopianCalendar.ethiopianYear();
-            if(assignTeacherRepo.isTeacherAssigned(userId,sec,sub,acYear)) {
+
+            if(assignTeacherRepo.isTeacherAssigned(userId,sec,sub,ACADEMIC_YEAR)) {
                 handleErrorResponse(request, response, new ApiException("Teacher is assigned"), HttpStatus.CONFLICT);
                 throw new ApiException("Teacher is assigned");
             }
@@ -46,7 +53,7 @@ public class AssignServiceImpl implements AssignService {
             SectionEntity section= getSection(sec);
             UserEntity teacher = getTeacher(userId);
 
-            return assignTeacherRepo.save(createAssignEntity(subject,section,teacher,acYear));
+            return assignTeacherRepo.save(createAssignEntity(subject,section,teacher,ACADEMIC_YEAR));
 
         }
 
@@ -56,6 +63,24 @@ public class AssignServiceImpl implements AssignService {
         }
 
       }
+
+    @Override
+    public List<UserEntity> freeTeachers(String sec) {
+     List<UserEntity> allTeachers =  userRepo.findUsersByRole(Authority.TEACHER.name()).orElseThrow(() -> new ApiException("Teacher is not register"));
+         Iterator<UserEntity> iterator = allTeachers.iterator();
+     Optional<List<UserEntity>> assignedTeacher = assignTeacherRepo.findByTeacher(sec,ACADEMIC_YEAR);
+     if(assignedTeacher.isEmpty())
+           return allTeachers;
+
+    while(iterator.hasNext()){
+          UserEntity u = iterator.next();
+          for(UserEntity u2: assignedTeacher.get())
+                  if(Objects.equals(u.getUserId(),u2.getUserId()))
+                      iterator.remove();
+
+    }
+    return allTeachers;
+    }
 
     private UserEntity getTeacher(String userId) {
         return userRepo.findByUserId(userId).orElseThrow(() -> new ApiException("user not found"));
