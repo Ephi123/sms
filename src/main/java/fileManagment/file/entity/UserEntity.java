@@ -1,7 +1,6 @@
 package fileManagment.file.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -39,6 +38,9 @@ public class UserEntity extends Auditable {
     private boolean mfa;
     @JsonIgnore
     private String qrCodeSecret;
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonProperty("user_id")
     @Column(columnDefinition = "text")
     private String qrCodeImage;
     @ManyToMany(fetch = FetchType.EAGER)

@@ -619,3 +619,97 @@ Caused by: org.hibernate.query.SemanticException: Cannot compare left expression
 2024-09-23T17:34:05.488+03:00 DEBUG 18134 --- [http-nio-8085-exec-7] o.s.security.web.FilterChainProxy        : Secured GET /subject?page%20=%201&size=2
 2024-09-23T17:34:41.387+03:00 DEBUG 18134 --- [http-nio-8085-exec-8] o.s.security.web.FilterChainProxy        : Securing GET /subject?page%20=%200
 2024-09-23T17:34:41.455+03:00 DEBUG 18134 --- [http-nio-8085-exec-8] o.s.security.web.FilterChainProxy        : Secured GET /subject?page%20=%200
+2024-09-23T20:36:55.975+03:00  INFO 24591 --- [restartedMain] fileManagment.file.FileApplication       : Starting FileApplication using Java 22.0.2 with PID 24591 (/home/ephi/Downloads/file/target/classes started by ephi in /home/ephi/Downloads/file)
+2024-09-23T20:36:56.039+03:00  INFO 24591 --- [restartedMain] fileManagment.file.FileApplication       : The following 1 profile is active: "dev"
+2024-09-23T20:36:56.420+03:00  INFO 24591 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-09-23T20:36:56.420+03:00  INFO 24591 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-09-23T20:37:06.011+03:00  INFO 24591 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-09-23T20:37:06.288+03:00  INFO 24591 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 244 ms. Found 10 JPA repository interfaces.
+2024-09-23T20:37:09.941+03:00  INFO 24591 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8085 (http)
+2024-09-23T20:37:09.996+03:00  INFO 24591 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-09-23T20:37:09.996+03:00  INFO 24591 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-09-23T20:37:10.094+03:00  INFO 24591 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-09-23T20:37:10.095+03:00  INFO 24591 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 13667 ms
+2024-09-23T20:37:10.764+03:00  INFO 24591 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-09-23T20:37:11.156+03:00  INFO 24591 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.2.Final
+2024-09-23T20:37:11.349+03:00  INFO 24591 --- [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-09-23T20:37:12.254+03:00  INFO 24591 --- [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-09-23T20:37:12.412+03:00  INFO 24591 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-09-23T20:37:14.409+03:00  INFO 24591 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@2899df11
+2024-09-23T20:37:14.411+03:00  INFO 24591 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-09-23T20:37:17.457+03:00  WARN 24591 --- [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-09-23T20:37:22.274+03:00  INFO 24591 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-09-23T20:37:23.584+03:00  INFO 24591 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-09-23T20:37:24.180+03:00  INFO 24591 --- [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-09-23T20:37:27.931+03:00  INFO 24591 --- [restartedMain] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name apiAuthenticationProvider
+2024-09-23T20:37:28.507+03:00 DEBUG 24591 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, LogoutFilter, JwtAuthorizationFilter, AuthenticationFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, ExceptionTranslationFilter, AuthorizationFilter
+2024-09-23T20:37:29.630+03:00  INFO 24591 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-09-23T20:37:29.854+03:00  INFO 24591 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8085 (http) with context path '/'
+2024-09-23T20:37:29.871+03:00  INFO 24591 --- [restartedMain] fileManagment.file.FileApplication       : Started FileApplication in 36.148 seconds (process running for 41.399)
+2024-09-23T20:38:56.618+03:00  INFO 24591 --- [http-nio-8085-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-09-23T20:38:56.619+03:00  INFO 24591 --- [http-nio-8085-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-09-23T20:38:56.622+03:00  INFO 24591 --- [http-nio-8085-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2024-09-23T20:38:56.743+03:00 DEBUG 24591 --- [http-nio-8085-exec-2] o.s.security.web.FilterChainProxy        : Securing POST /user/login
+2024-09-23T20:38:57.416+03:00  INFO 24591 --- [http-nio-8085-exec-2] fileManagment.file.cache.CacheStore      : Retrieving from Cache  with keyephrembereket36@gmail.com
+2024-09-23T20:38:57.417+03:00  INFO 24591 --- [http-nio-8085-exec-2] fileManagment.file.cache.CacheStore      : Storing Records in Cache for keyephrembereket36@gmail.com
+2024-09-23T20:38:57.419+03:00  INFO 24591 --- [http-nio-8085-exec-2] fileManagment.file.cache.CacheStore      : Retrieving from Cache  with keyephrembereket36@gmail.com
+2024-09-23T20:38:58.350+03:00  INFO 24591 --- [http-nio-8085-exec-2] fileManagment.file.cache.CacheStore      : Removing from Cache with keyephrembereket36@gmail.com
+2024-09-23T20:38:58.774+03:00  INFO 24591 --- [http-nio-8085-exec-2] f.file.service.impl.JwtImpl              : cookies add
+2024-09-23T20:41:38.842+03:00 DEBUG 24591 --- [http-nio-8085-exec-5] o.s.security.web.FilterChainProxy        : Securing POST /teacher
+2024-09-23T20:41:39.055+03:00  INFO 24591 --- [http-nio-8085-exec-5] f.file.service.impl.JwtImpl              : cookies add
+2024-09-23T20:41:39.132+03:00 DEBUG 24591 --- [http-nio-8085-exec-5] o.s.security.web.FilterChainProxy        : Secured POST /teacher
+2024-09-23T20:41:39.226+03:00  WARN 24591 --- [http-nio-8085-exec-5] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'POST' is not supported]
+2024-09-23T20:41:39.364+03:00 DEBUG 24591 --- [http-nio-8085-exec-5] o.s.security.web.FilterChainProxy        : Securing POST /user/error
+2024-09-23T20:41:39.366+03:00 DEBUG 24591 --- [http-nio-8085-exec-5] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2024-09-23T20:41:39.504+03:00 DEBUG 24591 --- [http-nio-8085-exec-5] o.s.s.w.s.HttpSessionRequestCache        : Saved request http://localhost:8085/user/error?continue to session
+2024-09-23T20:41:39.505+03:00 DEBUG 24591 --- [http-nio-8085-exec-5] o.s.s.w.a.Http403ForbiddenEntryPoint     : Pre-authenticated entry point called. Rejecting access
+2024-09-23T20:42:12.822+03:00 DEBUG 24591 --- [http-nio-8085-exec-6] o.s.security.web.FilterChainProxy        : Securing GET /teacher
+2024-09-23T20:42:12.884+03:00 DEBUG 24591 --- [http-nio-8085-exec-6] o.s.security.web.FilterChainProxy        : Secured GET /teacher
+2024-09-23T20:42:14.352+03:00 DEBUG 24591 --- [http-nio-8085-exec-6] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public org.springframework.data.domain.Page fileManagment.file.service.impl.UserServiceImpl.allUsers(java.lang.String,int,int); target is of class [fileManagment.file.service.impl.UserServiceImpl]
+2024-09-23T20:42:17.468+03:00 DEBUG 24591 --- [http-nio-8085-exec-6] horizationManagerBeforeMethodInterceptor : Authorized method invocation ReflectiveMethodInvocation: public org.springframework.data.domain.Page fileManagment.file.service.impl.UserServiceImpl.allUsers(java.lang.String,int,int); target is of class [fileManagment.file.service.impl.UserServiceImpl]
+2024-09-23T20:42:20.600+03:00  WARN 24591 --- [http-nio-8085-exec-6] ration$PageModule$WarningLoggingModifier : Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
+	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
+	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
+
+2024-09-23T20:43:58.211+03:00  INFO 24591 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-09-23T20:43:58.256+03:00  INFO 24591 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-09-23T20:43:58.278+03:00  INFO 24591 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2024-09-23T20:46:37.376+03:00  INFO 24944 --- [restartedMain] fileManagment.file.FileApplication       : Starting FileApplication using Java 22.0.2 with PID 24944 (/home/ephi/Downloads/file/target/classes started by ephi in /home/ephi/Downloads/file)
+2024-09-23T20:46:37.382+03:00  INFO 24944 --- [restartedMain] fileManagment.file.FileApplication       : The following 1 profile is active: "dev"
+2024-09-23T20:46:37.867+03:00  INFO 24944 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-09-23T20:46:37.868+03:00  INFO 24944 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-09-23T20:46:43.811+03:00  INFO 24944 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-09-23T20:46:43.971+03:00  INFO 24944 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 136 ms. Found 10 JPA repository interfaces.
+2024-09-23T20:46:46.099+03:00  INFO 24944 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8085 (http)
+2024-09-23T20:46:46.151+03:00  INFO 24944 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-09-23T20:46:46.152+03:00  INFO 24944 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.28]
+2024-09-23T20:46:46.246+03:00  INFO 24944 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-09-23T20:46:46.247+03:00  INFO 24944 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 8377 ms
+2024-09-23T20:46:46.751+03:00  INFO 24944 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-09-23T20:46:47.119+03:00  INFO 24944 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.2.Final
+2024-09-23T20:46:47.325+03:00  INFO 24944 --- [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-09-23T20:46:48.097+03:00  INFO 24944 --- [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-09-23T20:46:48.348+03:00  INFO 24944 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-09-23T20:46:48.974+03:00  INFO 24944 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@2dc6a24d
+2024-09-23T20:46:48.976+03:00  INFO 24944 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-09-23T20:46:49.174+03:00  WARN 24944 --- [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2024-09-23T20:46:58.225+03:00  INFO 24944 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-09-23T20:46:58.949+03:00  INFO 24944 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-09-23T20:47:00.074+03:00  INFO 24944 --- [restartedMain] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2024-09-23T20:47:03.980+03:00  INFO 24944 --- [restartedMain] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name apiAuthenticationProvider
+2024-09-23T20:47:04.706+03:00 DEBUG 24944 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, LogoutFilter, JwtAuthorizationFilter, AuthenticationFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, ExceptionTranslationFilter, AuthorizationFilter
+2024-09-23T20:47:05.317+03:00  INFO 24944 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-09-23T20:47:05.565+03:00  INFO 24944 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8085 (http) with context path '/'
+2024-09-23T20:47:05.599+03:00  INFO 24944 --- [restartedMain] fileManagment.file.FileApplication       : Started FileApplication in 30.649 seconds (process running for 33.049)
+2024-09-23T20:47:23.645+03:00  INFO 24944 --- [http-nio-8085-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-09-23T20:47:23.668+03:00  INFO 24944 --- [http-nio-8085-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-09-23T20:47:23.672+03:00  INFO 24944 --- [http-nio-8085-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2024-09-23T20:47:23.757+03:00 DEBUG 24944 --- [http-nio-8085-exec-2] o.s.security.web.FilterChainProxy        : Securing GET /teacher
+2024-09-23T20:47:25.080+03:00  INFO 24944 --- [http-nio-8085-exec-2] f.file.service.impl.JwtImpl              : cookies add
+2024-09-23T20:47:25.155+03:00 DEBUG 24944 --- [http-nio-8085-exec-2] o.s.security.web.FilterChainProxy        : Secured GET /teacher
+2024-09-23T20:47:25.257+03:00 DEBUG 24944 --- [http-nio-8085-exec-2] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public org.springframework.data.domain.Page fileManagment.file.service.impl.UserServiceImpl.allUsers(java.lang.String,int,int); target is of class [fileManagment.file.service.impl.UserServiceImpl]
+2024-09-23T20:47:25.342+03:00 DEBUG 24944 --- [http-nio-8085-exec-2] horizationManagerBeforeMethodInterceptor : Authorized method invocation ReflectiveMethodInvocation: public org.springframework.data.domain.Page fileManagment.file.service.impl.UserServiceImpl.allUsers(java.lang.String,int,int); target is of class [fileManagment.file.service.impl.UserServiceImpl]
+2024-09-23T20:47:25.816+03:00  WARN 24944 --- [http-nio-8085-exec-2] ration$PageModule$WarningLoggingModifier : Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
+	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
+	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
+
