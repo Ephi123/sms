@@ -67,5 +67,7 @@ public class AssignServiceImpl implements AssignService {
 
     private SubjectEntity getSubject(String sub) {
        return subjectRepo.findBySubjectName(sub).orElseThrow(() -> new ApiException("subject is not found"));
+
+
     }
 }
