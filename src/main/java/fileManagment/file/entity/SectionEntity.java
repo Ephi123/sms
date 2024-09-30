@@ -23,19 +23,11 @@ public class SectionEntity extends Auditable {
     @Column(columnDefinition = "text")
     private String qrCodeImage;
     @ManyToOne
-    @JoinColumn(name = "grade_id", referencedColumnName = "id")
-   @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonProperty("grade_id")
     private GradeEntity grade;
-
-
-    @ManyToOne(fetch =FetchType.EAGER)
-    @JoinTable(name = "section_field", joinColumns = @JoinColumn(name = "section_id",referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "field_id",referencedColumnName = "id"))
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonProperty("field_id")
+    @ManyToOne(fetch = FetchType.EAGER,cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private FieldEntity field;
+
+
+
 
 }

@@ -1,5 +1,6 @@
 package fileManagment.file.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.*;
@@ -14,7 +15,7 @@ import lombok.*;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class TimeTableEntity extends Auditable{
-    private Integer academic_year;
+    private Integer academicYear;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "period_id",referencedColumnName ="id")

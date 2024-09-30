@@ -1,11 +1,14 @@
 package fileManagment.file.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
+
+import static java.time.LocalDateTime.*;
 
 @Entity
 @Table(name = "attendances")
@@ -16,6 +19,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
+@JsonIgnoreProperties(value = {"date"},allowGetters = true)
 public class AttendanceEntity extends Auditable {
 
     private Integer academicYear;
@@ -33,6 +37,11 @@ public class AttendanceEntity extends Auditable {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "section_id ",referencedColumnName ="id")
     private SectionEntity section;
+
+   @PrePersist
+    void dateBeforePersist(){
+        setDate(now());
+    }
 
 
 }

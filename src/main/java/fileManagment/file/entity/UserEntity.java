@@ -40,7 +40,7 @@ public class UserEntity extends Auditable {
     private String qrCodeSecret;
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
     @JsonIdentityReference(alwaysAsId = true)
-    @JsonProperty("user_id")
+    @JsonProperty("teacher_id")
     @Column(columnDefinition = "text")
     private String qrCodeImage;
     @ManyToMany(fetch = FetchType.EAGER)

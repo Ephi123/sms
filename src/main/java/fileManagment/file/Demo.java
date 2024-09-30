@@ -1,56 +1,84 @@
 package fileManagment.file;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import fileManagment.file.domain.EthiopianCalendar;
+import fileManagment.file.domain.Payment;
+import org.joda.time.DateTime;
+import org.joda.time.chrono.EthiopicChronology;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-import static fileManagment.file.constant.Constant.ROLE_PREFIX;
-
-@Getter
-@Setter
-@Builder
-class Rol{
-    private String name;
-    private String authority;
-
-}
 
 public class Demo {
-         public static void main(String [] args){
+         public static void main(String [] args) {
+             int nextMonth = 2;
+             int chargeAfter = 10;
+             int year = EthiopianCalendar.ethiopianYear();
 
-             LocalDateTime  lastUpdateTime = LocalDateTime.now().minusDays(80) ;
+           //  System.out.println(DateTime.now().withChronology(EthiopicChronology.getInstance()));
 
-             var rol1 = Rol.builder().name("user").authority("u.p1,u.p2,u.p3").build();
-             var rol2 = Rol.builder().name("Admin").authority("a.p1,a.p2").build();
+         DateTime currentDate = DateTime.parse(year+"-7"+"-11");
+         double charge = 0;
+         double chargePerMonth=0;
+         double chargePerDay = 0;
+         int month = nextMonth;
 
-             List<Rol> rols = List.of(rol2,rol1);
-             System.out.println(new BCryptPasswordEncoder().encode("123"));
+         List<Payment> list = new ArrayList<>();
+         for(; month<currentDate.getMonthOfYear(); month++){
+             chargePerMonth = 0.5/100 * 1000 * 20;
+             list.add(meth(month,chargePerMonth));
+             charge+=chargePerMonth;
+         }
+
+         int reamingDay = currentDate.getDayOfMonth() - chargeAfter;
+         if(reamingDay>0) {
+             chargePerDay = reamingDay * 0.5 / 100 * 1000;
+
+             list.add(meth(month,chargePerDay));
+         }
+         charge += chargePerDay;
+
+             System.out.println(DateTime.now(EthiopicChronology.getInstance()));
 
          }
 
-         private static String converter(List<Rol> rols) {
-             StringBuilder res = new StringBuilder();
-             var num = 1;
-             for (Rol r : rols) {
-                 res.append(ROLE_PREFIX).append(r.getName());
-                   if(rols.size() != num){
-                       res.append(",");
-
-                   }
-                 num++;
+     private static Payment meth(int month, double charge){
+             switch (month){
+                 case 1-> {
+                     return Payment.builder().payment(1000.0).charge(charge).month("1").total(charge+ 1000.0).build();
                  }
 
+                 case 2-> {
+                     return Payment.builder().payment(1000.0).charge(charge).month("2").total(charge+ 1000.0).build();
+                 }
+                 case 3-> {
+                     return Payment.builder().payment(1000.0).charge(charge).month("3").total(charge+ 1000.0).build();
+                 }
+                 case 4-> {
+                     return Payment.builder().payment(1000.0).charge(charge).month("4").total(charge+ 1000.0).build();
+                 }
+                 case 5-> {
+                     return Payment.builder().payment(1000.0).charge(charge).month("5").total(charge+ 1000.0).build();
+                 }
+                 case 6-> {
+                     return Payment.builder().payment(1000.0).charge(charge).month("6").total(charge+ 1000.0).build();
+                 }
+                 case 7-> {
+                     return Payment.builder().payment(1000.0).charge(charge).month("7").total(charge+ 1000.0).build();
+                 }
+                 case 8-> {
+                     return Payment.builder().payment(1000.0).charge(charge).month("8").total(charge+ 1000.0).build();
+                 }
+                 case 9-> {
+                     return Payment.builder().payment(1000.0).charge(charge).month("9").total(charge+ 1000.0).build();
+                 }
+                 default -> {
+                     return null;
+                 }
 
-             return res.toString();
-         }
-
-
-
+             }
+     }
 }
 
 

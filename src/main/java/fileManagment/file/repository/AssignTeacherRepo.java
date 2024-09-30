@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,7 +29,7 @@ public interface AssignTeacherRepo extends JpaRepository<AssignsEntity,Long> {
             "JOIN a.section sec " +
             "JOIN a.teacher t " +
             "WHERE sec.room = :sec AND a.academicYear = :ay")
-    Optional<List<UserEntity>> findByTeacher(@Param("sec") String sec, @Param("ay") Integer accYear);
+    Optional<List<UserEntity>> findTeacherBySectionAndAy(@Param("sec") String sec, @Param("ay") Integer accYear);
 
 
 }

@@ -1,8 +1,6 @@
 package fileManagment.file.service.impl;
 import fileManagment.file.apiException.ApiException;
-import fileManagment.file.constant.Constant;
 import fileManagment.file.domain.EthiopianCalendar;
-import fileManagment.file.entity.AssignsEntity;
 import fileManagment.file.entity.SectionEntity;
 import fileManagment.file.entity.SubjectEntity;
 import fileManagment.file.entity.UserEntity;
@@ -11,6 +9,7 @@ import fileManagment.file.repository.AssignTeacherRepo;
 import fileManagment.file.repository.SectionRepo;
 import fileManagment.file.repository.SubjectRepo;
 import fileManagment.file.repository.UserRepo;
+import fileManagment.file.service.AssessmentService;
 import fileManagment.file.service.AssignService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -39,23 +38,23 @@ public class AssignServiceImpl implements AssignService {
     private final UserRepo userRepo;
     private final HttpServletResponse response;
     private final HttpServletRequest  request;
+    private final AssessmentService assessmentService;
 
     @Override
     @PreAuthorize("hasRole('USER')")
-    public AssignsEntity assignTeacher(String userId,String sec,String sub) {
+    public void assignsTeacher(String userId, String sec, String sub) {
         try{
 
             if(assignTeacherRepo.isTeacherAssigned(userId,sec,sub,EthiopianCalendar.ethiopianYear())) {
-                handleErrorResponse(request, response, new ApiException("Teacher is assigned"), HttpStatus.CONFLICT);
-                throw new ApiException("Teacher is assigned");
+                handleErrorResponse(request, response, new ApiException("Teacher is  already assigned"), HttpStatus.CONFLICT);
+                throw new ApiException("Teacher is already assigned");
             }
 
             SubjectEntity subject = getSubject(sub);
             SectionEntity section= getSection(sec);
             UserEntity teacher = getTeacher(userId);
-
-            return assignTeacherRepo.save(createAssignEntity(subject,section,teacher, ACADEMIC_YEAR));
-
+           var assigns = assignTeacherRepo.save(createAssignEntity(subject,section,teacher, ACADEMIC_YEAR));
+            assessmentService.crateDefaultAssessment(subject,section,teacher);
         }
 
         catch (Exception  e){
@@ -70,7 +69,7 @@ public class AssignServiceImpl implements AssignService {
     public List<UserEntity> freeTeachers(String sec) {
      List<UserEntity> allTeachers =  userRepo.findUsersByRole(Authority.TEACHER.name()).orElseThrow(() -> new ApiException("Teacher is not register"));
          Iterator<UserEntity> iterator = allTeachers.iterator();
-     Optional<List<UserEntity>> assignedTeacher = assignTeacherRepo.findByTeacher(sec,ACADEMIC_YEAR);
+     Optional<List<UserEntity>> assignedTeacher = assignTeacherRepo.findTeacherBySectionAndAy(sec,ACADEMIC_YEAR);
      if(assignedTeacher.isEmpty())
            return allTeachers;
 

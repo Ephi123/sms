@@ -17,4 +17,6 @@ public class SectionRequest {
     private Integer room;
     @NotEmpty(message = "block can't be empty")
     private Integer block;
+    @NotEmpty(message = "student number can't be empty ")
+    private  Integer studentNumber;
 }

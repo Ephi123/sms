@@ -16,7 +16,5 @@ public class EnrolRequest extends UserRequest {
     private Integer grade;
     @NotEmpty(message = "field can't be empty")
     private Integer field;
-    private LocalDateTime registration_date;
-    private Boolean is_valid;
 
 }

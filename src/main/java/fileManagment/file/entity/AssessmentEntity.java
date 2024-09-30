@@ -1,8 +1,10 @@
 package fileManagment.file.entity;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name = "assessments")
@@ -18,20 +20,36 @@ public class AssessmentEntity extends Auditable {
     private Integer wight;
     private Integer academicYear;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonProperty("subject_id")
+    @ManyToOne
     @JoinColumn(name = "subject_id",referencedColumnName ="id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private SubjectEntity subject;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonProperty("section_id")
+    @ManyToOne
     @JoinColumn(name = "section_id",referencedColumnName ="id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private SectionEntity section;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonProperty("semester_id")
+    @ManyToOne
     @JoinColumn(name = "semester_id",referencedColumnName ="id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private SemesterEntity semester;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
+    @JsonProperty("teacher_id")
+    @ManyToOne
     @JoinColumn(name = "teacher_id",referencedColumnName ="id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private UserEntity teacher;
 
 

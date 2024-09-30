@@ -480,7 +480,68 @@ create table if not exists id_generator(
   last_value bigint,
   user_id character varying(255) primary key
 );
+create table if not exists next_payments(
+     id SERIAL,
+      created_at timestamp(6) without time zone NOT NULL,
+      created_by bigint NOT NULL,
+      reference_id character varying(255) COLLATE pg_catalog."default",
+      update_at timestamp(6) without time zone NOT NULL,
+      updated_by bigint NOT NULL,
+  month smallInt,
+  student_id bigint,
+  constraint uk_next_payments_user_id unique(student_id),
+  constraint fk_next_payments_user_id foreign key(student_id) references users(id) match simple on update cascade on delete cascade,
+     CONSTRAINT fk_next_payments_user_created_by FOREIGN KEY (created_by) REFERENCES users(id) MATCH SIMPLE ON UPDATE CASCADE ON DELETE CASCADE,
+      CONSTRAINT fk_next_payments_user_updated_by FOREIGN KEY (updated_by) REFERENCES users(id) MATCH SIMPLE ON UPDATE CASCADE ON DELETE CASCADE
+  );
 
+create table if not exists payments(
+   id SERIAL,
+    created_at timestamp(6) without time zone NOT NULL,
+    created_by bigint NOT NULL,
+    reference_id character varying(255) COLLATE pg_catalog."default",
+    update_at timestamp(6) without time zone NOT NULL,
+    updated_by bigint NOT NULL,
+academic_year smallInt,
+month character varying,
+student_id bigInt,
+payment smallInt,
+penalty smallInt default 0,
+total smallInt,
+date timestamp(6) without time zone NOT NULL,
+constraint fk_student_payments_user_id foreign key(student_id) references users(id) match simple on update cascade on delete cascade,
+   CONSTRAINT fk_student_payments_user_created_by FOREIGN KEY (created_by) REFERENCES users(id) MATCH SIMPLE ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT fk_student_payments_user_updated_by FOREIGN KEY (updated_by) REFERENCES users(id) MATCH SIMPLE ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+create table if not exists student_payments(
+   id SERIAL,
+    created_at timestamp(6) without time zone NOT NULL,
+    created_by bigint NOT NULL,
+    reference_id character varying(255) COLLATE pg_catalog."default",
+    update_at timestamp(6) without time zone NOT NULL,
+    updated_by bigint NOT NULL,
+academic_year smallInt,
+month_fee smallInt,
+grade_id bigInt,
+constraint uk_student_payments_user_id unique(grade_id),
+constraint fk_student_payments_user_id foreign key(grade_id) references grades(id) match simple on update cascade on delete cascade,
+   CONSTRAINT fk_student_payments_user_created_by FOREIGN KEY (created_by) REFERENCES users(id) MATCH SIMPLE ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT fk_student_payments_user_updated_by FOREIGN KEY (updated_by) REFERENCES users(id) MATCH SIMPLE ON UPDATE CASCADE ON DELETE CASCADE
+);
+create table if not exists registrations(
+id character varying(20),
+registration_fee smallint,
+registration_start_date date,
+registration_end_date date,
+CONSTRAINT pk_registrations_id PRIMARY KEY (id)
+);
+create table if not exists penalties(
+penalty_id character varying primary key,
+penalty decimal(10,2) not null,
+penalty_after smallint not null
+)
+alter table payments add column is_checked boolean default false;
 alter table sections add column student_number integer
 alter table enrols alter column is_valid set default false
 alter table enrols add column date timestamp(6) without time zone NOT NULL

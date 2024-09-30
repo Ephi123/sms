@@ -30,10 +30,10 @@ public class SubjectServiceImpl implements SubjectService {
     private final FieldRepo fieldRepo;
     @Override
     @PreAuthorize("hasRole('USER')")
-    public SubjectEntity saveSubject(String subject, int grade, int filed) {
+    public void saveSubject(String subject, int grade, int filed) {
         var  gradeEntity = getGrade(grade);
         var fieldEntity= getField(filed);
-        return subjectRepo.save(createSubjectEntity(subjectName.apply(subject,gradeEntity),gradeEntity,fieldEntity));
+        subjectRepo.save(createSubjectEntity(subjectName.apply(subject, gradeEntity), gradeEntity, fieldEntity));
     }
 
     @Override

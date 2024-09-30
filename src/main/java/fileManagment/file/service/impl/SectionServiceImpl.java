@@ -38,8 +38,8 @@ public class SectionServiceImpl implements SectionService {
 
     @Override
     @PreAuthorize("hasRole('USER')")
-    public SectionEntity createSection(Integer room, Integer block, Integer grade, Integer fieldCode) {
-        var section =  createSectionEntity(withRoomPrefix.apply(room),withBlockPrefix.apply(block),grade, fieldCode);
+    public SectionEntity createSection(Integer room, Integer block, Integer grade, Integer fieldCode,Integer studentNumber) {
+        var section =  createSectionEntity(withRoomPrefix.apply(room),withBlockPrefix.apply(block),grade, fieldCode,studentNumber);
 
         return sectionRepo.save(section);
     }
@@ -63,14 +63,15 @@ public class SectionServiceImpl implements SectionService {
 
     }
      @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    private SectionEntity createSectionEntity(String room, String block, Integer grade, Integer fieldCode) {
+    private SectionEntity createSectionEntity(String room, String block, Integer grade, Integer fieldCode,Integer studentNumber) {
            if (sectionPresent(room)){
                RequestUtil.handleErrorResponse(request,response,new ApiException("Room is already registered"), HttpStatus.BAD_REQUEST);
                throw new ApiException("Room is already registered");
            }
 
         return SectionEntity.builder().block(block).room(room).
-                 grade(getGrade(grade))
+                studentNumber(studentNumber)
+                .grade(getGrade(grade))
                  .field(getField(fieldCode))
                  .build();
 

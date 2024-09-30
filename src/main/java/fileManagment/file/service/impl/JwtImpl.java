@@ -7,7 +7,6 @@ import fileManagment.file.enumeration.TokenType;
 import fileManagment.file.security.JwtConfiguration;
 import fileManagment.file.securityDto.User;
 import fileManagment.file.service.JwtService;
-import fileManagment.file.service.UserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
@@ -18,13 +17,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.stereotype.Service;
-
 import javax.crypto.SecretKey;
-import java.security.Key;
 import java.time.Instant;
 import java.util.*;
 import java.util.function.BiFunction;
@@ -98,7 +93,7 @@ public class JwtImpl extends JwtConfiguration implements JwtService {
                               var cookies = new Cookie(type.getValue(), refresh);
                               cookies.setHttpOnly(true);
                               //cookies.setSecure(true);
-                              cookies.setMaxAge(2 * 60 * 60);
+                              cookies.setMaxAge(2 * 60 * 60*60);//refresh cookies age 120 day
                               cookies.setPath("/");
                               cookies.setAttribute("sameSite",NONE.name());
                               response.addCookie(cookies);

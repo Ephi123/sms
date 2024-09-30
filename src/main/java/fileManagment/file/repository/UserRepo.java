@@ -25,4 +25,5 @@ public interface UserRepo extends JpaRepository<UserEntity,Long> {
             "JOIN u.roles r " +
             "WHERE r.name = :role ")
    Page<UserEntity> findUsersByRolePageable(@Param("role") String role, Pageable  pageable);
+
 }

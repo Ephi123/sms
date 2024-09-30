@@ -23,10 +23,10 @@ import static org.springframework.http.HttpStatus.OK;
 public class SectionController {
     private final SectionService sectionService;
 
-    @PostMapping("/register")
+    @PostMapping
     public ResponseEntity<Response> sectionRegister(@RequestBody SectionRequest section, HttpServletRequest request) {
 
-        var sec = sectionService.createSection(section.getRoom(), section.getBlock(), section.getGrade(), section.getFieldCode());
+        var sec = sectionService.createSection(section.getRoom(), section.getBlock(), section.getGrade(), section.getFieldCode(),section.getStudentNumber());
         return ResponseEntity.created(getUrRI("section/id")).body(getResponse(request, Map.of("section", sec), "section is created ", CREATED));
 
     }
@@ -35,6 +35,6 @@ public class SectionController {
     public ResponseEntity<Response> getAllSection(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size, HttpServletRequest request){
         Page<SectionEntity> section = sectionService.findsSections(page,size);
             List<SectionEntity> sections = section.stream().toList();
-        return ResponseEntity.created(getUrRI("section/id")).body(getResponse(request, Map.of("subjects",sections), "sections", OK));
+        return ResponseEntity.created(getUrRI("section/id")).body(getResponse(request, Map.of("section",sections), "sections", OK));
     }
 }

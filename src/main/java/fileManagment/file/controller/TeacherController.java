@@ -23,7 +23,7 @@ public class TeacherController {
     private final UserService userService;
     @GetMapping
     public ResponseEntity<Response> allTeacher(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size,  HttpServletRequest request){
-           var teacher = userService.allUsers(Authority.TEACHER.name(), page,size);
+           var teacher = userService.allUsers(Authority.TEACHER.name(), page,size).get().toList();
         return ResponseEntity.ok().body(getResponse(request, Map.of("teachers",teacher),"you are verified",OK));
     }
 

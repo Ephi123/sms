@@ -23,7 +23,7 @@ public class AssignController {
    private final AssignService assignService;
     @PostMapping
     public ResponseEntity<Response> assignTeachers(@RequestBody AssignRequest assignRequest,  HttpServletRequest request){
-       assignService.assignTeacher(assignRequest.getTeacher(),assignRequest.getSection(),assignRequest.getSubject());
+       assignService.assignsTeacher(assignRequest.getTeacher(),assignRequest.getSection(),assignRequest.getSubject());
         return ResponseEntity.created(getUrRI("")).body(getResponse(request,emptyMap(),"Teacher is assigned",CREATED));
 
 

@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.*;
 @Transactional(rollbackOn = Exception.class)
 @SpringBootTest
 class EnrolRepositoryTest {
@@ -31,7 +30,7 @@ class EnrolRepositoryTest {
 
         var enrol = new EnrolEntity();
            enrol.setAcademicYear(EthiopianCalendar.ethiopianYear());
-           enrol.setIsValid(true);
+           enrol.setIsActive(true);
            enrol.setField(field);
            enrol.addToGrades(grade);
            enrol.addToSection(sec);

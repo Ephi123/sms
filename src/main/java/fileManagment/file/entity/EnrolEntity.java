@@ -2,13 +2,8 @@ package fileManagment.file.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import fileManagment.file.domain.EthiopianCalendar;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -28,7 +23,7 @@ import static java.time.LocalDateTime.*;
 public class EnrolEntity extends Auditable {
 
     private Integer academicYear;
-    private Boolean isValid;
+    private Boolean isActive;
     private LocalDateTime date;
     @ManyToMany(fetch = FetchType.EAGER,cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name = "enrol_student", joinColumns = @JoinColumn(name = "enrol_id",referencedColumnName = "id"),
