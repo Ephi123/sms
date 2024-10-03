@@ -14,7 +14,7 @@ import java.util.Optional;
 public interface ResultRepo extends JpaRepository<ResultEntity,Long> {
 
     List<ResultEntity> findByAssessment(AssessmentEntity assessment);
-    @Query("SELECT new fileManagment.file.response.ResultResponse(st.firstName,st.lastName,st.userId,r.mark,r.id,as.id,as.assessmentName,as.wight) FROM ResultEntity r " +
+    @Query("SELECT new fileManagment.file.responseDto.ResultResponse(st.firstName,st.lastName,st.userId,r.mark,r.id,as.id,as.assessmentName,as.wight) FROM ResultEntity r " +
             "JOIN r.assessment as " +
             "JOIN r.student st " +
             "JOIN as.subject sub " +
@@ -26,7 +26,7 @@ public interface ResultRepo extends JpaRepository<ResultEntity,Long> {
     Optional<List<ResultResponse>> findByAssessmentSubject(@Param("subName") String subName , @Param("ay") int academicYear,  @Param("status") String status);
 
 
-    @Query("SELECT new fileManagment.file.response.ResultResponse(st.firstName,st.lastName,st.userId,r.mark,r.id,as.id,as.assessmentName,as.wight) FROM ResultEntity r " +
+    @Query("SELECT new fileManagment.file.responseDto.ResultResponse(st.firstName,st.lastName,st.userId,r.mark,r.id,as.id,as.assessmentName,as.wight) FROM ResultEntity r " +
             "JOIN r.assessment as " +
             "JOIN r.student st " +
             "JOIN as.subject sub " +

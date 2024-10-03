@@ -1,11 +1,10 @@
 package fileManagment.file.service.impl;
 
 import fileManagment.file.apiException.ApiException;
-import fileManagment.file.repository.AssessmentRepo;
-import fileManagment.file.repository.ResultRepo;
-import fileManagment.file.repository.SemesterRepo;
-import fileManagment.file.repository.SubjectRepo;
+import fileManagment.file.constant.Constant;
+import fileManagment.file.repository.*;
 import fileManagment.file.responseDto.ResultResponse;
+import fileManagment.file.responseDto.StudentResultDto;
 import fileManagment.file.service.ResultService;
 import fileManagment.file.util.RequestUtil;
 import jakarta.servlet.http.HttpServletRequest;
@@ -34,6 +33,7 @@ public class ResultServiceImpl implements ResultService {
     private final HttpServletResponse response;
     private final HttpServletRequest request;
     private final SemesterRepo  semesterRepo;
+    private final Result result;
 
 
     @Override
@@ -97,6 +97,12 @@ public class ResultServiceImpl implements ResultService {
                 }
                 );
 
+    }
+
+    @Override
+    @PreAuthorize("hasRole('USER')")
+    public List<StudentResultDto> getAvgAndRank(String userId) {
+        return result.studentAvgAndRank(userId, ACADEMIC_YEAR);
     }
 
 

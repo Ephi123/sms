@@ -41,6 +41,11 @@ public class ResultController {
        return ResponseEntity.created(getUrRI("")).body(getResponse(request, Map.of("result",result),"result is update",CREATED));
 
    }
+   @GetMapping("/myResult")
+   public ResponseEntity<Response>  getAvdAndRank(@RequestParam("id") String studentId ,HttpServletRequest request){
+       var result = resultService.getAvgAndRank(studentId);
+       return ResponseEntity.created(getUrRI("")).body(getResponse(request, Map.of("result",result),"result is update",CREATED));
 
+   }
 
 }
