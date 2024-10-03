@@ -14,7 +14,8 @@ import lombok.*;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class ResultEntity extends Auditable {
-    public Integer mark;
+    private Double mark;
+    private String status;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "assessment_id",referencedColumnName ="id")
     private AssessmentEntity assessment;

@@ -14,7 +14,7 @@ public class AssessmentRequest {
     private Long id;
     private String assessmentName;
     private Integer wight;
-    private String subject;
-    private String section;
-    private String teacher;
+    private String  subject;
+    private String  section;
+    private String  teacher;
 }

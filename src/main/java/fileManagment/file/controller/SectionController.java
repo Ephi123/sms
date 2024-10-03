@@ -1,7 +1,6 @@
 package fileManagment.file.controller;
 import fileManagment.file.domain.Response;
 import fileManagment.file.entity.SectionEntity;
-import fileManagment.file.entity.SubjectEntity;
 import fileManagment.file.requestDto.SectionRequest;
 import fileManagment.file.service.SectionService;
 import jakarta.servlet.http.HttpServletRequest;

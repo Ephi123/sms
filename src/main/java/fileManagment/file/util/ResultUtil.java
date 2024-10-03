@@ -5,7 +5,7 @@ import fileManagment.file.entity.ResultEntity;
 import fileManagment.file.entity.UserEntity;
 
 public class ResultUtil {
-    public static ResultEntity result(AssessmentEntity assessment, UserEntity student,int mark){
+    public static ResultEntity result(AssessmentEntity assessment, UserEntity student,double mark){
         return ResultEntity.builder()
                 .assessment(assessment)
                 .student(student)

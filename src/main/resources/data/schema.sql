@@ -311,7 +311,8 @@ CREATE TABLE IF NOT EXISTS assessments
     id SERIAL,
     created_at timestamp(6) without time zone NOT NULL,
     created_by bigint NOT NULL,
-	 update_at timestamp(6) without time zone NOT NULL,
+    semester smallint default 1,
+   update_at timestamp(6) without time zone NOT NULL,
     updated_by bigint NOT NULL,
     reference_id character varying(255) COLLATE pg_catalog."default",
 	assessment_name character varying(255) NOT NULL,
@@ -326,7 +327,6 @@ CREATE TABLE IF NOT EXISTS assessments
      CONSTRAINT fk_assessments_updated_by   FOREIGN KEY (updated_by)   REFERENCES users(id)      MATCH SIMPLE ON UPDATE CASCADE ON DELETE CASCADE,
 	 CONSTRAINT fk_assessments_section_id   FOREIGN KEY (section_id)   REFERENCES sections(id)   MATCH SIMPLE ON UPDATE CASCADE ON DELETE CASCADE,
      CONSTRAINT fk_assessments_subject_id   FOREIGN KEY (subject_id)   REFERENCES subjects(id)   MATCH SIMPLE ON UPDATE CASCADE ON DELETE CASCADE,
-     CONSTRAINT fk_assessments_semester_id  FOREIGN KEY (semester_id)  REFERENCES semesters(id)  MATCH SIMPLE ON UPDATE CASCADE ON DELETE CASCADE,
      CONSTRAINT fk_assessments_teacher_id   FOREIGN KEY (teacher_id)   REFERENCES users(id)      MATCH SIMPLE ON UPDATE CASCADE ON DELETE CASCADE
 
 );
@@ -341,6 +341,7 @@ CREATE TABLE IF NOT EXISTS results
     updated_by bigint NOT NULL,
     reference_id character varying(255) COLLATE pg_catalog."default",
 	mark integer NOT NULL,
+	status character varying(20) default 'active'
 	assessment_id bigint NOT NULL,
 	student_id bigint NOT NULL,
 	 CONSTRAINT pk_results_id PRIMARY KEY (id),
@@ -545,4 +546,5 @@ alter table payments add column is_checked boolean default false;
 alter table sections add column student_number integer
 alter table enrols alter column is_valid set default false
 alter table enrols add column date timestamp(6) without time zone NOT NULL
-
+alter table assessments drop column semester_id
+alter table results add column status character varying(255) default 'active'

@@ -19,6 +19,7 @@ public class AssessmentEntity extends Auditable {
     private String assessmentName;
     private Integer wight;
     private Integer academicYear;
+    private Integer semester;
 
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
     @JsonIdentityReference(alwaysAsId = true)
@@ -35,14 +36,6 @@ public class AssessmentEntity extends Auditable {
     @JoinColumn(name = "section_id",referencedColumnName ="id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private SectionEntity section;
-
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
-    @JsonIdentityReference(alwaysAsId = true)
-    @JsonProperty("semester_id")
-    @ManyToOne
-    @JoinColumn(name = "semester_id",referencedColumnName ="id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private SemesterEntity semester;
 
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
     @JsonIdentityReference(alwaysAsId = true)

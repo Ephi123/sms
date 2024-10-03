@@ -36,7 +36,8 @@ public class AssessmentServiceImpl implements AssessmentService {
     @Override
     public void crateDefaultAssessment(SubjectEntity sub, SectionEntity sec, UserEntity teacher) {
         SemesterEntity semester = semesterRepo.findByIsCurrent(true);
-        List<AssessmentEntity> assessmentEntities = createDefaultAssessments(sub,sec,teacher,semester);
+                       int seme =semester.getSemester();
+        List<AssessmentEntity> assessmentEntities = createDefaultAssessments(sub,sec,teacher,seme);
         generateDefaultMark(assessmentEntities, sec.getRoom());
 
     }
@@ -48,7 +49,9 @@ public class AssessmentServiceImpl implements AssessmentService {
             handleErrorResponse(request, response, new ApiException("assessment is not found "), HttpStatus.BAD_REQUEST);
                return new ApiException("assessment is not found");}
         );
-
+        List<UserEntity> students = enrolRepository.findStudentsBySection(assessmentRequest.getSection(), ACADEMIC_YEAR, PageRequest.of(0,45))
+                .get()
+                .toList();
         if(isAssessmentValid(subject,sec,assessmentRequest)){
               if(assessmentRequest.getAssessmentName() == null && assessmentRequest.getWight() == null){
                   handleErrorResponse(request, response, new ApiException("assessment is not update "), HttpStatus.BAD_REQUEST);
@@ -73,7 +76,16 @@ public class AssessmentServiceImpl implements AssessmentService {
     @Override
     @PreAuthorize("hasRole('USER')")
     public void addAssessment(AssessmentRequest assessmentRequest) {
-        var semester = semesterRepo.findByIsCurrent(true);
+        SemesterEntity semester = semesterRepo.findByIsCurrent(true);
+        int seme =semester.getSemester();
+        List<UserEntity> students = enrolRepository.findStudentsBySection(assessmentRequest.getSection(), ACADEMIC_YEAR, PageRequest.of(0,45))
+                .get()
+                .toList();
+        if(students.isEmpty()){
+            handleErrorResponse(request, response, new ApiException("student is not registered in this class"), HttpStatus.BAD_REQUEST);
+            throw new ApiException("student is not registered in this class");
+        }
+
         var subject1 = subjectRepo.findBySubjectName(assessmentRequest.getSubject()).orElseThrow(() -> {
             handleErrorResponse(request, response, new ApiException("Subject is not find"), HttpStatus.BAD_REQUEST);
           return   new ApiException("subject is not find");
@@ -94,8 +106,18 @@ public class AssessmentServiceImpl implements AssessmentService {
         for(AssessmentEntity ass: assessments)
                 wightTotal += ass.getWight();
 
-        if(wightTotal+assessmentRequest.getWight() <= 100)
-           assessmentRepo.save(assessment(subject1,section,teacher,semester,assessmentRequest.getAssessmentName(),assessmentRequest.getWight()));
+        List<ResultEntity> results = new ArrayList<>();
+        if(wightTotal+assessmentRequest.getWight() <= 100){
+            var assessment = assessmentRepo.save(assessment(subject1,section,teacher,seme,assessmentRequest.getAssessmentName(),assessmentRequest.getWight()));
+            for(UserEntity student: students) {
+                results.add(ResultUtil.result(assessment,student,0));
+            }
+
+            resultRepo.saveAll(results);
+        }
+
+
+
 
         else {
             handleErrorResponse(request, response, new ApiException("you can't create assessment"), HttpStatus.BAD_REQUEST);

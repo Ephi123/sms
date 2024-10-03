@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 public class AssessmentUtil {
-    public static  List<AssessmentEntity> createDefaultAssessments(SubjectEntity sub, SectionEntity sec, UserEntity teacher, SemesterEntity semester){
+    public static  List<AssessmentEntity> createDefaultAssessments(SubjectEntity sub, SectionEntity sec, UserEntity teacher, Integer semester){
 
      return List.of(
              assessment(sub,sec,teacher,semester,"Mid Exam 1",15),
@@ -20,7 +20,7 @@ public class AssessmentUtil {
 
     }
 
-    public static  AssessmentEntity assessment(SubjectEntity sub, SectionEntity sec, UserEntity teacher, SemesterEntity semester, String assessmentName, int wight){
+    public static  AssessmentEntity assessment(SubjectEntity sub, SectionEntity sec, UserEntity teacher, Integer semester, String assessmentName, int wight){
         return AssessmentEntity.builder()
                 .assessmentName(assessmentName)
                 .wight(wight)

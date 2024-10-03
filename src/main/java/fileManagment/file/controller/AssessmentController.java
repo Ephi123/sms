@@ -32,7 +32,7 @@ public class AssessmentController {
 
 
     }
-    @GetMapping
+    @GetMapping("/get")
     public ResponseEntity<Response> getAssessment(@RequestParam("sec") String section, @RequestParam("sub") String subject ,HttpServletRequest request){
                var assessments = assessmentService.getAssessments(section,subject);
         return ResponseEntity.ok().body(getResponse(request, Map.of("assessment",assessments),"",OK));
