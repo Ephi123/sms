@@ -1,10 +1,12 @@
 package fileManagment.file.responseDto;
 
-import lombok.AllArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
-@AllArgsConstructor
+@Builder
+@Getter
+@Setter
 @ToString
+@AllArgsConstructor
 public class StudentResultDto {
  private String userId;
  private String fName;
@@ -14,5 +16,7 @@ public class StudentResultDto {
  private Integer year;
  private Double average;
  private Long std_rank;
-
+ private Double cumulativeAvg;
+ private Long cumulativeRank;
+ private Long rankFromAll;
 }

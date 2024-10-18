@@ -1,6 +1,7 @@
 package fileManagment.file.repository;
 
 import fileManagment.file.entity.EnrolEntity;
+import fileManagment.file.entity.GradeEntity;
 import fileManagment.file.entity.UserEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -41,4 +42,6 @@ public interface EnrolRepository extends JpaRepository<EnrolEntity,Long> {
             "JOIN enrol.students stu " +
             "WHERE enrol.academicYear = :ay AND stu.userId = :id")
     Optional<EnrolEntity> findByStudentId(@Param("id") String userId, @Param("ay") int academicYear);
+
+
  }

@@ -32,12 +32,7 @@ public class EnrolController {
 
     }
 
-    @GetMapping
-    public ResponseEntity<Response> saveStudent(HttpServletRequest request){
-       // List<EnrolEntity> enrolEntities =enrolService.registeredStudents();
-        return ResponseEntity.created(getUrRI("")).body(getResponse(request, Map.of(),"Student is enrolled",CREATED));
 
-    }
 
     @GetMapping("/new")
     public ResponseEntity<Response> getNewStudentRegistrationFee(HttpServletRequest request){

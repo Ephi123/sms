@@ -9,7 +9,7 @@ import fileManagment.file.requestDto.AssessmentRequest;
 import java.util.List;
 
 public interface AssessmentService {
-    void crateDefaultAssessment(SubjectEntity sub, SectionEntity sec, UserEntity teacher);
+    void crateDefaultAssessment(SubjectEntity sub, SectionEntity sec, UserEntity teacher,int sem);
     void updateAssessment(AssessmentRequest assessmentRequest,String subject,String sec);
     void deleteAssessment(Long id);
     void addAssessment(AssessmentRequest assessmentRequest);

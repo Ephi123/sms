@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS users
     CONSTRAINT fk_users_updated_by FOREIGN KEY (updated_by) REFERENCES users(id) MATCH SIMPLE ON UPDATE CASCADE ON DELETE CASCADE
 );
 
+
 -- Table: public.credentials
 
 -- DROP TABLE IF EXISTS public.credentials;
@@ -548,3 +549,19 @@ alter table enrols alter column is_valid set default false
 alter table enrols add column date timestamp(6) without time zone NOT NULL
 alter table assessments drop column semester_id
 alter table results add column status character varying(255) default 'active'
+
+create table if not exists subject_status(
+ id SERIAL,
+    created_at timestamp(6) without time zone NOT NULL,
+    created_by bigint NOT NULL,
+    reference_id character varying(255) COLLATE pg_catalog."default",
+    update_at timestamp(6) without time zone NOT NULL,
+    updated_by bigint NOT NULL,
+	academic_year smallint not null,
+	subject_id bigint not null,
+	section_id bigint not null,
+	semester smallint not null,
+	status character varying(255) default 'active',
+	CONSTRAINT pk_subject_status_id PRIMARY KEY (id),
+	Constraint fk_subject_status_subject_id foreign key(subject_id) references subjects(id) match simple on delete cascade on update cascade,
+	Constraint fk_subject_status_section_id foreign key(section_id) references sections(id) match simple on delete cascade on update cascade

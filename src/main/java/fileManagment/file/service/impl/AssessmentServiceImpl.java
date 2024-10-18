@@ -34,10 +34,8 @@ public class AssessmentServiceImpl implements AssessmentService {
     private final SectionRepo sectionRepo;
     private final UserRepo userRepo;
     @Override
-    public void crateDefaultAssessment(SubjectEntity sub, SectionEntity sec, UserEntity teacher) {
-        SemesterEntity semester = semesterRepo.findByIsCurrent(true);
-                       int seme =semester.getSemester();
-        List<AssessmentEntity> assessmentEntities = createDefaultAssessments(sub,sec,teacher,seme);
+    public void crateDefaultAssessment(SubjectEntity sub, SectionEntity sec, UserEntity teacher, int sem) {
+        List<AssessmentEntity> assessmentEntities = createDefaultAssessments(sub,sec,teacher,sem);
         generateDefaultMark(assessmentEntities, sec.getRoom());
 
     }
@@ -133,6 +131,7 @@ public class AssessmentServiceImpl implements AssessmentService {
     @PreAuthorize("hasRole('USER')")
     public List<AssessmentEntity> getAssessments(String sec,String sub) {
         return assessmentRepo.findAssessmentsBySection(sec, ACADEMIC_YEAR,sub);
+
     }
 
     private boolean isAssessmentValid(String subject,String sec,AssessmentRequest assessmentDto) {

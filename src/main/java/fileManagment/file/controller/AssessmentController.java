@@ -1,9 +1,7 @@
 package fileManagment.file.controller;
 
 import fileManagment.file.domain.Response;
-import fileManagment.file.entity.UserEntity;
 import fileManagment.file.requestDto.AssessmentRequest;
-import fileManagment.file.requestDto.AssignRequest;
 import fileManagment.file.service.AssessmentService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;

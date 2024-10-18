@@ -1,14 +1,10 @@
 package fileManagment.file.service.impl;
 import fileManagment.file.apiException.ApiException;
+import fileManagment.file.constant.Constant;
 import fileManagment.file.domain.EthiopianCalendar;
-import fileManagment.file.entity.SectionEntity;
-import fileManagment.file.entity.SubjectEntity;
-import fileManagment.file.entity.UserEntity;
+import fileManagment.file.entity.*;
 import fileManagment.file.enumeration.Authority;
-import fileManagment.file.repository.AssignTeacherRepo;
-import fileManagment.file.repository.SectionRepo;
-import fileManagment.file.repository.SubjectRepo;
-import fileManagment.file.repository.UserRepo;
+import fileManagment.file.repository.*;
 import fileManagment.file.service.AssessmentService;
 import fileManagment.file.service.AssignService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -39,7 +35,7 @@ public class AssignServiceImpl implements AssignService {
     private final HttpServletResponse response;
     private final HttpServletRequest  request;
     private final AssessmentService assessmentService;
-
+    private final SubjectStatusRepo subjectStatusRepo;
     @Override
     @PreAuthorize("hasRole('USER')")
     public void assignsTeacher(String userId, String sec, String sub) {
@@ -54,7 +50,16 @@ public class AssignServiceImpl implements AssignService {
             SectionEntity section= getSection(sec);
             UserEntity teacher = getTeacher(userId);
            var assigns = assignTeacherRepo.save(createAssignEntity(subject,section,teacher, ACADEMIC_YEAR));
-            assessmentService.crateDefaultAssessment(subject,section,teacher);
+            assessmentService.crateDefaultAssessment(subject,section,teacher,1);
+            var status =SubjectStatusEntity.builder()
+                    .sem(1)
+                    .academicYear(ACADEMIC_YEAR)
+                    .status("active")
+                    .section(section)
+                    .subject(subject)
+                    .build();
+            subjectStatusRepo.save(status);
+
         }
 
         catch (Exception  e){

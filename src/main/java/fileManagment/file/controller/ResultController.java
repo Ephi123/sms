@@ -44,8 +44,15 @@ public class ResultController {
    @GetMapping("/myResult")
    public ResponseEntity<Response>  getAvdAndRank(@RequestParam("id") String studentId ,HttpServletRequest request){
        var result = resultService.getAvgAndRank(studentId);
-       return ResponseEntity.created(getUrRI("")).body(getResponse(request, Map.of("result",result),"result is update",CREATED));
+       return ResponseEntity.created(getUrRI("")).body(getResponse(request, result,"result is update",CREATED));
 
    }
+
+    @GetMapping("/subject")
+    public ResponseEntity<Response>  getSubjectWithWaiting(HttpServletRequest request){
+        var subjectStatus = resultService.getSubjectWthWaitingStatus();
+        return ResponseEntity.created(getUrRI("")).body(getResponse(request, Map.of("data",subjectStatus),"subject waiting",CREATED));
+
+    }
 
 }

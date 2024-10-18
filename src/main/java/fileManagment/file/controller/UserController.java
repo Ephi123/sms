@@ -39,8 +39,4 @@ public class UserController {
         userService.verifyUser(token);
         return ResponseEntity.ok().body(getResponse(request,emptyMap(),"you are verified",OK));
     }
-
-
-
-
-    }
+}
