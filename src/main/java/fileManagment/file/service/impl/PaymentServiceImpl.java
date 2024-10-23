@@ -25,6 +25,7 @@ import static fileManagment.file.util.PaymentUtil.*;
 import static fileManagment.file.util.RequestUtil.handleErrorResponse;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
+
 @Service
 @Transactional(rollbackOn = Exception.class)
 @RequiredArgsConstructor
@@ -39,6 +40,8 @@ public class PaymentServiceImpl implements PaymentService {
     private final EnrolRepository enrolRepository;
    private final RegistrationRepo registrationRepo;
    private final UserRepo userRepo;
+
+
 
     @Override
     @PreAuthorize("hasRole('USER')")
@@ -128,6 +131,12 @@ public class PaymentServiceImpl implements PaymentService {
         );
 
 
+    }
+
+    @Override
+    @PreAuthorize("hasRole('USER')")//fiance officer
+    public Map<?, ?> sinorStudentRegistration(String userId) {
+        return Map.of();
     }
 
 

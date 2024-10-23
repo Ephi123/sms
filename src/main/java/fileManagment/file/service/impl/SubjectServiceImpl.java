@@ -4,9 +4,11 @@ import fileManagment.file.apiException.ApiException;
 import fileManagment.file.entity.FieldEntity;
 import fileManagment.file.entity.GradeEntity;
 import fileManagment.file.entity.SubjectEntity;
+import fileManagment.file.entity.SubjectStatusEntity;
 import fileManagment.file.repository.FieldRepo;
 import fileManagment.file.repository.GradeRepo;
 import fileManagment.file.repository.SubjectRepo;
+import fileManagment.file.repository.SubjectStatusRepo;
 import fileManagment.file.service.SubjectService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -28,12 +30,15 @@ public class SubjectServiceImpl implements SubjectService {
     private final SubjectRepo subjectRepo;
     private final GradeRepo gradeRepo;
     private final FieldRepo fieldRepo;
+    private final SubjectStatusRepo subjectStatusRepo;
+    private final SubjectStatusEntity status;
     @Override
     @PreAuthorize("hasRole('USER')")
     public void saveSubject(String subject, int grade, int filed) {
         var  gradeEntity = getGrade(grade);
         var fieldEntity= getField(filed);
         subjectRepo.save(createSubjectEntity(subjectName.apply(subject, gradeEntity), gradeEntity, fieldEntity));
+
     }
 
     @Override

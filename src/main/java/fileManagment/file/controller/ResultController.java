@@ -13,6 +13,7 @@ import static fileManagment.file.util.RequestUtil.getResponse;
 import static fileManagment.file.util.RequestUtil.getUrRI;
 import static java.util.Collections.emptyMap;
 import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @RequestMapping(path = {"/result"})
@@ -48,10 +49,17 @@ public class ResultController {
 
    }
 
-    @GetMapping("/subject")
+    @GetMapping("/subject")//principal and vis Principal or course coordinator
     public ResponseEntity<Response>  getSubjectWithWaiting(HttpServletRequest request){
         var subjectStatus = resultService.getSubjectWthWaitingStatus();
-        return ResponseEntity.created(getUrRI("")).body(getResponse(request, Map.of("data",subjectStatus),"subject waiting",CREATED));
+        return ResponseEntity.created(getUrRI("")).body(getResponse(request, Map.of("data",subjectStatus),"subject waiting",OK));
+
+    }
+
+    @PutMapping("/status")//teachers
+    public ResponseEntity<Response>  changeSubjectStatus(@RequestParam("sub") String sub, @RequestParam("sec") String sec,HttpServletRequest request){
+       resultService.teacherChangeStatus(sub,sec);
+        return ResponseEntity.created(getUrRI("")).body(getResponse(request,emptyMap(),"Assessment is submitted wait for approval",CREATED));
 
     }
 
