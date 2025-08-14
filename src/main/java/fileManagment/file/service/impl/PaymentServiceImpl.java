@@ -16,6 +16,7 @@ import org.joda.time.chrono.EthiopicChronology;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
@@ -64,7 +65,7 @@ public class PaymentServiceImpl implements PaymentService {
         int nextMonth = getNextMonth(userId);
         if(nextMonth == 10){
             RequestUtil.handleErrorResponse(request,response, new ApiException("all month fee tuition is already Payed"), BAD_REQUEST);
-            throw new ApiException("ll month fee tuition is already Payed");
+            throw new ApiException("all month fee tuition is already Payed");
          }
         if(nextMonth + numOfMonth > 10){
             RequestUtil.handleErrorResponse(request,response, new ApiException(nextMonth + " already payed, The rest Payment is " + (10 - nextMonth) ), BAD_REQUEST);
@@ -134,9 +135,42 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    @PreAuthorize("hasRole('USER')")//fiance officer
-    public Map<?, ?> sinorStudentRegistration(String userId) {
-        return Map.of();
+    @PreAuthorize("hasRole('USER')")//fiance officer //student before registration need to now payment and registration fee
+    public Map<?, ?> getSinorStudentRegistrationInfo(String userId) {
+        var nextPayment = getNextMonthEntity(userId);
+        var enrolEntity = enrolRepository.findByStudentId(userId, ACADEMIC_YEAR-1).orElseThrow(() -> new ApiException("user Is not found"));
+        GradeEntity lastYearGrade = enrolEntity.getGrades().stream().max(Comparator.comparingInt(GradeEntity::getGrade)).orElseThrow(() -> new ApiException("something is wrong"));
+         Map<String,Object> studentInfo = new java.util.HashMap<>(Map.of(
+                 "name", enrolEntity.getStudents().getFirst().getFirstName() + " " + enrolEntity.getStudents().getFirst().getLastName(),
+                 "ID", enrolEntity.getStudents().getFirst().getUserId(),
+                 "pass", true,
+                 "grade", lastYearGrade.getGrade() + 1,
+                 "registrationFee", registrationFee(),
+                 "payment", getMonthTuition(lastYearGrade.getGrade() + 1),
+                 "totalPayment", registrationFee() + getMonthTuition(lastYearGrade.getGrade() + 1),
+                 "url","localhost:8080/register?id="+enrolEntity.getStudents().getFirst().getUserId()+
+                         "&grade="+lastYearGrade.getGrade() + 1
+
+
+         ));
+
+        if(isPassed()) {
+            return studentInfo;
+        }
+            studentInfo.put("pass", false);
+            studentInfo.put("grade",lastYearGrade.getGrade());
+            studentInfo.put("payment",getMonthTuition(lastYearGrade.getGrade()));
+           studentInfo.put( "totalPayment", registrationFee() + getMonthTuition(lastYearGrade.getGrade()));
+           studentInfo.put("url","localhost:8080/senior/register?id="+enrolEntity.getStudents().getFirst().getUserId()+
+                   "&grade="+lastYearGrade.getGrade());
+          return studentInfo;
+
+
+
+    }
+
+    private boolean isPassed() {
+        return true;
     }
 
 

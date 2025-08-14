@@ -31,7 +31,9 @@ import java.util.stream.Collectors;
 public class FileApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(FileApplication.class, args);
+
+		SpringApplication.run(FileApplication.class, args)
+		;
 	}
 
 	@Bean

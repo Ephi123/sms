@@ -11,5 +11,5 @@ public interface PaymentService {
 
     Map<?, ?> makeStudentTuitionPyament(int monthNum, String userId);
 
-    Map<?, ?> sinorStudentRegistration(String userId);
+    Map<?, ?> getSinorStudentRegistrationInfo(String userId);
 }

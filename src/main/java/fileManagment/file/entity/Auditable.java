@@ -22,8 +22,7 @@ import static java.time.LocalDateTime.*;
 @JsonIgnoreProperties(value = {"createdAt,updateAt"},allowGetters = true)
 public abstract class Auditable {
     @Id
-    @SequenceGenerator(name = "primary_key_seq",sequenceName = "primary_key_seq",
-    allocationSize = 1)
+    @SequenceGenerator(name = "primary_key_seq",sequenceName = "primary_key_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "primary_key_seq")
     private Long id;
     private String referenceId = new AlternativeJdkIdGenerator().generateId().toString();
