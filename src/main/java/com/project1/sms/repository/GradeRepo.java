@@ -11,8 +11,8 @@ import java.util.List;
 
 @Repository
 public interface GradeRepo extends JpaRepository<Grade,Long> {
-    List<Result> findByStudentAndAssessmentCourseOffering(Student student, CourseOffering courseOffering);
-    List<Result> findByStudentAndAssessmentCourseOfferingStudyYear(Student student,int year);
-
+    List<Grade> findByStudentAndAssessmentCourseOffering(Student student, CourseOffering courseOffering);
+    List<Grade> findByStudentAndAssessmentCourseOfferingStudyYear(Student student,int year);
+   List<Grade> findByAssessmentCourseOffering(CourseOffering offering);
 
 }

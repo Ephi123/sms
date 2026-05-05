@@ -1,6 +1,7 @@
 package com.project1.sms.repository;
 
 import com.project1.sms.enumeration.ProgramEnum;
+import com.project1.sms.model.CourseOffering;
 import com.project1.sms.model.Enrollment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -45,6 +46,7 @@ public interface EnrollRepo extends JpaRepository<Enrollment,Long> {
             "e.courseOffering.section = :sec AND e.student.user.userId = :stdId")
     Optional<Enrollment> getEnrolledStudent(@Param("year") Integer year, @Param("sem") Integer sem, @Param("dept") String department, @Param("year") Integer studyYear, @Param("pName") ProgramEnum program, @Param("sec") Integer section, @Param("stdId") String studentId);
 
+    List<Enrollment> findByCourseOffering(CourseOffering offering);
 
 
 }

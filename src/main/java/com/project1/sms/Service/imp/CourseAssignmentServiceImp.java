@@ -27,16 +27,11 @@ public class CourseAssignmentServiceImp implements CourseAssignmentService {
     private CourseAssignmentRepo assignmentRepo;
     private AssessmentRepo assessmentRepo;
     @Override
-    public Map<String, Object> assignCourseWithDefaultAssessment(Long offeringId, String teacherId) {
+    public Map<String, Object> assignCourse(Long offeringId, String teacherId) {
         CourseOffering courseOffering = offeringRepo.findById(offeringId).orElseThrow(() -> new ApiException("course offering not found "));
         Teacher teacher = teacherRepo.findByUserUserId(teacherId).orElseThrow(() -> new ApiException("teacher is ot found"));
 
         CourseAssignment assignment = assignmentRepo.save( new CourseAssignment(courseOffering,teacher));
-        assessmentRepo.save(new Assessment(assignment.getCourseOffering(),"Mid",25));
-        assessmentRepo.save(new Assessment(assignment.getCourseOffering(),"quiz",10));
-        assessmentRepo.save(new Assessment(assignment.getCourseOffering(),"Assignment",20));
-        assessmentRepo.save(new Assessment(assignment.getCourseOffering(),"Attendance",5));
-        assessmentRepo.save(new Assessment(assignment.getCourseOffering(),"Final",40));
 
 
         return Map.of();
