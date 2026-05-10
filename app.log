@@ -439,3 +439,58 @@ Caused by: org.springframework.data.core.PropertyReferenceException: No property
 2026-04-30T12:01:09.662+03:00  INFO 7103 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 2026-04-30T12:01:09.666+03:00  INFO 7103 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2026-04-30T12:01:09.669+03:00  INFO 7103 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-05-06T19:20:19.011+03:00  INFO 9201 --- [restartedMain] com.project1.sms.SmsApplication          : Starting SmsApplication using Java 26.0.1 with PID 9201 (/home/zioncd/IdeaProjects/sms/target/classes started by zioncd in /home/zioncd/IdeaProjects/sms)
+2026-05-06T19:20:19.066+03:00  INFO 9201 --- [restartedMain] com.project1.sms.SmsApplication          : The following 1 profile is active: "dev"
+2026-05-06T19:20:19.394+03:00  INFO 9201 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-05-06T19:20:19.395+03:00  INFO 9201 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-05-06T19:20:19.571+03:00  INFO 9201 --- [restartedMain] .s.b.d.c.l.DockerComposeLifecycleManager : Using Docker Compose file /home/zioncd/IdeaProjects/sms/compose.yaml
+2026-05-06T19:20:21.010+03:00 ERROR 9201 --- [restartedMain] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.boot.docker.compose.core.DockerProcessStartException: Unable to start docker process. Is docker correctly installed?
+	at org.springframework.boot.docker.compose.core.DockerCli$DockerCommands.getDockerCommand(DockerCli.java:152) ~[spring-boot-docker-compose-4.0.5.jar:4.0.5]
+	at org.springframework.boot.docker.compose.core.DockerCli$DockerCommands.<init>(DockerCli.java:141) ~[spring-boot-docker-compose-4.0.5.jar:4.0.5]
+	at org.springframework.boot.docker.compose.core.DockerCli.lambda$new$0(DockerCli.java:67) ~[spring-boot-docker-compose-4.0.5.jar:4.0.5]
+	at java.base/java.util.HashMap.computeIfAbsent(HashMap.java:1229) ~[na:na]
+	at org.springframework.boot.docker.compose.core.DockerCli.<init>(DockerCli.java:66) ~[spring-boot-docker-compose-4.0.5.jar:4.0.5]
+	at org.springframework.boot.docker.compose.core.DockerCompose.get(DockerCompose.java:147) ~[spring-boot-docker-compose-4.0.5.jar:4.0.5]
+	at org.springframework.boot.docker.compose.lifecycle.DockerComposeLifecycleManager.getDockerCompose(DockerComposeLifecycleManager.java:166) ~[spring-boot-docker-compose-4.0.5.jar:4.0.5]
+	at org.springframework.boot.docker.compose.lifecycle.DockerComposeLifecycleManager.start(DockerComposeLifecycleManager.java:114) ~[spring-boot-docker-compose-4.0.5.jar:4.0.5]
+	at org.springframework.boot.docker.compose.lifecycle.DockerComposeListener.onApplicationEvent(DockerComposeListener.java:53) ~[spring-boot-docker-compose-4.0.5.jar:4.0.5]
+	at org.springframework.boot.docker.compose.lifecycle.DockerComposeListener.onApplicationEvent(DockerComposeListener.java:35) ~[spring-boot-docker-compose-4.0.5.jar:4.0.5]
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:180) ~[spring-context-7.0.6.jar:7.0.6]
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:173) ~[spring-context-7.0.6.jar:7.0.6]
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:151) ~[spring-context-7.0.6.jar:7.0.6]
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:133) ~[spring-context-7.0.6.jar:7.0.6]
+	at org.springframework.boot.context.event.EventPublishingRunListener.multicastInitialEvent(EventPublishingRunListener.java:137) ~[spring-boot-4.0.5.jar:4.0.5]
+	at org.springframework.boot.context.event.EventPublishingRunListener.contextLoaded(EventPublishingRunListener.java:99) ~[spring-boot-4.0.5.jar:4.0.5]
+	at org.springframework.boot.SpringApplicationRunListeners.lambda$contextLoaded$0(SpringApplicationRunListeners.java:74) ~[spring-boot-4.0.5.jar:4.0.5]
+	at java.base/java.util.ImmutableCollections$List12.forEach(ImmutableCollections.java:680) ~[na:na]
+	at org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:123) ~[spring-boot-4.0.5.jar:4.0.5]
+	at org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:117) ~[spring-boot-4.0.5.jar:4.0.5]
+	at org.springframework.boot.SpringApplicationRunListeners.contextLoaded(SpringApplicationRunListeners.java:74) ~[spring-boot-4.0.5.jar:4.0.5]
+	at org.springframework.boot.SpringApplication.prepareContext(SpringApplication.java:418) ~[spring-boot-4.0.5.jar:4.0.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:320) ~[spring-boot-4.0.5.jar:4.0.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1365) ~[spring-boot-4.0.5.jar:4.0.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1354) ~[spring-boot-4.0.5.jar:4.0.5]
+	at com.project1.sms.SmsApplication.main(SmsApplication.java:16) ~[classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565) ~[na:na]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:52) ~[spring-boot-devtools-4.0.5.jar:4.0.5]
+Caused by: org.springframework.boot.docker.compose.core.ProcessStartException: Unable to start command docker version --format {{.Client.Version}}
+	at org.springframework.boot.docker.compose.core.ProcessRunner.startProcess(ProcessRunner.java:117) ~[spring-boot-docker-compose-4.0.5.jar:4.0.5]
+	at org.springframework.boot.docker.compose.core.ProcessRunner.run(ProcessRunner.java:89) ~[spring-boot-docker-compose-4.0.5.jar:4.0.5]
+	at org.springframework.boot.docker.compose.core.ProcessRunner.run(ProcessRunner.java:76) ~[spring-boot-docker-compose-4.0.5.jar:4.0.5]
+	at org.springframework.boot.docker.compose.core.DockerCli$DockerCommands.getDockerCommand(DockerCli.java:147) ~[spring-boot-docker-compose-4.0.5.jar:4.0.5]
+	... 28 common frames omitted
+Caused by: java.io.IOException: Cannot run program "docker": Exec failed, error: 2 (No such file or directory) 
+	at java.base/java.lang.ProcessBuilder.start(ProcessBuilder.java:1112) ~[na:na]
+	at java.base/java.lang.ProcessBuilder.start(ProcessBuilder.java:1046) ~[na:na]
+	at org.springframework.boot.docker.compose.core.ProcessRunner.startProcess(ProcessRunner.java:107) ~[spring-boot-docker-compose-4.0.5.jar:4.0.5]
+	... 31 common frames omitted
+Caused by: java.io.IOException: Exec failed, error: 2 (No such file or directory) 
+	at java.base/java.lang.ProcessImpl.forkAndExec(Native Method) ~[na:na]
+	at java.base/java.lang.ProcessImpl.<init>(ProcessImpl.java:300) ~[na:na]
+	at java.base/java.lang.ProcessImpl.start(ProcessImpl.java:231) ~[na:na]
+	at java.base/java.lang.ProcessBuilder.start(ProcessBuilder.java:1078) ~[na:na]
+	... 33 common frames omitted
+

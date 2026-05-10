@@ -2,6 +2,7 @@ package com.project1.sms.Service.imp;
 
 import com.project1.sms.ResponseDto.AssessmentResultResponse;
 import com.project1.sms.Service.AssessmentResultService;
+import com.project1.sms.Service.AssessmentService;
 import com.project1.sms.apiException.ApiException;
 import com.project1.sms.dto.AssessmentResultDetailDTO;
 import com.project1.sms.model.CourseOffering;
@@ -27,7 +28,10 @@ public class AssessmentResultImpl implements AssessmentResultService {
 
     //student
     @Override
-    public Map<String, Object> getStudentAssessmentResult(Long offeringId) {
+    public AssessmentResultResponse getStudentAssessmentResult(Long offeringId) {
+
+
+
         return null;
 
     }
@@ -68,11 +72,20 @@ public class AssessmentResultImpl implements AssessmentResultService {
             row.setTotal(row.getTotal() + (detail.getMarksObtained() != null ? detail.getMarksObtained() : 0));
         }
 
+
         // Apply grading logic as seen in table.jpg (e.g., 89 -> A, 51 -> C)
     tableMap.values().forEach(resultResponse -> {
-       Grade grade = calculateLetterGrade(resultResponse,student,offering);
-       resultResponse.setGrade(grade.getGrade());
-       resultResponse.setGradeId(grade.getId());
+
+        Student std = studentRepo
+                .findByUserUserId(resultResponse.getStudentId())
+                .orElseThrow(() -> new ApiException("student is not found"));
+
+        Grade grade = gradeRepo.findByStudentAndOffering(std, offering);
+
+        if (grade != null) {
+            resultResponse.setGrade(grade.getGrade());
+            resultResponse.setGradeId(grade.getId());
+        }
 
     });
 
