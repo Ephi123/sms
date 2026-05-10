@@ -25,6 +25,7 @@ public class PaymentImpl implements PaymentService {
     private final CourseOfferingRepo courseOfferingRepo;
     private final CurrentSemRepo currentSemRepo;
     private final AssessmentRepo assessmentRepo;
+    private final AssessmentResultRepo assessmentResultRepo;
     private final GradeRepo gradeRepo;
     @Override
     public Map<String, Object> getPaymentDetailOfStudent(String userId) {
@@ -101,11 +102,13 @@ public class PaymentImpl implements PaymentService {
             enrollment.setCourseOffering(courseOffering);
              enrollRepo.save(enrollment);
             assessmentRepo.findByCourseOffering(courseOffering).forEach(assessment ->{
-                gradeRepo.save(new Grade(student,assessment,0));
+                assessmentResultRepo.save(new AssessmentResult(student,assessment,null));
 
                     }
 
                     );
+            gradeRepo.save(new Grade(null,student,courseOffering));
+
 
 
         });

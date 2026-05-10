@@ -8,10 +8,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class GradeDetailDTO {
+public class AssessmentResultDetailDTO {
     private String studentId;
     private String studentName;
-    private String assessmentTitle;
     private Integer marksObtained;
+    private Long assessmentResultId;
+    private String assessmentTitle;
 
 }
