@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface AssessmentResultService {
-    Map<String,Object> getStudentAssessmentResult(Long offeringId);
+    AssessmentResultResponse getStudentAssessmentResult(Long offeringId,String stdId);
     AssessmentResultResponse updateResult(Long resultId, Integer mark);
      List<AssessmentResultResponse> getGradeSheet(Long courseOfferingId);
     AssessmentResultResponse gradeUpdate(Long gradeId, String Grade);

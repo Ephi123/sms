@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface AssessmentResultRepo extends JpaRepository<AssessmentResult,Long> {
@@ -34,6 +35,8 @@ public interface AssessmentResultRepo extends JpaRepository<AssessmentResult,Lon
             "FROM AssessmentResult ar " +
             "WHERE ar.assessment.courseOffering.id = :id AND " +
             "g.student.userId = :stdId")
-    AssessmentResultDetailDTO findStudentGradeDetails(@Param("id") Long offeringId, @Param("stdId") String stdId);
+
+    // One student assessment and assessment result
+    List<AssessmentResultDetailDTO> findStudentGradeDetails(@Param("id") Long offeringId, @Param("stdId") String stdId);
 
 }

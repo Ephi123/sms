@@ -152,7 +152,7 @@ public class PaymentImpl implements PaymentService {
 
         List<CurrentSem> currentSem =currentSemRepo.findAll();
 
-        CurrentSem sem=currentSem.getFirst();
+        CurrentSem sem=currentSem.get(0);
         if(sem.getCurrentSem()==1){
             List<MonthlyPaymentReportDTO>  reports = paymentRepo.getMonthlyReport(EthiopianCalendar.ethiopianYear(),1);
             return Map.of(
