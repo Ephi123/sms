@@ -1,22 +1,18 @@
 package com.project1.sms.Service.imp;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.project1.sms.Service.AssessmentService;
 import com.project1.sms.apiException.ApiException;
 import com.project1.sms.model.Assessment;
 import com.project1.sms.model.CourseOffering;
 import com.project1.sms.model.Enrollment;
-import com.project1.sms.model.Grade;
+import com.project1.sms.model.AssessmentResult;
 import com.project1.sms.repository.AssessmentRepo;
 import com.project1.sms.repository.CourseOfferingRepo;
 import com.project1.sms.repository.EnrollRepo;
-import com.project1.sms.repository.GradeRepo;
+import com.project1.sms.repository.AssessmentResultRepo;
 import com.project1.sms.requestDTO.AssessmentRequest;
 import jakarta.transaction.Transactional;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -31,7 +27,7 @@ public class AssessmentImpl implements AssessmentService {
 private final CourseOfferingRepo offeringRepo;
 private final AssessmentRepo assessmentRepo;
 private final EnrollRepo enrollRepo;
-private final GradeRepo gradeRepo;
+private final AssessmentResultRepo assessmentResultRepo;
 
     @Override
     public Map<String, Object> createAssessment(AssessmentRequest request) {
@@ -49,11 +45,11 @@ private final GradeRepo gradeRepo;
 
 Assessment  newAssessment = assessmentRepo.save(new Assessment(offering,request.getTitle(),request.getWeight()));
 List<Enrollment> enrollments =enrollRepo.findByCourseOffering(offering);
-List<Grade> grades = new ArrayList<>();
+List<AssessmentResult> assessmentResults = new ArrayList<>();
 for(Enrollment enrollment:enrollments){
-    grades.add(new Grade(enrollment.getStudent(),newAssessment,0));
+    assessmentResults.add(new AssessmentResult(enrollment.getStudent(),newAssessment,0));
 }
-gradeRepo.saveAll(grades);
+assessmentResultRepo.saveAll(assessmentResults);
 
         return Map.of();
 

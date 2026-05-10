@@ -13,14 +13,18 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
-public class Grade extends Auditable {
+public class AssessmentResult extends Auditable {
 
-    private String Grade;
     @ManyToOne
     @JoinColumn(name = "student_id")
-  private  Student student;
+    private Student student;
+
     @ManyToOne
-    @JoinColumn(name = "course_offering_id")
-    private CourseOffering offering;
+    @JoinColumn(name = "assessment_id")
+    private Assessment assessment;
+
+    private Integer marksObtained;
+
+
 
 }
