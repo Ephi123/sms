@@ -13,9 +13,13 @@ import lombok.*;
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class Course extends Auditable {
+
+    @Column(nullable = false)
    private String courseName;
    @Column(unique = true,nullable = false)
    private String courseCode;
+
+    @Column(nullable = false)
    private Integer creditHour;
 
    @ManyToOne
