@@ -1,3 +1,10 @@
+app:
+  jwt:
+    issuer: sms-api
+    expiration-minutes: 60
+    # Use an environment-specific 256-bit or stronger secret in production.
+    secret: ${JWT_SECRET:change-this-demo-secret-to-a-very-long-random-production-secret}
+
 spring:
   profiles:
     active: ${ACTIVE_PROFILE:dev}

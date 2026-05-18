@@ -5,6 +5,7 @@ import com.project1.sms.dto.CourseGradeDto;
 import com.project1.sms.dto.SemesterResultDto;
 import com.project1.sms.model.Course;
 import com.project1.sms.model.Grade;
+import com.project1.sms.model.Result;
 import com.project1.sms.model.Student;
 import com.project1.sms.repository.GradeRepo;
 import com.project1.sms.repository.ResultRepo;
@@ -84,7 +85,32 @@ public class ResultImpl implements ResultService {
 
     @Override
     public SemesterResultDto recalculateAndSaveSemesterResult(String studentId, Integer academicYear, Integer semester) {
-        return null;
+        Student student = findStudent(studentId);
+        List<Grade> semesterGrades = gradeRepository.findSemesterGrades(student, academicYear, semester);
+        List<Grade> cumulativeGrades = gradeRepository.findGradesThroughSemester(student, academicYear, semester);
+        SemesterResultDto calculatedResult = buildSemesterResult(
+                student,
+                academicYear,
+                semester,
+                semesterGrades,
+                cumulativeGrades
+        );
+
+        Result result = resultRepository
+                .findByStudentAndAcademicYearAndSemester(student, academicYear, semester)
+                .orElseGet(Result::new);
+        result.setStudent(student);
+        result.setAcademicYear(academicYear);
+        result.setSemester(semester);
+        result.setGpa(calculatedResult.gpa());
+        result.setCgpa(calculatedResult.cgpa());
+        result.setSemesterCreditHours(calculatedResult.semesterCreditHours());
+        result.setCumulativeCreditHours(calculatedResult.cumulativeCreditHours());
+        resultRepository.save(result);
+
+        return calculatedResult;
+
+
     }
 
 

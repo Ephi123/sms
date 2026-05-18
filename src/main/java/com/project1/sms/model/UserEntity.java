@@ -3,10 +3,7 @@ package com.project1.sms.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.project1.sms.enumeration.Active;
 import com.project1.sms.enumeration.Role;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
@@ -41,7 +38,9 @@ public class UserEntity extends Auditable {
     @NotNull
     @Column(unique = true, nullable = false)
     private String password;
-
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Role role;
     private Active isActive;
 
