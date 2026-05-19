@@ -1,18 +1,17 @@
 package com.project1.sms.requestDTO;
 
 import com.project1.sms.enumeration.Role;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
+
+import java.util.Set;
 
 public record RegisterRequest(
-        @NotBlank String userName,
-        @NotBlank @Size(min = 8, message = "Password must contain at least 8 characters") String password,
         @NotBlank String firstName,
+        @NotBlank String fatherName,
         @NotBlank String lastName,
-        @Email String email,
-        @NotNull Role role
+        @NotEmpty(message = "At least one role is required")
+        Set<Role> roles
 ) {
+
 }
 

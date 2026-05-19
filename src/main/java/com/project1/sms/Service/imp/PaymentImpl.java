@@ -34,7 +34,7 @@ public class PaymentImpl implements PaymentService {
                 orElseThrow(()-> new ApiException("Student Not Found"));
 
     Enrollment enrollment =enrollRepo.getEnrolledStudent(
-                2018,
+                EthiopianCalendar.ethiopianYear(),
                 student.getCurrentSem(),
                 student.getDepartment().getDepName(),
                 student.getCurrentYear(),
