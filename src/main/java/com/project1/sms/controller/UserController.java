@@ -2,7 +2,7 @@ package com.project1.sms.controller;
 
 import java.util.List;
 
-import com.project1.sms.Service.imp.UserService;
+import com.project1.sms.Service.imp.UserServiceImpl;
 import com.project1.sms.responseDto.UserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
 public class UserController {
-    private final UserService userService;
+    private final UserServiceImpl userService;
 
     @GetMapping("/me")
     @PreAuthorize("isAuthenticated()")

@@ -3,23 +3,26 @@ package com.project1.sms.responseDto;
 import com.project1.sms.enumeration.Role;
 import com.project1.sms.model.UserEntity;
 
+import java.util.Set;
+
 public record UserResponse(
-        Long id,
+
         String userName,
         String firstName,
+        String midlName,
         String lastName,
-        String email,
-        Role role
+        String password,
+        Set<Role> roles
 ) {
 
     public static UserResponse from(UserEntity user) {
         return new UserResponse(
-                user.getId(),
                 user.getUserName(),
                 user.getFirstName(),
+                user.getMidlName(),
                 user.getLastName(),
-                user.getEmail(),
-                user.getRole()
+                user.getPassword(),
+                user.getRoles()
         );
     }
 }

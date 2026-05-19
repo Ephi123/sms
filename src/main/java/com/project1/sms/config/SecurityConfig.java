@@ -3,6 +3,9 @@ package com.project1.sms.config;
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
 import com.project1.sms.security.CustomUserDetailsService;
 import java.nio.charset.StandardCharsets;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import lombok.RequiredArgsConstructor;
@@ -32,9 +35,6 @@ import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.web.SecurityFilterChain;
 
-import java.util.Collection;
-import java.util.List;
-
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -58,7 +58,6 @@ public class SecurityConfig {
                 .build();
     }
 
-
     @Bean
     public JwtAuthenticationConverter jwtAuthenticationConverter() {
         JwtAuthenticationConverter converter = new JwtAuthenticationConverter();
@@ -67,20 +66,22 @@ public class SecurityConfig {
     }
 
     private Collection<GrantedAuthority> extractAuthorities(Jwt jwt) {
-        String role = jwt.getClaimAsString("role");
-        if (role == null || role.isBlank()) {
+        List<String> roles = jwt.getClaimAsStringList("roles");
+        if (roles == null || roles.isEmpty()) {
             return List.of();
         }
-        return List.of(new SimpleGrantedAuthority("ROLE_" + role));
+
+        return roles.stream()
+                .filter(role -> role != null && !role.isBlank())
+                .map(role -> role.startsWith("ROLE_") ? role : "ROLE_" + role)
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toUnmodifiableSet());
     }
 
     @Bean
     public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider provider =
-                new DaoAuthenticationProvider(userDetailsService);
-
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider(userDetailsService);
         provider.setPasswordEncoder(passwordEncoder());
-
         return provider;
     }
 
@@ -102,7 +103,7 @@ public class SecurityConfig {
     @Bean
     public JwtDecoder jwtDecoder(@Value("${app.jwt.secret}") String secret) {
         return NimbusJwtDecoder.withSecretKey(jwtSecretKey(secret))
-                .macAlgorithm(MacAlgorithm  .HS256)
+                .macAlgorithm(MacAlgorithm.HS256)
                 .build();
     }
 
