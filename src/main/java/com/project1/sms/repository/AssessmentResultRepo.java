@@ -34,6 +34,5 @@ public interface AssessmentResultRepo extends JpaRepository<AssessmentResult,Lon
             "FROM AssessmentResult ar " +
             "WHERE ar.assessment.courseOffering.id = :id AND " +
             "g.student.userId = :stdId")
-    AssessmentResultDetailDTO findStudentGradeDetails(@Param("id") Long offeringId, @Param("stdId") String stdId);
 
 }

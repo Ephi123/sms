@@ -1,13 +1,8 @@
 package com.project1.sms.Service.imp;
 
-import com.project1.sms.ResponseDto.AssessmentResultResponse;
 import com.project1.sms.Service.AssessmentResultService;
 import com.project1.sms.apiException.ApiException;
 import com.project1.sms.dto.AssessmentResultDetailDTO;
-import com.project1.sms.model.CourseOffering;
-import com.project1.sms.model.AssessmentResult;
-import com.project1.sms.model.Grade;
-import com.project1.sms.model.Student;
 import com.project1.sms.repository.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -27,8 +22,6 @@ public class AssessmentResultImpl implements AssessmentResultService {
 
     //student
     @Override
-    public Map<String, Object> getStudentAssessmentResult(Long offeringId) {
-        return null;
 
     }
 
@@ -70,7 +63,6 @@ public class AssessmentResultImpl implements AssessmentResultService {
 
         // Apply grading logic as seen in table.jpg (e.g., 89 -> A, 51 -> C)
     tableMap.values().forEach(resultResponse -> {
-       Grade grade = calculateLetterGrade(resultResponse,student,offering);
        resultResponse.setGrade(grade.getGrade());
        resultResponse.setGradeId(grade.getId());
 
@@ -100,38 +92,27 @@ public class AssessmentResultImpl implements AssessmentResultService {
                return grade;
         int total = result.getTotal();
         if(total >= 95){
-            return gradeRepo.save(new Grade("A+",student,courseOffering));
         }
         else if(total >= 85){
-            return gradeRepo.save(new Grade("A",student,courseOffering));
         }
         else if(total >= 80){
-            return gradeRepo.save(new Grade("A-",student,courseOffering));
         }
         else if(total >= 75){
-            return gradeRepo.save(new Grade("B+",student,courseOffering));
         }
         else if(total >= 70){
-            return gradeRepo.save(new Grade("B",student,courseOffering));
         }
         else if(total >= 65){
-            return gradeRepo.save(new Grade("B-",student,courseOffering));
         }
         else if(total >= 60){
-            return gradeRepo.save(new Grade("C+",student,courseOffering));
         }
         else if(total >= 50){
-            return gradeRepo.save(new Grade("C",student,courseOffering));
         }
        else if(total >= 45){
-            return gradeRepo.save(new Grade("C-",student,courseOffering));
         }
 
         else if(total >= 40){
-            return gradeRepo.save(new Grade("D",student,courseOffering));
         }
         else{
-            return gradeRepo.save(new Grade("F",student,courseOffering));
         }
 
 

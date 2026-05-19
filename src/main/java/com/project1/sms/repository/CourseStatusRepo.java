@@ -10,6 +10,5 @@ import java.util.Optional;
 @Repository
 public interface CourseStatusRepo extends JpaRepository<CourseStaus,Long> {
 
-    Optional<CourseStaus> findByOffering(CourseOffering offering);
 
 }
