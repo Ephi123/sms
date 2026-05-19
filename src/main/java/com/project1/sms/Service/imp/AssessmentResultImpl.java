@@ -1,8 +1,7 @@
 package com.project1.sms.Service.imp;
 
-import com.project1.sms.ResponseDto.AssessmentResultResponse;
+import com.project1.sms.responseDto.AssessmentResultResponse;
 import com.project1.sms.Service.AssessmentResultService;
-import com.project1.sms.Service.AssessmentService;
 import com.project1.sms.apiException.ApiException;
 import com.project1.sms.dto.AssessmentResultDetailDTO;
 import com.project1.sms.model.*;

@@ -1,10 +1,8 @@
 package com.project1.sms.Service;
 
-import com.project1.sms.ResponseDto.AssessmentResultResponse;
-import com.project1.sms.model.Grade;
+import com.project1.sms.responseDto.AssessmentResultResponse;
 
 import java.util.List;
-import java.util.Map;
 
 public interface AssessmentResultService {
     AssessmentResultResponse getStudentAssessmentResult(Long offeringId);

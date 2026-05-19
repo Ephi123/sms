@@ -1,4 +1,4 @@
-package com.project1.sms.ResponseDto;
+package com.project1.sms.responseDto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;

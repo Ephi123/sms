@@ -15,6 +15,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
+@Builder
 public class UserEntity extends Auditable {
     @NotNull
     @Column(unique = true, nullable = false)
@@ -43,5 +44,6 @@ public class UserEntity extends Auditable {
     @Column(nullable = false)
     private Role role;
     private Active isActive;
+
 
 }
