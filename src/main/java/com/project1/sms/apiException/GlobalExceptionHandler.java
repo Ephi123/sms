@@ -1,44 +1,40 @@
 package com.project1.sms.apiException;
 
-
-import java.time.Instant;
-import java.util.Map;
+import com.project1.sms.response.GlobalResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<Map<String, Object>> handleIllegalArgument(IllegalArgumentException exception) {
-        return error(HttpStatus.BAD_REQUEST, exception.getMessage());
+    public ResponseEntity<GlobalResponse<Void>> handleIllegalArgument(IllegalArgumentException exception) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(GlobalResponse.failure(HttpStatus.BAD_REQUEST, exception.getMessage()));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, Object>> handleValidation(MethodArgumentNotValidException exception) {
-        String message = exception.getBindingResult().getFieldErrors().stream()
-                .findFirst()
-                .map(error -> error.getField() + ": " + error.getDefaultMessage())
-                .orElse("Validation failed");
-        return error(HttpStatus.BAD_REQUEST, message);
+    public ResponseEntity<GlobalResponse<Void>> handleValidation(MethodArgumentNotValidException exception) {
+        Map<String, String> fieldErrors = new LinkedHashMap<>();
+        exception.getBindingResult().getFieldErrors()
+                .forEach(error -> fieldErrors.put(error.getField(), error.getDefaultMessage()));
+
+        return ResponseEntity
+                .badRequest()
+                .body(GlobalResponse.validationFailure("Validation failed", fieldErrors));
     }
 
-
-    @ExceptionHandler(ApiException.class)
-    public ResponseEntity<Map<String, Object>> myException(ApiException exception) {
-        return error(HttpStatus.BAD_REQUEST, exception.getMessage());
-    }
-
-
-    private ResponseEntity<Map<String, Object>> error(HttpStatus status, String message) {
-        return ResponseEntity.status(status).body(Map.of(
-                "timestamp", Instant.now(),
-                "status", status.value(),
-                "error", status.getReasonPhrase(),
-                "message", message
-        ));
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<GlobalResponse<Void>> handleUnhandled(Exception exception) {
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(GlobalResponse.failure(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected server error"));
     }
 }

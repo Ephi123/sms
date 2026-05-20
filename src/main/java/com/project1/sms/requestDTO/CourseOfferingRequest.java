@@ -15,7 +15,6 @@ public class CourseOfferingRequest {
     private String department;
     private ProgramEnum program;
     private Integer year;
-    private Integer semester;
     private Long sectionId;
 
 }

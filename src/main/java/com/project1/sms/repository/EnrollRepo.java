@@ -47,6 +47,7 @@ public interface EnrollRepo extends JpaRepository<Enrollment,Long> {
     Optional<Enrollment> getEnrolledStudent(@Param("year") Integer year, @Param("sem") Integer sem, @Param("dept") String department, @Param("year") Integer studyYear, @Param("pName") ProgramEnum program, @Param("sec") Integer section, @Param("stdId") String studentId);
 
     List<Enrollment> findByCourseOffering(CourseOffering offering);
+     boolean existByStudentUserUserId(String userId);
 
 
 }

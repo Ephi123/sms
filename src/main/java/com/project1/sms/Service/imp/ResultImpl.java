@@ -126,7 +126,7 @@ public class ResultImpl implements ResultService {
 
 
         return new SemesterResultDto(
-                student.getUserId(),
+                student.getUser().getUserId(),
                 academicYear,
                 semester,
                 calculateGpa(semesterGrades),

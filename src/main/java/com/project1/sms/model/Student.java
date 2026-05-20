@@ -14,7 +14,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
-public class Student extends UserEntity {
+public class Student extends Auditable {
     @JsonBackReference
     @ManyToOne()
     @JoinColumn(name = "department_id")

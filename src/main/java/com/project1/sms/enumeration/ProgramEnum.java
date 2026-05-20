@@ -9,7 +9,8 @@ public enum ProgramEnum {
     NIGHT("Night");
     private final String label;
 
-    ProgramEnum(String label){
+    ProgramEnum(String label)
+    {
         this.label = label;
     }
 

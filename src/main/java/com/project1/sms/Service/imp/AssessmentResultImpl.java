@@ -205,7 +205,7 @@ public class AssessmentResultImpl implements AssessmentResultService {
         resultResponse.setName(results.get(0).getStudent().getUser().getFirstName()+" "+
                 results.get(0).getStudent().getUser().getMidlName()
         );
-        resultResponse.setStudentId(results.get(0).getStudent().getUserId());
+        resultResponse.setStudentId(results.get(0).getStudent().getUser().getUserId());
         Grade grade =calculateLetterGrade(resultResponse,student,offering);
         resultResponse.setGrade(grade.getGrade());
         resultResponse.setGradeId(grade.getId());

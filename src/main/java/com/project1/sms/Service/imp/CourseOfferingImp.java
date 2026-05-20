@@ -21,6 +21,7 @@ public class CourseOfferingImp implements CourseOfferingService {
     private final CourseRepo courseRepo;
     private final ProgramRepo programRepo;
     private final AssessmentRepo assessmentRepo;
+    private final CurrentSemRepo semRepo;
 
     @Override
     public Map<String, Object> createCourseOffering(CourseOfferingRequest request) {
@@ -28,12 +29,13 @@ public class CourseOfferingImp implements CourseOfferingService {
         Section section = sectionRepo.findById(request.getSectionId()).orElseThrow(() -> new ApiException("section os not found"));
         Course course = courseRepo.findByCourseCode(request.getCourseCode()).orElseThrow(() -> new ApiException("Course not Found"));
         Program program = programRepo.findByName(request.getProgram()).orElseThrow(() -> new ApiException("program is not found"));
+        int sem = semRepo.findAll().get(0).getCurrentSem();
         CourseOffering offering =offeringRepo.save(new CourseOffering(
                 course,
                 department,
                 program,
                 request.getYear(),
-                request.getSemester(),
+                sem,
                 section,
                 EthiopianCalendar.ethiopianYear()
                 ));

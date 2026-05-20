@@ -46,7 +46,7 @@ public class PaymentImpl implements PaymentService {
     if(enrollment != null){
             Payment payment = paymentRepo.findByStudentAndSemAndAcademicYear(student,student.getCurrentSem(),2018).orElseThrow(() -> new ApiException("student not paid"));
 
-        return Map.ofEntries( Map.entry("fullName", enrollment.getStudent().getFirstName()+enrollment.getStudent().getMidlName()),
+        return Map.ofEntries( Map.entry("fullName", enrollment.getStudent().getUser().getFirstName()+enrollment.getStudent().getUser().getMidlName()),
                Map.entry( "department",enrollment.getStudent().getDepartment().getDepName()),
               Map.entry(  "Year",enrollment.getStudent().getCurrentYear().toString()),
                 Map.entry("program",enrollment.getCourseOffering().getProgram().getName().getLabel()),
@@ -66,7 +66,7 @@ public class PaymentImpl implements PaymentService {
 
 
 
-        return Map.ofEntries( Map.entry("fullName", student.getFirstName()+ " " + student.getMidlName()),
+        return Map.ofEntries( Map.entry("fullName", student.getUser().getFirstName()+ " " + student.getUser().getMidlName()),
                 Map.entry("department",student.getDepartment().getDepName()),
               Map.entry(  "Year",student.getCurrentYear().toString()),
                Map.entry( "program",student.getProgram().getName().getLabel()),
@@ -84,30 +84,46 @@ public class PaymentImpl implements PaymentService {
 
     @Override
     public Map<String, Object> makeFirstMonthFeeAndEnrollment(String studentId) {
+
+         boolean isStudentEnrol = enrollRepo.existByStudentUserUserId(studentId);
         Student student = studentRepo.findByUserUserId(studentId).
                 orElseThrow(() -> new ApiException("student is not found"));
-        List<CourseOffering> offerings =courseOfferingRepo.findByAcademicYearAndStudyYearAndSemAndSectionAndProgramAndDepartment(
+        int sem = student.getCurrentSem();
+        int year = student.getCurrentYear();
+        String program = student.getProgram().getName().getLabel();
+        int currentSem = currentSemRepo.findAll().get(0).getCurrentSem();
+           if(isStudentEnrol && currentSem==1){
+               student.setCurrentYear(student.getCurrentYear()+1);
+               student.setCurrentSem(currentSem);
+
+           } else if (currentSem>1) {
+               student.setCurrentSem(currentSem);
+
+           }
+         Student std =studentRepo.save(student);
+
+        List<CourseOffering> offerings = courseOfferingRepo.findByAcademicYearAndStudyYearAndSemAndSectionAndProgramAndDepartment(
                 EthiopianCalendar.ethiopianYear(),
-                student.getCurrentYear(),
-                student.getCurrentSem(),
-                student.getSection(),
-                student.getProgram(),
-                student.getDepartment()
+                std.getCurrentYear(),
+                std.getCurrentSem(),
+                std.getSection(),
+                std.getProgram(),
+                std.getDepartment()
         );
         if(offerings == null)
             throw new ApiException("course not found");
         offerings.forEach(courseOffering -> {
             Enrollment enrollment = new Enrollment();
-            enrollment.setStudent(student);
+            enrollment.setStudent(std);
             enrollment.setCourseOffering(courseOffering);
              enrollRepo.save(enrollment);
             assessmentRepo.findByCourseOffering(courseOffering).forEach(assessment ->{
-                assessmentResultRepo.save(new AssessmentResult(student,assessment,null));
+                assessmentResultRepo.save(new AssessmentResult(std,assessment,null));
 
                     }
 
                     );
-            gradeRepo.save(new Grade(null,student,courseOffering));
+            gradeRepo.save(new Grade(null,std,courseOffering));
 
 
 
@@ -115,9 +131,9 @@ public class PaymentImpl implements PaymentService {
 
         PaymentScall scall = paymentScallRepo.findByDepartment(student.getDepartment()).orElseThrow(() -> new ApiException("scall not found"));
         Payment payment = new Payment();
-        payment.setPayment(calculateMonthPayment(student)+scall.getRegistrationFee());
+        payment.setPayment(calculateMonthPayment(std)+scall.getRegistrationFee());
         payment.setMonth(1);
-        payment.setStudent(student);
+        payment.setStudent(std);
         payment.setAcademicYear(EthiopianCalendar.ethiopianYear());
         payment.setSem(student.getCurrentSem());
 

@@ -6,7 +6,9 @@ import lombok.Getter;
 public enum StudentStatus {
     ACTIVE("Active"),
     GRADUATED("Graduated"),
-    SUSPENDED("Suspended");
+    SUSPENDED("Suspended"),
+    UNENROLL( "Unenroll");
+
 
      private final String label;
 
