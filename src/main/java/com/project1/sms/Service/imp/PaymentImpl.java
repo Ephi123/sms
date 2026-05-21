@@ -8,6 +8,7 @@ import com.project1.sms.model.*;
 import com.project1.sms.repository.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,10 +33,13 @@ public class PaymentImpl implements PaymentService {
 
         Student  student = studentRepo.findByUserUserId(userId).
                 orElseThrow(()-> new ApiException("Student Not Found"));
+        List<CurrentSem> currentSem =currentSemRepo.findAll();
+        if(currentSem.get(0)==null)
+            throw new ApiException("current sem not created");
 
     Enrollment enrollment =enrollRepo.getEnrolledStudent(
                 EthiopianCalendar.ethiopianYear(),
-                student.getCurrentSem(),
+                currentSem.get(0).getCurrentSem(),
                 student.getDepartment().getDepName(),
                 student.getCurrentYear(),
                 student.getProgram().getName(),
@@ -85,7 +89,7 @@ public class PaymentImpl implements PaymentService {
     @Override
     public Map<String, Object> makeFirstMonthFeeAndEnrollment(String studentId) {
 
-         boolean isStudentEnrol = enrollRepo.existByStudentUserUserId(studentId);
+         boolean isStudentEnrol = enrollRepo.existsByStudentUserUserId(studentId);
         Student student = studentRepo.findByUserUserId(studentId).
                 orElseThrow(() -> new ApiException("student is not found"));
         int sem = student.getCurrentSem();

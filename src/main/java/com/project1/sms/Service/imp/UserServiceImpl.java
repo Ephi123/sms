@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.project1.sms.requestDTO.RegisterRequest;
 import com.project1.sms.responseDto.UserResponse;
+import com.project1.sms.utillity.UserUtility;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -36,7 +37,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public UserResponse createUser(RegisterRequest request) {
-       StringBuilder specialName = new StringBuilder(request.firstName() + request.firstName());
+       StringBuilder specialName = new StringBuilder(request.firstName() + request.fatherName());
         String userName = specialName+"@zion.edu";
         boolean isUsernameExist = userRepo.existsByUserName(userName);
         int n = 1;
@@ -46,15 +47,8 @@ public class UserServiceImpl implements UserService {
             isUsernameExist = userRepo.existsByUserName(userName);
             n++;
            }
-        UserEntity userEntity = UserEntity.builder().
-                userId("Emp_"+specialName)
-                .userName(userName)
-                .firstName(request.firstName())
-                .lastName(request.lastName())
-                .midlName(request.fatherName())
-                .password("default_"+request.firstName())
-                .roles(request.roles())
-                .build();
+        UserEntity userEntity =UserUtility.createUser(request,userRepo,userName,"Emp_"+specialName.toString());
+
         UserEntity savedEntity = userRepo.save(userEntity);
 
         return UserResponse.from(userEntity);

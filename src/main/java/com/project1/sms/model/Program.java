@@ -20,8 +20,6 @@ import java.util.List;
 public class Program extends Auditable {
     @Column(nullable = false)
     @Convert(converter = ProgramConverter.class)
-
-    @Convert(converter = ProgramConverter.class)
     private ProgramEnum name;
     @Column(nullable = false)
     private Integer semesterPerYear;

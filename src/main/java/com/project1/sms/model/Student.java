@@ -14,6 +14,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
+@Builder
 public class Student extends Auditable {
     @JsonBackReference
     @ManyToOne()

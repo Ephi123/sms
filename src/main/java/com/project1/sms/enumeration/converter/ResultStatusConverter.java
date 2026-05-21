@@ -7,7 +7,7 @@ import jakarta.persistence.Converter;
 
 import java.util.stream.Stream;
 
-@Converter
+@Converter(autoApply = false)
 public class ResultStatusConverter implements AttributeConverter<ResultStatus,String> {
     @Override
     public String convertToDatabaseColumn(ResultStatus resultStatus) {
