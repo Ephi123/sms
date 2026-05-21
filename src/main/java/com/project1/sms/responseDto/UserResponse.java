@@ -2,6 +2,8 @@ package com.project1.sms.responseDto;
 
 import com.project1.sms.enumeration.Role;
 import com.project1.sms.model.UserEntity;
+import lombok.Builder;
+import lombok.Data;
 
 import java.util.Set;
 
@@ -24,5 +26,12 @@ public record UserResponse(
                 user.getPassword(),
                 user.getRoles()
         );
+    }
+
+    @Builder
+    @Data
+    public static class NewStudentResponse {
+
+
     }
 }

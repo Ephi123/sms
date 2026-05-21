@@ -13,4 +13,5 @@ public interface ResultService {
     BigDecimal calculateCgpa(String studentId);
 
     SemesterResultDto recalculateAndSaveSemesterResult(String studentId, Integer academicYear, Integer semester);
+
 }
