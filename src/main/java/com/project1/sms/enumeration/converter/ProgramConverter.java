@@ -1,9 +1,11 @@
 package com.project1.sms.enumeration.converter;
 import com.project1.sms.enumeration.ProgramEnum;
 import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter;
 
 import java.util.stream.Stream;
 
+@Converter(autoApply = false)
 public class ProgramConverter implements AttributeConverter<ProgramEnum,String> {
     @Override
     public String convertToDatabaseColumn(ProgramEnum program) {

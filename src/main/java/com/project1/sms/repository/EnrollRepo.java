@@ -3,6 +3,7 @@ package com.project1.sms.repository;
 import com.project1.sms.enumeration.ProgramEnum;
 import com.project1.sms.model.CourseOffering;
 import com.project1.sms.model.Enrollment;
+import com.project1.sms.model.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -43,10 +44,14 @@ public interface EnrollRepo extends JpaRepository<Enrollment,Long> {
     @Query("SELECT e FROM Enrollment e WHERE e.courseOffering.academicYear = :year " +
             "AND e.courseOffering.sem = :sem AND e.courseOffering.department.depName = :dept "+
             "AND e.courseOffering.studyYear = :year AND e.courseOffering.program.name = :pName AND "+
-            "e.courseOffering.section = :sec AND e.student.user.userId = :stdId")
+            "e.courseOffering.section.section = :sec AND e.student.user.userId = :stdId")
     Optional<Enrollment> getEnrolledStudent(@Param("year") Integer year, @Param("sem") Integer sem, @Param("dept") String department, @Param("year") Integer studyYear, @Param("pName") ProgramEnum program, @Param("sec") Integer section, @Param("stdId") String studentId);
 
     List<Enrollment> findByCourseOffering(CourseOffering offering);
+     boolean existsByStudentUserUserId(String userId);
+   boolean existsByCourseOfferingAcademicYearAndCourseOfferingSemAndStudent(int year, int sem, Student student);
+
+
 
 
 }

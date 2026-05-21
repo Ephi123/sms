@@ -3,6 +3,8 @@ package com.project1.sms.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.project1.sms.enumeration.Active;
 import com.project1.sms.enumeration.Role;
+import com.project1.sms.enumeration.converter.ActiveConverter;
+import com.project1.sms.enumeration.converter.ProgramConverter;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -51,6 +53,7 @@ public class UserEntity extends Auditable {
     @Column(name = "roles", nullable = false, length = 512)
     private Set<Role> roles = EnumSet.noneOf(Role.class);
 
+    @Convert(converter = ActiveConverter.class)
     private Active isActive;
 
 

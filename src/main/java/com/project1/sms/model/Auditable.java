@@ -37,16 +37,17 @@ public abstract class  Auditable {
     private Long createdBy;
 
     @LastModifiedBy
-    @Column(nullable = false)
-    private Long updatedBy;@NotNull
+    @Column(nullable = true)
+    private Long updatedBy;
 
+    @NotNull
     @CreatedDate
     @Column(name = "created_at",nullable = false)
     private LocalDateTime createdAt;
     @NotNull
     @LastModifiedDate
     @Column(name = "update_at",nullable = false)
-    private LocalDateTime updateAt;
+    private LocalDateTime updatedAt;
 
 //    @PrePersist
 //    public void beforePersist(Authentication authentication){

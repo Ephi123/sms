@@ -20,4 +20,5 @@ public class Enrollment extends Auditable{
     @ManyToOne
     @JoinColumn(name = "course_offering_id")
     private CourseOffering courseOffering;
+
 }

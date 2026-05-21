@@ -3,9 +3,11 @@ package com.project1.sms.enumeration.converter;
 import com.project1.sms.enumeration.ResultStatus;
 import com.project1.sms.enumeration.StudentStatus;
 import jakarta.persistence.AttributeConverter;
+import jakarta.persistence.Converter;
 
 import java.util.stream.Stream;
 
+@Converter(autoApply = false)
 public class ResultStatusConverter implements AttributeConverter<ResultStatus,String> {
     @Override
     public String convertToDatabaseColumn(ResultStatus resultStatus) {
