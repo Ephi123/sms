@@ -1,8 +1,10 @@
 package com.project1.sms.Service.imp;
 
+import com.project1.sms.responseDto.AssessmentResultResponse;
 import com.project1.sms.Service.AssessmentResultService;
 import com.project1.sms.apiException.ApiException;
 import com.project1.sms.dto.AssessmentResultDetailDTO;
+import com.project1.sms.model.*;
 import com.project1.sms.repository.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -19,9 +21,43 @@ public class AssessmentResultImpl implements AssessmentResultService {
     private final StudentRepo studentRepo;
     private final AssessmentRepo assessmentRepo;
     private final GradeRepo gradeRepo;
+    private final CourseStatusRepo statusRepo;
 
     //student
     @Override
+    public AssessmentResultResponse getStudentAssessmentResult(Long offeringId,String stdId) {
+        CourseOffering  offering=offeringRepo.findById(offeringId).orElseThrow(() -> new ApiException("offering not found"));
+        Student student = studentRepo.findByUserUserId(stdId).orElseThrow(() -> new ApiException("student is not found"));
+        List<AssessmentResultDetailDTO> results = assessmentResultRepo.findStudentGradeDetails(offeringId,stdId);
+
+        int total = 0;
+
+        AssessmentResultResponse resultResponse = new AssessmentResultResponse();
+        for(AssessmentResultDetailDTO result1:results){
+            total = result1.getMarksObtained() != null?result1.getMarksObtained()+total: total;
+            resultResponse.getMarks().put(result1.getAssessmentTitle(),result1.getMarksObtained());
+
+
+        }
+
+
+        resultResponse.setTotal(total);
+        resultResponse.setName(results.get(0).getStudentName());
+        resultResponse.setStudentId(results.get(0).getStudentId());
+
+        CourseStaus status = statusRepo.findByOfferingId(offeringId).
+                orElseThrow(() -> new ApiException("status not found"));
+
+        if(status.getStatus() == 0){
+            resultResponse.setGrade(null);
+        }
+        else{
+            Grade grade =gradeRepo.findByStudentAndOffering(student,offering);
+
+            resultResponse.setGrade(grade.getGrade());
+        }
+
+        return resultResponse;
 
     }
 
@@ -29,14 +65,14 @@ public class AssessmentResultImpl implements AssessmentResultService {
     @Override
     public AssessmentResultResponse updateResult(Long resultId, Integer mark) {
         AssessmentResult result =assessmentResultRepo.findById(resultId).orElseThrow(() -> new ApiException("result is not found"));
-           result.setMarksObtained(mark);
-            assessmentResultRepo.save(result);
+        result.setMarksObtained(mark);
+        assessmentResultRepo.save(result);
         Student student = result.getStudent();
         CourseOffering courseOffering = result.getAssessment().getCourseOffering();
-       return calculateAssessment(courseOffering,student);
+        return calculateAssessment(courseOffering,student);
     }
 
-     //Teacher department head and registrar
+    //Teacher department head and registrar
     @Override
     public List<AssessmentResultResponse> getGradeSheet(Long courseOfferingId) {
         List<AssessmentResultDetailDTO> rawData = assessmentResultRepo.findGradeDetails(courseOfferingId);
@@ -61,12 +97,22 @@ public class AssessmentResultImpl implements AssessmentResultService {
             row.setTotal(row.getTotal() + (detail.getMarksObtained() != null ? detail.getMarksObtained() : 0));
         }
 
-        // Apply grading logic as seen in table.jpg (e.g., 89 -> A, 51 -> C)
-    tableMap.values().forEach(resultResponse -> {
-       resultResponse.setGrade(grade.getGrade());
-       resultResponse.setGradeId(grade.getId());
 
-    });
+        // Apply grading logic as seen in table.jpg (e.g., 89 -> A, 51 -> C)
+        tableMap.values().forEach(resultResponse -> {
+
+            Student std = studentRepo
+                    .findByUserUserId(resultResponse.getStudentId())
+                    .orElseThrow(() -> new ApiException("student is not found"));
+
+            Grade grade = gradeRepo.findByStudentAndOffering(std, offering);
+
+            if (grade != null) {
+                resultResponse.setGrade(grade.getGrade());
+                resultResponse.setGradeId(grade.getId());
+            }
+
+        });
 
         return new ArrayList<>(tableMap.values());
 
@@ -87,32 +133,54 @@ public class AssessmentResultImpl implements AssessmentResultService {
     }
 
     private Grade calculateLetterGrade(AssessmentResultResponse result,Student student,CourseOffering courseOffering) {
-          Grade grade = gradeRepo.findByStudentAndOffering(student,courseOffering);
-          if(grade.getGrade().equalsIgnoreCase("NG") || grade.getGrade().equalsIgnoreCase("IC")  || grade.getGrade().equalsIgnoreCase("IA"))
-               return grade;
+        Grade grade = gradeRepo.findByStudentAndOffering(student,courseOffering);
+        if(grade.getGrade().equalsIgnoreCase("NG") || grade.getGrade().equalsIgnoreCase("IC")  || grade.getGrade().equalsIgnoreCase("IA"))
+            return grade;
         int total = result.getTotal();
         if(total >= 95){
+            grade.setGrade("A+");
+            return gradeRepo.save(grade);
         }
         else if(total >= 85){
+            grade.setGrade("A");
+            return gradeRepo.save(grade);
         }
         else if(total >= 80){
+            grade.setGrade("A-");
+            return gradeRepo.save(grade);
         }
         else if(total >= 75){
+            grade.setGrade("B+");
+            return gradeRepo.save(grade);
         }
         else if(total >= 70){
+            grade.setGrade("B");
+            return gradeRepo.save(grade);
         }
         else if(total >= 65){
+            grade.setGrade("B-");
+            return gradeRepo.save(grade);
         }
         else if(total >= 60){
+            grade.setGrade("C+");
+            return gradeRepo.save(grade);
         }
         else if(total >= 50){
+            grade.setGrade("C");
+            return gradeRepo.save(grade);
         }
-       else if(total >= 45){
+        else if(total >= 45){
+            grade.setGrade("C-");
+            return gradeRepo.save(grade);
         }
 
         else if(total >= 40){
+            grade.setGrade("D");
+            return gradeRepo.save(grade);
         }
         else{
+            grade.setGrade("F");
+            return gradeRepo.save(grade);
         }
 
 

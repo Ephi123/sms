@@ -35,4 +35,7 @@ public interface StudentRepo extends JpaRepository<Student,Long> {
     int countByDepartmentAndProgramAndSectionAndCurrentYear(Department department, Program program, Section section,int year);
 
 
+    List<Student> findByStudentStatus(StudentStatus studentStatus);
+
+
 }

@@ -4,6 +4,7 @@ import com.project1.sms.Service.PaymentService;
 import com.project1.sms.apiException.ApiException;
 import com.project1.sms.domain.EthiopianCalendar;
 import com.project1.sms.dto.MonthlyPaymentReportDTO;
+import com.project1.sms.enumeration.StudentStatus;
 import com.project1.sms.model.*;
 import com.project1.sms.repository.*;
 import jakarta.transaction.Transactional;
@@ -100,6 +101,10 @@ public class PaymentImpl implements PaymentService {
 
            } else if (isStudentEnrol && currentSem>1) {
                student.setCurrentSem(currentSem);
+               student = studentRepo.save(student);
+           }
+           if(!isStudentEnrol){
+               student.setStudentStatus(StudentStatus.ACTIVE);
                student = studentRepo.save(student);
            }
 
