@@ -22,12 +22,12 @@ public class AuthController {
 
     private final AuthService authService;
 
-    @PostMapping("/register")
-    @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("permitAll()")
-    public AuthResponse register(@Valid @RequestBody RegisterRequest request) {
-        return authService.register(request);
-    }
+//    @PostMapping("/register")
+//    @ResponseStatus(HttpStatus.CREATED)
+//    @PreAuthorize("permitAll()")
+//    public AuthResponse register(@Valid @RequestBody RegisterRequest request) {
+//        return authService.register(request);
+//    }
 
     @PostMapping("/login")
     @PreAuthorize("permitAll()")

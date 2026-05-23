@@ -1,6 +1,7 @@
 package com.project1.sms.Service.imp;
 
 import com.project1.sms.Service.PaymentService;
+import com.project1.sms.Service.ResultService;
 import com.project1.sms.apiException.ApiException;
 import com.project1.sms.domain.EthiopianCalendar;
 import com.project1.sms.dto.MonthlyPaymentReportDTO;
@@ -28,6 +29,7 @@ public class PaymentImpl implements PaymentService {
     private final AssessmentRepo assessmentRepo;
     private final AssessmentResultRepo assessmentResultRepo;
     private final GradeRepo gradeRepo;
+    private final ResultService resultService;
     @Override
     public Map<String, Object> getPaymentDetailOfStudent(String userId) {
 

@@ -18,13 +18,13 @@ public interface GradeRepo extends JpaRepository<Grade,Long> {
             join fetch g.offering offering
             join fetch offering.course course
             where g.student = :student
-              and offering.academicYear = :academicYear
+              and offering.studyYear = :studyYear
               and offering.semester = :semester
             order by course.courseCode
             """)
     List<Grade> findSemesterGrades(
             @Param("student") Student student,
-            @Param("academicYear") Integer academicYear,
+            @Param("studyYear") Integer studyYear,
             @Param("semester") Integer semester
     );
 
@@ -34,7 +34,7 @@ public interface GradeRepo extends JpaRepository<Grade,Long> {
             join fetch g.offering offering
             join fetch offering.course course
             where g.student = :student
-            order by offering.academicYear, offering.semester, course.courseCode
+            order by offering.studyYear, offering.semester, course.courseCode
             """)
     List<Grade> findAllGradesForStudent(@Param("student") Student student);
 
@@ -45,12 +45,12 @@ public interface GradeRepo extends JpaRepository<Grade,Long> {
             join fetch offering.course course
             where g.student = :student
               and (offering.academicYear < :academicYear
-                   or (offering.academicYear = :academicYear and offering.semester <= :semester))
-            order by offering.academicYear, offering.semester, course.courseCode
+                   or (offering.studyYear = :studyYear and offering.semester <= :semester))
+            order by offering.studyYear, offering.semester, course.courseCode
             """)
     List<Grade> findGradesThroughSemester(
             @Param("student") Student student,
-            @Param("academicYear") Integer academicYear,
+            @Param("studyYear") Integer studyYear,
             @Param("semester") Integer semester
     );
 

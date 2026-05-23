@@ -9,7 +9,6 @@ import com.project1.sms.repository.UserRepo;
 import com.project1.sms.requestDTO.RegisterRequest;
 import com.project1.sms.requestDTO.StudentRequest;
 import lombok.RequiredArgsConstructor;
-
 @RequiredArgsConstructor
 public class UserUtility {
 

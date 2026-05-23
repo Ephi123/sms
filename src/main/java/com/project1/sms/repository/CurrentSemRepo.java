@@ -11,4 +11,5 @@ import java.util.Optional;
 
 @Repository
 public interface CurrentSemRepo extends JpaRepository<CurrentSem,Long> {
+    Optional<CurrentSem> findTopByOrderByIdDesc();
 }

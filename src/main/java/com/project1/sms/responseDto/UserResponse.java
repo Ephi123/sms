@@ -28,10 +28,4 @@ public record UserResponse(
         );
     }
 
-    @Builder
-    @Data
-    public static class NewStudentResponse {
-
-
-    }
 }

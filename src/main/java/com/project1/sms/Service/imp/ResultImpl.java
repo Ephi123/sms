@@ -29,15 +29,16 @@ public class ResultImpl implements ResultService {
     private final GradeRepo gradeRepository;
     private final StudentRepo studentRepository;
     @Override
-    public SemesterResultDto calculateSemesterResult(String studentId, Integer academicYear, Integer semester) {
+    public SemesterResultDto calculateSemesterResult(String studentId, Integer studyYear, Integer semester) {
 
 
         Student student = findStudent(studentId);
-        List<Grade> semesterGrades = gradeRepository.findSemesterGrades(student, academicYear, semester);
-        List<Grade> cumulativeGrades = gradeRepository.findGradesThroughSemester(student, academicYear, semester);
+        List<Grade> semesterGrades = gradeRepository.findSemesterGrades(student, studyYear, semester);
+        List<Grade> cumulativeGrades = gradeRepository.findGradesThroughSemester(student, studyYear, semester);
 
-        return buildSemesterResult(student, academicYear, semester, semesterGrades, cumulativeGrades);
+        return buildSemesterResult(student, studyYear, semester, semesterGrades, cumulativeGrades);
     }
+
 
 
 
@@ -50,7 +51,7 @@ public class ResultImpl implements ResultService {
         return allGrades.stream()
                 .collect(Collectors.groupingBy(
                         grade -> new SemesterKey(
-                                grade.getOffering().getAcademicYear(),
+                                grade.getOffering().getStudyYear(),
                                 grade.getOffering().getSem()
                         ),
                         LinkedHashMap::new,
@@ -62,11 +63,11 @@ public class ResultImpl implements ResultService {
                 .map(entry -> {
                     SemesterKey key = entry.getKey();
                     List<Grade> cumulativeGrades = allGrades.stream()
-                            .filter(grade -> isSameOrBefore(grade, key.academicYear(), key.semester()))
+                            .filter(grade -> isSameOrBefore(grade, key.studyYear(), key.semester()))
                             .toList();
                     return buildSemesterResult(
                             student,
-                            key.academicYear(),
+                            key.studyYear(),
                             key.semester(),
                             entry.getValue(),
                             cumulativeGrades
@@ -228,11 +229,11 @@ public class ResultImpl implements ResultService {
     }
 
 
-    private record SemesterKey(Integer academicYear, Integer semester) implements Comparable<SemesterKey> {
+    private record SemesterKey(Integer studyYear, Integer semester) implements Comparable<SemesterKey> {
 
         @Override
         public int compareTo(SemesterKey other) {
-            int yearComparison = academicYear.compareTo(other.academicYear);
+            int yearComparison = studyYear.compareTo(other.studyYear);
             if (yearComparison != 0) {
                 return yearComparison;
             }

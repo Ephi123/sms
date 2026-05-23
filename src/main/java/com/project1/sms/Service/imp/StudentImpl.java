@@ -10,6 +10,7 @@ import com.project1.sms.model.*;
 import com.project1.sms.repository.*;
 import com.project1.sms.requestDTO.StudentRequest;
 import com.project1.sms.requestDTO.StudentsRequest;
+import com.project1.sms.responseDto.NewStudent;
 import com.project1.sms.utillity.UserUtility;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -100,7 +101,13 @@ public class StudentImpl implements StudentService {
     }
 
 
+    //finance officer get new student to have them enrolled
+    @Override
+    public List<NewStudent> getNewStudent() {
+       List<Student> students = studentRepo.findByStudentStatus(StudentStatus.UNENROLL);
 
+        return students.stream().map(NewStudent::from).toList();
+    }
 
 
 }

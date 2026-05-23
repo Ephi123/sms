@@ -43,6 +43,7 @@ public class AuthService {
 //        UserEntity savedUser = userRepo.save(user);
 //        return toAuthResponse(savedUser);
 //    }
+
    public AuthResponse  changePassword(LoginRequest request){
        UserEntity user =userRepo.findByUserName(request.userName()).orElseThrow(() -> new UsernameNotFoundException("user not found"));
                   String newPassword = request.password();
