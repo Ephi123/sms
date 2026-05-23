@@ -47,11 +47,11 @@ public class UserServiceImpl implements UserService {
             isUsernameExist = userRepo.existsByUserName(userName);
             n++;
            }
-        UserEntity userEntity =UserUtility.createUser(request,userRepo,userName,"Emp_"+specialName.toString());
+        UserEntity userEntity =UserUtility.createUser(request,userRepo,userName,"Emp_"+specialName);
 
         UserEntity savedEntity = userRepo.save(userEntity);
 
-        return UserResponse.from(userEntity);
+        return UserResponse.from(savedEntity);
 
 
 

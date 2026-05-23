@@ -1,25 +1,22 @@
 package com.project1.sms.model;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
-import lombok.NonNull;
+
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.security.core.Authentication;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import static java.time.LocalDateTime.now;
+
 
 @Getter
 @Setter
@@ -37,7 +34,6 @@ public abstract class  Auditable {
     private Long createdBy;
 
     @LastModifiedBy
-    @Column(nullable = true)
     private Long updatedBy;
 
     @NotNull

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class SemImpl implements SemsterService {
-    private CurrentSemRepo semRepo;
+    private final CurrentSemRepo semRepo;
     @Override
     public void updateSemster(Long id,int sem) {
         CurrentSem sem1 =semRepo.findById(id).orElseThrow(() -> new ApiException("sem is not found"));

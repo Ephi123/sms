@@ -7,8 +7,8 @@ import org.springframework.security.core.Authentication;
 import java.util.List;
 
 public interface UserService {
-    public UserResponse getCurrentUser(Authentication authentication);
+    UserResponse getCurrentUser(Authentication authentication);
 
-    public List<UserResponse> getAllUsers();
-    public UserResponse createUser(RegisterRequest request);
+     List<UserResponse> getAllUsers();
+     UserResponse createUser(RegisterRequest request);
 }

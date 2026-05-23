@@ -1,7 +1,6 @@
 package com.project1.sms.requestDTO;
 
 import com.project1.sms.enumeration.ProgramEnum;
-import com.project1.sms.model.Program;
 import jakarta.validation.constraints.NotBlank;
 
 public record StudentRequest (
