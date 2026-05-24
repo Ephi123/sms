@@ -1,5 +1,6 @@
 package com.project1.sms.repository;
 
+import com.project1.sms.enumeration.CourseStatus;
 import com.project1.sms.model.CourseAssignment;
 import com.project1.sms.model.CourseOffering;
 import com.project1.sms.model.Department;
@@ -26,4 +27,5 @@ public interface CourseAssignmentRepo extends JpaRepository<CourseAssignment,Lon
 
 
     Optional<CourseAssignment> findByCourseOfferingId(Long courseOfferingId);
+    List<CourseAssignment> findByCourseStatus(CourseStatus courseStatus);
 }

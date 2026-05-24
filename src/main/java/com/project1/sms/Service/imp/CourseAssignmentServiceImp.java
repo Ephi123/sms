@@ -7,6 +7,7 @@ import com.project1.sms.enumeration.CourseStatus;
 import com.project1.sms.model.*;
 import com.project1.sms.repository.*;
 import com.project1.sms.requestDTO.CourseOfferingResponse;
+import com.project1.sms.responseDto.SubmittedCourseResponse;
 import com.project1.sms.security.CurrentUserService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,6 @@ public class CourseAssignmentServiceImp implements CourseAssignmentService {
     private final CourseOfferingRepo offeringRepo;
     private final TeacherRepo  teacherRepo;
     private final CourseAssignmentRepo assignmentRepo;
-    private final CourseStatusRepo statusRepo;
     private final DepartmentRepo departmentRepo;
     private  final CurrentSemRepo semRepo;
     @Override
@@ -32,8 +32,6 @@ public class CourseAssignmentServiceImp implements CourseAssignmentService {
         Teacher teacher = teacherRepo.findByUserUserId(teacherId).orElseThrow(() -> new ApiException("teacher is ot found"));
 
         CourseAssignment assignment = assignmentRepo.save( new CourseAssignment(courseOffering,teacher, CourseStatus.NOT_SUBMITTED));
-            statusRepo.save(new CourseStaus(courseOffering,0));
-
         return Map.of();
     }
 
@@ -60,4 +58,13 @@ public class CourseAssignmentServiceImp implements CourseAssignmentService {
 
     }
 
+    @Override
+    public List<SubmittedCourseResponse> getSubmittedCourse() {
+       List<CourseAssignment> assignments = assignmentRepo.findByCourseStatus(CourseStatus.SUBMITTED);
+       return  assignments.stream().map(SubmittedCourseResponse::from).toList();
+
+
+
+
+}
 }
