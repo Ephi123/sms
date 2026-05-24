@@ -78,4 +78,12 @@ assessmentResultRepo.saveAll(assessmentResults);
 
         return Map.of("data",updatedAssessment);
     }
+
+    @Override
+    public void deleteAssessment(Long assessmentId) {
+        Assessment assessment = assessmentRepo.
+                findById(assessmentId).orElseThrow(() -> new ApiException("assessment not Found"));
+
+        assessmentRepo.delete(assessment);
+    }
 }

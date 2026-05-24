@@ -1,10 +1,8 @@
 package com.project1.sms.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
+import com.project1.sms.enumeration.CourseStatus;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -24,6 +22,8 @@ public class CourseAssignment extends Auditable{
  @ManyToOne
  @JoinColumn(name = "teacher_id")
  private Teacher teacher;
+ @Enumerated(EnumType.STRING)
+ private CourseStatus courseStatus;
 
 
 }

@@ -1,6 +1,9 @@
 package com.project1.sms.responseDto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.project1.sms.enumeration.CourseStatus;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.Data;
 
 import java.util.LinkedHashMap;
@@ -14,5 +17,7 @@ public class AssessmentResultResponse {
     private Integer total = 0;
     private String grade;
     private  Long gradeId;
+    @Enumerated(EnumType.STRING)
+    private CourseStatus courseStatus;
 
 }

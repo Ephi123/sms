@@ -3,17 +3,14 @@ package com.project1.sms.Service.imp;
 import com.project1.sms.Service.CourseAssignmentService;
 import com.project1.sms.apiException.ApiException;
 import com.project1.sms.domain.EthiopianCalendar;
+import com.project1.sms.enumeration.CourseStatus;
 import com.project1.sms.model.*;
 import com.project1.sms.repository.*;
 import com.project1.sms.requestDTO.CourseOfferingResponse;
 import com.project1.sms.security.CurrentUserService;
-import com.project1.sms.security.CustomUserDetailsService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Map;
 
@@ -34,7 +31,7 @@ public class CourseAssignmentServiceImp implements CourseAssignmentService {
         CourseOffering courseOffering = offeringRepo.findById(offeringId).orElseThrow(() -> new ApiException("course offering not found "));
         Teacher teacher = teacherRepo.findByUserUserId(teacherId).orElseThrow(() -> new ApiException("teacher is ot found"));
 
-        CourseAssignment assignment = assignmentRepo.save( new CourseAssignment(courseOffering,teacher));
+        CourseAssignment assignment = assignmentRepo.save( new CourseAssignment(courseOffering,teacher, CourseStatus.NOT_SUBMITTED));
             statusRepo.save(new CourseStaus(courseOffering,0));
 
         return Map.of();

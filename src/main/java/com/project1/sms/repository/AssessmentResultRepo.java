@@ -19,24 +19,34 @@ public interface AssessmentResultRepo extends JpaRepository<AssessmentResult,Lon
     List<AssessmentResult> findByAssessmentCourseOffering(CourseOffering offering);
 
 
-    @Query("SELECT new com.project1.sms.dto.AssessmentResultDetailDTO(" +
-            "g.student.userId,CONCAT (ar.student.firstName,' ',ar.student.midlName), " +
-            "ar.marksObtained,ar.id), " +
-            "CONCAT(ar.assessment.title,'(',ar.assessment.WeightPercent,'%)') "+
-            "FROM AssessmentResult ar " +
-            "WHERE ar.assessment.courseOffering.id = :id " +
-            "ORDER BY ar.student.studentId ASC")
+    @Query("""
+    SELECT new com.project1.sms.dto.AssessmentResultDetailDTO(
+        ar.student.user.userId,
+        CONCAT(ar.student.user.firstName, ' ', ar.student.user.midlName),
+        ar.marksObtained,
+        ar.id,
+        CONCAT(ar.assessment.title, '(', ar.assessment.weightPercent, '%)')
+    )
+    FROM AssessmentResult ar
+    WHERE ar.assessment.courseOffering.id = :id
+    ORDER BY ar.student.user.firstName ASC
+""")
     List<AssessmentResultDetailDTO> findGradeDetails(@Param("id") Long offeringId);
 
-    @Query("SELECT new com.project1.sms.dto.AssessmentResultDetailDTO(" +
-            "g.student.userId,CONCAT (ar.student.firstName,' ',ar.student.midlName), " +
-            "ar.marksObtained,ar.id), " +
-            "CONCAT(ar.assessment.title,'(',ar.assessment.WeightPercent,'%)') "+
-            "FROM AssessmentResult ar " +
-            "WHERE ar.assessment.courseOffering.id = :id AND " +
-            "g.student.userId = :stdId")
-
-        // One student assessment and assessment result
-    List<AssessmentResultDetailDTO> findStudentGradeDetails(@Param("id") Long offeringId, @Param("stdId") String stdId);
-
+    @Query("""
+    SELECT new com.project1.sms.dto.AssessmentResultDetailDTO(
+        ar.student.user.userId,
+        CONCAT(ar.student.user.firstName, ' ', ar.student.user.midlName),
+        ar.marksObtained,
+        ar.id,
+        CONCAT(ar.assessment.title, '(', ar.assessment.weightPercent, '%)')
+    )
+    FROM AssessmentResult ar
+    WHERE ar.assessment.courseOffering.id = :id
+      AND ar.student.user.userId = :stdId
+""")
+    List<AssessmentResultDetailDTO> findStudentGradeDetails(
+            @Param("id") Long offeringId,
+            @Param("stdId") String stdId
+    );
 }

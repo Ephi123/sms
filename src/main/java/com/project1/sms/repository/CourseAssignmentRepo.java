@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
+
 @Repository
 public interface CourseAssignmentRepo extends JpaRepository<CourseAssignment,Long> {
 
@@ -23,5 +25,5 @@ public interface CourseAssignmentRepo extends JpaRepository<CourseAssignment,Lon
     boolean existsByCourseOffering(CourseOffering offering);
 
 
-
+    Optional<CourseAssignment> findByCourseOfferingId(Long courseOfferingId);
 }

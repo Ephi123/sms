@@ -1,5 +1,6 @@
 package com.project1.sms.Service.imp;
 
+import com.project1.sms.enumeration.CourseStatus;
 import com.project1.sms.responseDto.AssessmentResultResponse;
 import com.project1.sms.Service.AssessmentResultService;
 import com.project1.sms.apiException.ApiException;
@@ -21,7 +22,8 @@ public class AssessmentResultImpl implements AssessmentResultService {
     private final StudentRepo studentRepo;
     private final AssessmentRepo assessmentRepo;
     private final GradeRepo gradeRepo;
-    private final CourseStatusRepo statusRepo;
+
+    private final CourseAssignmentRepo courseAssignmentRepo;
 
     //student
     @Override
@@ -45,14 +47,12 @@ public class AssessmentResultImpl implements AssessmentResultService {
         resultResponse.setName(results.get(0).getStudentName());
         resultResponse.setStudentId(results.get(0).getStudentId());
 
-        CourseStaus status = statusRepo.findByOfferingId(offeringId).
-                orElseThrow(() -> new ApiException("status not found"));
-
-        if(status.getStatus() == 0){
+        CourseAssignment courseAssignment =courseAssignmentRepo.findByCourseOfferingId(offeringId).orElseThrow(() -> new ApiException("course Not Assigned"));
+        if(CourseStatus.APPROVED != courseAssignment.getCourseStatus()){
             resultResponse.setGrade(null);
         }
         else{
-            Grade grade =gradeRepo.findByStudentAndOffering(student,offering);
+            Grade grade = gradeRepo.findByStudentAndOffering(student,offering);
 
             resultResponse.setGrade(grade.getGrade());
         }
@@ -64,20 +64,29 @@ public class AssessmentResultImpl implements AssessmentResultService {
     //Teacher
     @Override
     public AssessmentResultResponse updateResult(Long resultId, Integer mark) {
+
         AssessmentResult result =assessmentResultRepo.findById(resultId).orElseThrow(() -> new ApiException("result is not found"));
+        CourseOffering courseOffering = result.getAssessment().getCourseOffering();
+        CourseAssignment  courseAssignment =courseAssignmentRepo.findByCourseOfferingId(courseOffering.getId()).orElseThrow(() -> new ApiException("course not assigned yet"));
+        if(courseAssignment.getCourseStatus() == CourseStatus.NOT_SUBMITTED){
+            throw new ApiException("you can't insert student mark after Submitting a grade");
+        }
+
         result.setMarksObtained(mark);
         assessmentResultRepo.save(result);
         Student student = result.getStudent();
-        CourseOffering courseOffering = result.getAssessment().getCourseOffering();
         return calculateAssessment(courseOffering,student);
     }
 
     //Teacher department head and registrar
     @Override
     public List<AssessmentResultResponse> getGradeSheet(Long courseOfferingId) {
+         CourseAssignment courseAssignment =courseAssignmentRepo.findByCourseOfferingId(courseOfferingId).orElseThrow(() -> new ApiException("course not Assigned yet"));
+        CourseStatus courseStatus =courseAssignment.getCourseStatus();
+
         List<AssessmentResultDetailDTO> rawData = assessmentResultRepo.findGradeDetails(courseOfferingId);
         CourseOffering offering = offeringRepo.findById(courseOfferingId).orElseThrow(() -> new ApiException("course offering is not found"));
-        String stdId =rawData.get(0).getStudentId();
+        String stdId = rawData.get(0).getStudentId();
         Student student = studentRepo.findByUserUserId(stdId).orElseThrow(() -> new ApiException("student is not found"));
         Map<String, AssessmentResultResponse> tableMap = new LinkedHashMap<>();
 
@@ -95,6 +104,7 @@ public class AssessmentResultImpl implements AssessmentResultService {
 
             // Increment total
             row.setTotal(row.getTotal() + (detail.getMarksObtained() != null ? detail.getMarksObtained() : 0));
+            row.setCourseStatus(courseStatus);
         }
 
 
@@ -189,7 +199,7 @@ public class AssessmentResultImpl implements AssessmentResultService {
     private AssessmentResultResponse calculateAssessment(CourseOffering offering, Student student){
 
 
-        List<AssessmentResult> results =assessmentResultRepo.findByStudentAndAssessmentCourseOffering(student,offering);
+        List<AssessmentResult> results = assessmentResultRepo.findByStudentAndAssessmentCourseOffering(student,offering);
         int total = 0;
 
         AssessmentResultResponse resultResponse = new AssessmentResultResponse();
