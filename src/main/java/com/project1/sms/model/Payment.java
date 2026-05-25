@@ -1,9 +1,8 @@
 package com.project1.sms.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import com.project1.sms.enumeration.FinaceOfficerStatus;
+import jakarta.persistence.*;
 
 import lombok.*;
 
@@ -14,6 +13,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
+@Builder
 public class Payment extends Auditable {
 
    @ManyToOne
@@ -23,5 +23,6 @@ public class Payment extends Auditable {
     private Integer sem;
     private Integer month;
     private Integer payment;
+
 
 }

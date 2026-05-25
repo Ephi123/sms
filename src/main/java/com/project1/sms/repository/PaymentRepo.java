@@ -14,7 +14,7 @@ import java.util.Optional;
 @Repository
 public interface PaymentRepo extends JpaRepository<Payment,Long> {
 
-    Optional<Payment> findByStudentAndSemAndAcademicYear(Student  student,Integer sem,Integer academicYear);
+    List<Payment> findByStudentAndSemAndAcademicYearOrderByMonthAsc(Student  student,Integer sem,Integer academicYear);
     @Query("""
 SELECT new com.project1.sms.dto.MonthlyPaymentReportDTO(p.month,COUNT(p.student.user.userId),SUM(p.payment))
 FROM Payment p WHERE p.academicYear =:year AND p.sem = :seme

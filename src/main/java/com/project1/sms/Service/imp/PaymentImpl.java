@@ -1,13 +1,14 @@
 package com.project1.sms.Service.imp;
 
 import com.project1.sms.Service.PaymentService;
-import com.project1.sms.Service.ResultService;
+
 import com.project1.sms.apiException.ApiException;
 import com.project1.sms.domain.EthiopianCalendar;
 import com.project1.sms.dto.MonthlyPaymentReportDTO;
 import com.project1.sms.enumeration.StudentStatus;
 import com.project1.sms.model.*;
 import com.project1.sms.repository.*;
+import com.project1.sms.responseDto.MonthPaymentResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,19 +30,18 @@ public class PaymentImpl implements PaymentService {
     private final AssessmentRepo assessmentRepo;
     private final AssessmentResultRepo assessmentResultRepo;
     private final GradeRepo gradeRepo;
-    private final ResultService resultService;
+
     @Override
     public Map<String, Object> getPaymentDetailOfStudent(String userId) {
 
         Student  student = studentRepo.findByUserUserId(userId).
                 orElseThrow(()-> new ApiException("Student Not Found"));
-        List<CurrentSem> currentSem =currentSemRepo.findAll();
-        if(currentSem.get(0)==null)
-            throw new ApiException("current sem not created");
+        CurrentSem currentSem =currentSemRepo.findTopByOrderByIdDesc().orElseThrow(() -> new ApiException("sem is not defined"));
+
 
     Enrollment enrollment =enrollRepo.getEnrolledStudent(
                 EthiopianCalendar.ethiopianYear(),
-                currentSem.get(0).getCurrentSem(),
+                currentSem.getCurrentSem(),
                 student.getDepartment().getDepName(),
                 student.getCurrentYear(),
                 student.getProgram().getName(),
@@ -50,14 +50,15 @@ public class PaymentImpl implements PaymentService {
         ).orElse(null);
 
     if(enrollment != null){
-            Payment payment = paymentRepo.findByStudentAndSemAndAcademicYear(student,student.getCurrentSem(),2018).orElseThrow(() -> new ApiException("student not paid"));
+            List<Payment> payments= paymentRepo.findByStudentAndSemAndAcademicYearOrderByMonthAsc(student,student.getCurrentSem(),2018);
+            List<MonthPaymentResponse> paymentDetails =payments.stream().map(MonthPaymentResponse::from).toList();
 
         return Map.ofEntries( Map.entry("fullName", enrollment.getStudent().getUser().getFirstName()+enrollment.getStudent().getUser().getMidlName()),
                Map.entry( "department",enrollment.getStudent().getDepartment().getDepName()),
               Map.entry(  "Year",enrollment.getStudent().getCurrentYear().toString()),
                 Map.entry("program",enrollment.getCourseOffering().getProgram().getName().getLabel()),
                 Map.entry("academicYear",enrollment.getCourseOffering().getAcademicYear().toString()),
-                Map.entry("paymentDetail",payment),
+                Map.entry("paymentDetail",paymentDetails),
                 Map.entry("UnpaidMonths",getUnpaidMonths(student) == 0?"Completed":getUnpaidMonths(student)),
                 Map.entry("mothPayment",getUnpaidMonths(student) == 0?"":calculateMonthPayment(student)),
                Map.entry( "totalUnpaidFee",getUnpaidMonths(student) == 0? "" : getUnpaidMonths(student) * calculateMonthPayment(student)),
@@ -147,6 +148,7 @@ public class PaymentImpl implements PaymentService {
         payment.setAcademicYear(EthiopianCalendar.ethiopianYear());
         payment.setSem(student.getCurrentSem());
 
+
         Payment savedPayment =paymentRepo.save(payment);
 
 
@@ -162,9 +164,16 @@ public class PaymentImpl implements PaymentService {
 
         Student student = studentRepo.findByUserUserId(studentId).
                 orElseThrow(() -> new ApiException("student is not found"));
-          Payment  payment = paymentRepo.findByStudentAndSemAndAcademicYear(student,student.getCurrentSem(),EthiopianCalendar.ethiopianYear()).orElseThrow(() -> new ApiException("mot paid"));
+        CurrentSem currentSem = currentSemRepo.findTopByOrderByIdDesc().orElseThrow(() -> new ApiException("sem is not defined"));
+          List<Payment>  payments = paymentRepo.findByStudentAndSemAndAcademicYearOrderByMonthAsc(student,student.getCurrentSem(),EthiopianCalendar.ethiopianYear());
+          int month = 0;
+          for(Payment payment: payments){
+              if(month<payment.getMonth())
+                  month=payment.getMonth();
+          }
 
-          payment.setMonth(payment.getMonth()+1);
+
+          Payment payment =Payment.builder().student(student).academicYear(EthiopianCalendar.ethiopianYear()).sem(currentSem.getCurrentSem()).month(month+1).payment(calculateMonthPayment(student)).build();
 
           Payment savedPayment =paymentRepo.save(payment);
 
@@ -229,11 +238,16 @@ public class PaymentImpl implements PaymentService {
     private int getUnpaidMonths(Student student){
 
 
-       Payment payment = paymentRepo.findByStudentAndSemAndAcademicYear(student,student.getCurrentSem(),2018).orElseThrow(()->new ApiException("student is not paid"));
-        if(student.getCurrentSem() == 3){
-            return 3-payment.getMonth();
+       List<Payment> payments = paymentRepo.findByStudentAndSemAndAcademicYearOrderByMonthAsc(student,student.getCurrentSem(),2018);
+        int month = 0;
+        for(Payment payment: payments){
+            if(month<payment.getMonth())
+                month=payment.getMonth();
         }
-        return 4-payment.getMonth();
+       if(student.getCurrentSem() == 3){
+            return 2-month;
+        }
+        return 4-month;
     }
 
     private int calculateMonthPayment(Student student){
