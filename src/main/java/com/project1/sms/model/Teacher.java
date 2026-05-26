@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -21,5 +24,8 @@ public class Teacher extends Auditable {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Teacher_id")
     private UserEntity user;
+
+    @OneToMany(mappedBy = "teacher")
+    private List<Material> materials = new ArrayList<>();
 
 }

@@ -1,6 +1,6 @@
 package com.project1.sms.enumeration;
 
-public enum FinaceOfficerStatus {
+public enum FinanceOfficerStatus {
     CHECKED,
-    UNCHECKED;
+    PENDING;
 }

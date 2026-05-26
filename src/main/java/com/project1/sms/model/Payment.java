@@ -1,7 +1,7 @@
 package com.project1.sms.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.project1.sms.enumeration.FinaceOfficerStatus;
+import com.project1.sms.enumeration.FinanceOfficerStatus;
 import jakarta.persistence.*;
 
 import lombok.*;
@@ -23,6 +23,8 @@ public class Payment extends Auditable {
     private Integer sem;
     private Integer month;
     private Integer payment;
+    @Enumerated(EnumType.STRING)
+    private FinanceOfficerStatus officerStatus;
 
 
 }

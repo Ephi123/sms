@@ -13,7 +13,7 @@ public enum Role {
     ACADEMIC_DEAN,
     REGISTRAR_OFFICER,
     DEAN,
-    VICEDEAN,
+    VICE_DEAN,
     HR;
 
     public String getAuthority() {

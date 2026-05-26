@@ -5,9 +5,11 @@ import com.project1.sms.Service.PaymentService;
 import com.project1.sms.apiException.ApiException;
 import com.project1.sms.domain.EthiopianCalendar;
 import com.project1.sms.dto.MonthlyPaymentReportDTO;
+import com.project1.sms.enumeration.FinanceOfficerStatus;
 import com.project1.sms.enumeration.StudentStatus;
 import com.project1.sms.model.*;
 import com.project1.sms.repository.*;
+import com.project1.sms.responseDto.FinanceOfficerPaymentSummaryResponse;
 import com.project1.sms.responseDto.MonthPaymentResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -147,6 +149,7 @@ public class PaymentImpl implements PaymentService {
         payment.setStudent(student);
         payment.setAcademicYear(EthiopianCalendar.ethiopianYear());
         payment.setSem(student.getCurrentSem());
+        payment.setOfficerStatus(FinanceOfficerStatus.PENDING);
 
 
         Payment savedPayment =paymentRepo.save(payment);
@@ -173,7 +176,7 @@ public class PaymentImpl implements PaymentService {
           }
 
 
-          Payment payment =Payment.builder().student(student).academicYear(EthiopianCalendar.ethiopianYear()).sem(currentSem.getCurrentSem()).month(month+1).payment(calculateMonthPayment(student)).build();
+          Payment payment =Payment.builder().student(student).academicYear(EthiopianCalendar.ethiopianYear()).sem(currentSem.getCurrentSem()).month(month+1).payment(calculateMonthPayment(student)).officerStatus(FinanceOfficerStatus.PENDING).build();
 
           Payment savedPayment =paymentRepo.save(payment);
 
@@ -233,6 +236,20 @@ public class PaymentImpl implements PaymentService {
 
 
 
+    }
+
+    //finance Admin
+    @Override
+    public void updateFinanceOfficerStatus(Long officerId) {
+       int x = paymentRepo.updateOfficerStatusToChecked(officerId);
+        if(x==0)
+         throw new ApiException("not updated");
+    }
+
+    //finance admin and owner
+    @Override
+    public List<FinanceOfficerPaymentSummaryResponse> getFinanceOfficerWithPendingStatus() {
+        return paymentRepo.getPendingPaymentSummary();
     }
 
     private int getUnpaidMonths(Student student){

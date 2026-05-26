@@ -4,8 +4,11 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -37,4 +40,6 @@ public class CourseOffering extends Auditable{
     private Section section;
 
     private Integer academicYear;
+    @OneToMany(mappedBy = "courseOffering")
+    private List<Material> materials = new ArrayList<>();
 }
