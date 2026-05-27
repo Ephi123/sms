@@ -16,7 +16,6 @@ import java.util.List;
 @Setter
 @ToString
 @NoArgsConstructor
-@AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class CourseOffering extends Auditable{
 
@@ -40,6 +39,26 @@ public class CourseOffering extends Auditable{
     private Section section;
 
     private Integer academicYear;
+
     @OneToMany(mappedBy = "courseOffering")
     private List<Material> materials = new ArrayList<>();
+
+    public CourseOffering(Course course,
+                          Department department,
+                          Program program,
+                          Integer studyYear,
+                          Integer sem,
+                          Section section,
+                          Integer academicYear){
+        this.academicYear = academicYear;
+        this.course = course;
+        this.sem= sem;
+        this.department = department;
+        this.program = program;
+        this.studyYear = studyYear;
+        this.section = section;
+    }
+
+
+
 }

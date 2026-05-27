@@ -30,6 +30,7 @@ public class CourseOfferingImp implements CourseOfferingService {
         Course course = courseRepo.findByCourseCode(request.getCourseCode()).orElseThrow(() -> new ApiException("Course not Found"));
         Program program = programRepo.findByName(request.getProgram()).orElseThrow(() -> new ApiException("program is not found"));
         int sem = semRepo.findAll().get(0).getCurrentSem();
+
         CourseOffering offering =offeringRepo.save(new CourseOffering(
                 course,
                 department,
