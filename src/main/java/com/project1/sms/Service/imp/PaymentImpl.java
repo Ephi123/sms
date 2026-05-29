@@ -244,6 +244,8 @@ public class PaymentImpl implements PaymentService {
        int x = paymentRepo.updateOfficerStatusToChecked(officerId);
         if(x==0)
          throw new ApiException("not updated");
+
+        paymentRepo.updateOfficerStatusToChecked(officerId);
     }
 
     //finance admin and owner

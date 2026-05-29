@@ -14,6 +14,7 @@ import com.project1.sms.responseDto.NewStudent;
 import com.project1.sms.utillity.UserUtility;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -29,6 +30,8 @@ public class StudentImpl implements StudentService {
     private final SectionRepo sectionRepo;
     private final StudentRepo studentRepo;
     private final UserRepo userRepo;
+    private final UserUtility userUtility;
+    private final PasswordEncoder passwordEncoder;
     @Override
     public void studentRegister(StudentRequest request) {
         Program program = programRepo.findByName(request.Program()).orElseThrow(() -> new ApiException("program is not found"));
@@ -39,7 +42,7 @@ public class StudentImpl implements StudentService {
 
         String studentId = UserUtility.studentIdGenerator(program,department,section,studentNum);
 
-        String userName = UserUtility.userNameGenerator(userRepo,request.firstName(),request.fatherName());
+        String userName = userUtility.userNameGenerator(userRepo,request.firstName(),request.fatherName());
         UserEntity user = UserEntity.
                 builder().
                 userId(studentId).
@@ -49,7 +52,7 @@ public class StudentImpl implements StudentService {
                 .email(null)
                 .imageUrl(null)
                 .userName(userName).
-                password("default_"+request.firstName()).roles(Set.of(Role.STUDENT)).isActive(Active.ACTIVE).build();
+                password(passwordEncoder.encode("default_"+request.firstName())).roles(Set.of(Role.STUDENT)).build();
 
         UserEntity userEntity = userRepo.save(user);
 
@@ -80,7 +83,8 @@ public class StudentImpl implements StudentService {
                   midlName(userDto.getFatherName()).
                   lastName(userDto.getLastName()).
                   phone(null).email(null).imageUrl(null).
-                  userName(UserUtility.userNameGenerator(userRepo,userDto.getFirstName(),userDto.getFatherName())).password("default_"+userDto.getFirstName()).
+                  userName(userUtility.userNameGenerator(userRepo,userDto.getFirstName(),userDto.getFatherName())).
+                    password(passwordEncoder.encode("default_"+userDto.getFirstName())).
                   roles(Set.of(Role.STUDENT)).isActive(Active.ACTIVE).
                   build());
             temp++;

@@ -9,10 +9,14 @@ import com.project1.sms.repository.UserRepo;
 import com.project1.sms.requestDTO.RegisterRequest;
 import com.project1.sms.requestDTO.StudentRequest;
 import lombok.RequiredArgsConstructor;
-@RequiredArgsConstructor
-public class UserUtility {
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 
-    public static UserEntity createUser(RegisterRequest request , UserRepo userRepo,String userName, String userId){
+@RequiredArgsConstructor
+@Component
+public class UserUtility {
+private final PasswordEncoder  passwordEncoder;
+    public  UserEntity createUser(RegisterRequest request , UserRepo userRepo,String userName, String userId){
 
 
 
@@ -22,7 +26,7 @@ public class UserUtility {
                 .firstName(request.firstName())
                 .lastName(request.lastName())
                 .midlName(request.fatherName())
-                .password("default_"+request.firstName())
+                .password(passwordEncoder.encode("default_"+request.firstName()))
                 .roles(request.roles())
                 .build();
     }
@@ -42,7 +46,7 @@ public class UserUtility {
     }
 
 
-    public static   String userNameGenerator(UserRepo userRepo, String firstName, String fatherName){
+    public  String userNameGenerator(UserRepo userRepo, String firstName, String fatherName){
         StringBuilder specialName = new StringBuilder(firstName + fatherName);
         String userName = specialName+"@zion.edu";
         boolean isUsernameExist = userRepo.existsByUserName(userName);

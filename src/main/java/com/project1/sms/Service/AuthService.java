@@ -1,20 +1,19 @@
 package com.project1.sms.Service;
 
+import com.project1.sms.apiException.ApiException;
 import com.project1.sms.model.UserEntity;
+import com.project1.sms.requestDTO.ChangePasswordRequest;
 import com.project1.sms.requestDTO.LoginRequest;
-import com.project1.sms.requestDTO.RegisterRequest;
 import com.project1.sms.repository.UserRepo;
 import com.project1.sms.responseDto.AuthResponse;
-
-import java.util.Objects;
-import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
 
 @Service
 @RequiredArgsConstructor
@@ -44,30 +43,62 @@ public class AuthService {
 //        return toAuthResponse(savedUser);
 //    }
 
-   public AuthResponse  changePassword(LoginRequest request){
-       UserEntity user =userRepo.findByUserName(request.userName()).orElseThrow(() -> new UsernameNotFoundException("user not found"));
-                  String newPassword = request.password();
-                  user.setPassword(passwordEncoder.encode(request.password()));
-                  UserEntity updateUser = userRepo.save(user);
-                  return toAuthResponse(updateUser);
+    public void restPassword(String userName){
+           UserEntity user = userRepo.findByUserName(userName).orElseThrow(() -> new ApiException("user not found"));
+                     user.setPassword(passwordEncoder.encode("default_"+user.getFirstName()));
+                     userRepo.save(user);
+    }
+
+   public AuthResponse  changePassword(ChangePasswordRequest request){
+       authenticationManager.authenticate(
+               new UsernamePasswordAuthenticationToken(
+                       request.userName(),
+                       request.oldPassword()
+               )
+       );
+
+       UserEntity user = userRepo.findByUserName(request.userName())
+               .orElseThrow(() ->
+                       new UsernameNotFoundException("user not found"));
+
+       user.setPassword(
+               passwordEncoder.encode(request.newPassword())
+       );
+
+       user.setFirstLogin(false);
+
+       UserEntity updatedUser = userRepo.save(user);
+
+       return toAuthResponse(updatedUser);
 
 
 
    }
     public AuthResponse login(LoginRequest request) {
-        UserEntity userEntity = userRepo.findByUserName(request.userName()).orElseThrow(() -> new UsernameNotFoundException("Credential Error"));
-        if(Objects.equals(userEntity.getPassword(), "default_" + userEntity.getFirstName())){
-            return toAuthResponseForFirstLogin(userEntity);
-        }
+       try {
+           authenticationManager.authenticate(
+                   new UsernamePasswordAuthenticationToken(
+                           request.userName(),
+                           request.password()
+                   )
+           );
 
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.userName(), request.password())
-        );
+           UserEntity user = userRepo.findByUserName(request.userName()).orElseThrow(() -> new UsernameNotFoundException("Credential Error"));
+           if (Boolean.TRUE.equals(user.getFirstLogin())) {
+               return toAuthResponseForFirstLogin(user);
+           }
 
-        UserEntity user = userRepo.findByUserName(request.userName())
-                .orElseThrow(() -> new IllegalArgumentException("Invalid username or password"));
 
-        return toAuthResponse(user);
+           return toAuthResponse(user);
+       }
+        catch (DisabledException e) {
+
+            throw new RuntimeException(
+                    "Your account is inactive. Contact admin."
+            );
+       }
+
+
     }
 
     private AuthResponse toAuthResponse(UserEntity user) {

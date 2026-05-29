@@ -47,6 +47,9 @@ public class UserEntity extends Auditable {
     @Column(nullable = false)
     private String password;
 
+    @Builder.Default
+    private Boolean firstLogin = true;
+
     @NotNull
     @Builder.Default
     @Convert(converter = RolesConverter.class)
@@ -54,7 +57,8 @@ public class UserEntity extends Auditable {
     private Set<Role> roles = EnumSet.noneOf(Role.class);
 
     @Convert(converter = ActiveConverter.class)
-    private Active isActive;
+    @Builder.Default
+    private Active isActive = Active.ACTIVE;
 
 
     public static class RolesConverter implements jakarta.persistence.AttributeConverter<Set<Role>, String> {
