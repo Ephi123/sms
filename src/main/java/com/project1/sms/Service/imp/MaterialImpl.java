@@ -8,14 +8,19 @@ import com.project1.sms.model.Teacher;
 import com.project1.sms.repository.CourseOfferingRepo;
 import com.project1.sms.repository.MaterialRepo;
 import com.project1.sms.repository.TeacherRepo;
-import com.project1.sms.requestDTO.CreateMaterialRequest;
 import com.project1.sms.requestDTO.UpdateMaterialRequest;
 import com.project1.sms.responseDto.MaterialResponse;
 import com.project1.sms.security.CurrentUserService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.util.List;
 @Service
@@ -26,32 +31,13 @@ public class MaterialImpl implements MaterialService {
     private final CurrentUserService userService;
     private final CourseOfferingRepo offeringRepo;
     private final MaterialRepo materialRepo;
-    private TeacherRepo teacherRepo;
-    @Override
-    public MaterialResponse postMaterial(CreateMaterialRequest request) {
-       Long teacherId = userService.getUserId();
-       Teacher teacher = teacherRepo.findById(teacherId).orElseThrow(() -> new ApiException("teacher is not found"));
-        CourseOffering offering = offeringRepo.findById(request.getCourseOfferingId()).orElseThrow(() -> new ApiException("course offering not found "));
+    private final CurrentUserService currentUserService;
+    private final TeacherRepo teacherRepo;
 
-       Material material = Material.builder().title(request.getTitle())
-                .description(request.getDescription()).
-                fileName(request.getFileName()).
-                fileType(request.getFileType()).
-                fileUrl(request.getFileUrl()).
-                postedAt(LocalDateTime.now()).
-                teacher(teacher).
-                courseOffering(offering).
-                build();
-
-        Material savedMaterial=materialRepo.save(material);
-
-        return MaterialResponse.from(savedMaterial);
-    }
 
     @Override
     public List<MaterialResponse> getTeacherMaterials() {
         Long teacherId =userService.getUserId();
-        Teacher teacher = teacherRepo.findById(teacherId).orElseThrow(() -> new ApiException("teacher is not found"));
        return
                materialRepo.findByTeacherIdOrderByPostedAtDesc(teacherId).
                        stream().map(MaterialResponse::from).toList();
@@ -70,11 +56,82 @@ public class MaterialImpl implements MaterialService {
       Material material = materialRepo.findById(materialId).orElseThrow(() -> new ApiException("material not found"));
       material.setDescription(request.getDescription());
       material.setTitle(request.getTitle());
-      material.setFileUrl(request.getFileUrl());
-      material.setFileType(request.getFileType());
-      material.setFileName(request.getFileName());
       Material savedMaterial = materialRepo.save(material);
         return MaterialResponse.from(savedMaterial);
+    }
+
+    @Override
+    public void uploadMaterial(Long offeringId, String title, String description, MultipartFile file) throws IOException {
+        long MAX_SIZE = 1024 * 1024;
+
+        if (file.getSize() > MAX_SIZE) {
+            throw new ApiException(
+                    "File size must not exceed 1 MB"
+            );
+        }
+
+        Long userId = currentUserService.getUserId();
+
+        Teacher teacher = teacherRepo
+                .findByUserId(userId)
+                .orElseThrow(() ->
+                        new ApiException("Teacher not found"));
+
+        CourseOffering offering =
+                offeringRepo.findById(offeringId)
+                        .orElseThrow(() ->
+                                new ApiException(
+                                        "Course offering not found"
+                                ));
+
+        String UPLOAD_DIR = "uploads/materials/";
+        Files.createDirectories(
+                Paths.get(UPLOAD_DIR)
+        );
+
+        String savedFileName =
+                System.currentTimeMillis()
+                        + "_"
+                        + file.getOriginalFilename();
+
+        Path filePath =
+                Paths.get(
+                        UPLOAD_DIR,
+                        savedFileName
+                );
+
+        Files.copy(
+                file.getInputStream(),
+                filePath,
+                StandardCopyOption.REPLACE_EXISTING
+        );
+
+        Material material =
+                Material.builder()
+                        .title(title)
+                        .description(description)
+                        .fileName(
+                                file.getOriginalFilename()
+                        )
+                        .fileType(
+                                file.getContentType()
+                        )
+                        .fileUrl(
+                                filePath.toString()
+                        )
+                        .postedAt(LocalDateTime.now())
+                        .teacher(teacher)
+                        .courseOffering(offering)
+                        .build();
+
+        materialRepo.save(material);
+    }
+
+    @Override
+    public MaterialResponse getMaterial(Long materialId) {
+        Material material = materialRepo.findById(materialId).orElseThrow(() -> new ApiException(",material not found"));
+
+        return MaterialResponse.from(material);
     }
 
 

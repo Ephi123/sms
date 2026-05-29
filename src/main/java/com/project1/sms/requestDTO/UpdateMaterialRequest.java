@@ -11,12 +11,4 @@ public class UpdateMaterialRequest {
 
     private String description;
 
-    @NotBlank
-    private String fileName;
-
-    @NotBlank
-    private String fileType;
-
-    @NotBlank
-    private String fileUrl;
 }
