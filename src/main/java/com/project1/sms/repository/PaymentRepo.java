@@ -25,6 +25,7 @@ GROUP BY p.month ORDER BY p.month
 
 """)
     List<MonthlyPaymentReportDTO> getMonthlyReport(@Param("year") Integer year, @Param("seme") Integer sem);
+
     @Modifying(clearAutomatically = true, flushAutomatically = true)
     @Transactional
     @Query("""

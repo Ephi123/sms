@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -27,11 +28,11 @@ public class Department extends Auditable {
     private Teacher head;
 
     @OneToMany(mappedBy = "department", fetch = FetchType.LAZY)
-    private List<Teacher> teachers;
+    private List<Teacher> teachers = new ArrayList<>();
 
     @JsonManagedReference
     @OneToMany(mappedBy = "department", fetch = FetchType.LAZY)
-    private List<Student> students;
+    private List<Student> students = new ArrayList<>();
 
 
 }

@@ -26,7 +26,7 @@ public class Attendance extends Auditable{
     @JoinColumn
     Student student;
     @Enumerated(EnumType.STRING)
-    AttendanceStatus Status;
+    AttendanceStatus status;
     
     LocalDate localDate;
 }

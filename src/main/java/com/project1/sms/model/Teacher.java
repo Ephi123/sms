@@ -15,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
+@Builder
 public class Teacher extends Auditable {
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -24,7 +25,7 @@ public class Teacher extends Auditable {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Teacher_id")
     private UserEntity user;
-
+    @Builder.Default
     @OneToMany(mappedBy = "teacher")
     private List<Material> materials = new ArrayList<>();
 

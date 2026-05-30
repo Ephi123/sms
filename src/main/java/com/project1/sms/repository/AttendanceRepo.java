@@ -16,13 +16,13 @@ public interface  AttendanceRepo extends JpaRepository<Attendance,Long> {
         CONCAT(s.user.firstName, ' ', s.user.midlName, ' ', s.user.lastName),
 
         SUM(CASE 
-                 WHEN a.Status = com.project1.sms.enumeration.Attendance.PRESENT 
+                 WHEN a.status = com.project1.sms.enumeration.Attendance.PRESENT 
                 THEN 1 
                 ELSE 0 
             END),
 
         SUM(CASE 
-                WHEN a.Status = com.project1.sms.enumeration.Attendance.ABSENT 
+                WHEN a.status = com.project1.sms.enumeration.Attendance.ABSENT 
                 THEN 1 
                 ELSE 0 
             END),
@@ -32,7 +32,7 @@ public interface  AttendanceRepo extends JpaRepository<Attendance,Long> {
     FROM Attendance a
     JOIN a.student s
     WHERE a.offering.id = :offeringId
-    GROUP BY s.userId, s.firstName, s.midlName, s.lastName
+    GROUP BY s.user.userId, s.user.firstName, s.user.midlName, s.user.lastName
 """)
     List<AttendanceResponse> getAttendanceReport(Long offeringId);
 

@@ -34,4 +34,14 @@ public interface UserRepo extends JpaRepository<UserEntity, Long> {
     Optional<UserEntity> findByUserId(String userId);
     List<UserEntity> findByRoleOrderByUsernameAtAsc(Role role);
 
+    @Query("""
+SELECT u FROM UserEntity u
+WHERE com.project1.sms.enumeration.Role.TEACHER MEMBER OF u.roles
+AND NOT EXISTS (
+    SELECT t FROM Teacher t
+    WHERE t.user = u
+)
+""")
+    List<UserEntity> getUnregisteredTeachers();
+
 }
