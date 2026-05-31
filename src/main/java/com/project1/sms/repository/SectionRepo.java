@@ -14,4 +14,8 @@ public interface SectionRepo extends JpaRepository<Section,Long> {
     List<Section> findByDepartment(Department department);
     List<Section> findByProgram(Program program);
     Optional<Section> findBySection(Integer section);
+    List<Section> findByDepartmentAndProgramOrderBySectionDesc(
+            Department department,
+            Program program
+    );
 }

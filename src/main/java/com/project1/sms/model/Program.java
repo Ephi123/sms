@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,6 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
+@Builder
 public class Program extends Auditable {
     @Column(nullable = false)
     @Convert(converter = ProgramConverter.class)
@@ -25,7 +27,8 @@ public class Program extends Auditable {
     private Integer semesterPerYear;
 
     @JsonManagedReference
+    @Builder.Default
     @OneToMany(mappedBy = "program", fetch = FetchType.LAZY)
-    private List<Student> students;
+    private List<Student> students = new ArrayList<>();
 
 }
