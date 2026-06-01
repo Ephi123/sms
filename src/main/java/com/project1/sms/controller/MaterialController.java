@@ -1,6 +1,7 @@
 package com.project1.sms.controller;
 
 import com.project1.sms.Service.MaterialService;
+import com.project1.sms.response.GlobalResponse;
 import com.project1.sms.responseDto.MaterialResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.FileSystemResource;
@@ -20,7 +21,7 @@ public class MaterialController {
     private final MaterialService materialService;
 
     @PostMapping("/upload/{offeringId}")
-    public ResponseEntity<?> uploadMaterial(
+    public ResponseEntity<GlobalResponse<?>> uploadMaterial(
             @PathVariable Long offeringId,
             @RequestParam String title,
             @RequestParam String description,
@@ -34,23 +35,16 @@ public class MaterialController {
                 file
         );
 
-        return ResponseEntity.ok(
-                "Material uploaded successfully"
-        );
+        return ResponseEntity.ok( GlobalResponse.success("Material uploaded successfully",null));
     }
 
     @GetMapping("/offering/{offeringId}")
-    public ResponseEntity<List<MaterialResponse>>
+    public ResponseEntity<GlobalResponse<List<MaterialResponse>>>
     getMaterialsByOffering(
             @PathVariable Long offeringId
     ) {
-
-        return ResponseEntity.ok(
-                materialService
-                        .getCourseOfferingMaterials(
-                                offeringId
-                        )
-        );
+       List<MaterialResponse> materials= materialService.getCourseOfferingMaterials(offeringId);
+        return ResponseEntity.ok(GlobalResponse.success("material is sent", materials));
     }
 
 

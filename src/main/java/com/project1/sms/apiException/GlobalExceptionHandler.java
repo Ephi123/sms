@@ -36,5 +36,14 @@ public class GlobalExceptionHandler {
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(GlobalResponse.failure(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected server error"));
+
+
+    }
+
+    @ExceptionHandler(ApiException.class)
+    public ResponseEntity<GlobalResponse<Void>> handleIllegalArgument(ApiException exception) {
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(GlobalResponse.failure(HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage()));
     }
 }

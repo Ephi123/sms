@@ -26,7 +26,7 @@ public interface DepartmentRepo extends JpaRepository<Department,Long> {
         CONCAT(
             COALESCE(u.firstName, ''),
             ' ',
-            COALESCE(u.middleName, '')
+            COALESCE(u.midlName, '')
         )
     )
     FROM Department d

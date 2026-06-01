@@ -20,7 +20,7 @@ public class Assessment extends Auditable{
     @JoinColumn(name = "course_offering_id")
     private CourseOffering courseOffering;
     private String title;
-    private Integer WeightPercent;
+    private Integer weightPercent;
 
     @OneToMany(mappedBy = "assessment",
             cascade = CascadeType.ALL,

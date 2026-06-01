@@ -32,16 +32,24 @@ public interface UserRepo extends JpaRepository<UserEntity, Long> {
     );
 
     Optional<UserEntity> findByUserId(String userId);
-    List<UserEntity> findByRoleOrderByUsernameAtAsc(Role role);
-
-    @Query("""
-SELECT u FROM UserEntity u
-WHERE com.project1.sms.enumeration.Role.TEACHER MEMBER OF u.roles
+    @Query(value = """
+  SELECT *
+    FROM user u
+    WHERE CONCAT(',', u.roles, ',')
+          LIKE CONCAT('%,', :roleName, ',%')
+    ORDER BY u.user_name ASC
+""", nativeQuery = true)
+    List<UserEntity> findByRole(@Param("roleName") String roleName);
+    @Query(value = """
+SELECT *
+FROM user u
+WHERE CONCAT(',', u.roles, ',') LIKE '%,TEACHER,%'
 AND NOT EXISTS (
-    SELECT t FROM Teacher t
-    WHERE t.user = u
+    SELECT 1
+    FROM teacher t
+    WHERE t.teacher_id = u.id
 )
-""")
+""", nativeQuery = true)
     List<UserEntity> getUnregisteredTeachers();
 
 }
