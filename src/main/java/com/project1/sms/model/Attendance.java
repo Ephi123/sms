@@ -20,13 +20,13 @@ public class Attendance extends Auditable{
     @JoinColumn(name = "offering_id")
     private CourseOffering offering;
     @ManyToOne
-    @JoinColumn
-    Teacher teacher;
+    @JoinColumn(name="teacher_id")
+    private Teacher teacher;
     @ManyToOne
-    @JoinColumn
-    Student student;
+    @JoinColumn(name="student_id")
+   private  Student student;
     @Enumerated(EnumType.STRING)
-    AttendanceStatus status;
+   private  AttendanceStatus status;
     
-    LocalDate localDate;
+    private LocalDate date;
 }

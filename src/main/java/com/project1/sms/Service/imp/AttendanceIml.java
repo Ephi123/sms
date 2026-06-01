@@ -34,7 +34,7 @@ public class AttendanceIml implements AttendanceService {
     //teacher,DepartmentHead,academicDean,vice,dean
     @Override
     public List<AttendanceResponse> getAttendanceReport(Long offeringId) {
-        return attendanceRepo.getAttendanceReport(offeringId);
+        return attendanceRepo.getAttendanceReport(offeringId,AttendanceStatus.PRESENT,AttendanceStatus.ABSENT);
     }
      //teacher
     @Override
@@ -48,8 +48,8 @@ public class AttendanceIml implements AttendanceService {
                 .offering(offering).
                 teacher(teacher).
                 student(student).
-                Status(status).
-                localDate(LocalDate.now()).build();
+                status(status).
+                date(LocalDate.now()).build();
         attendanceRepo.save(attendance);
 
 

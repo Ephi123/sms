@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
 @Setter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-@JsonIgnoreProperties(value = {"createdAt, updatedAt"}, allowGetters = true)
+@JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
 public abstract class  Auditable {
 
     @Id
@@ -30,7 +30,6 @@ public abstract class  Auditable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "primary_key_sequence" )
     private Long id;
     @CreatedBy
-    @Column(nullable = false, updatable = false)
     private Long createdBy;
 
     @LastModifiedBy

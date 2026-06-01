@@ -7,6 +7,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.security.sasl.AuthenticationException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -31,10 +32,31 @@ public class GlobalExceptionHandler {
                 .body(GlobalResponse.validationFailure("Validation failed", fieldErrors));
     }
 
+    @ExceptionHandler(ApiException.class)
+    public ResponseEntity<GlobalResponse<Void>> myException(ApiException exception) {
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(GlobalResponse.failure(HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage()));
+    }
+
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<GlobalResponse<Void>> handleAuthUnhandled(Exception exception) {
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body(GlobalResponse.failure(HttpStatus.UNAUTHORIZED, "User name or Password not Correct"));
+
+
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<GlobalResponse<Void>> handleUnhandled(Exception exception) {
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(GlobalResponse.failure(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected server error"));
+                .body(GlobalResponse.failure(HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage()));
+
+
     }
+
+
 }

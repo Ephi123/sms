@@ -18,9 +18,9 @@ public interface TeacherRepo extends JpaRepository<Teacher,Long> {
     Optional<Teacher> findByUserId(Long userId);
 
     @Query("""
-          SELECT new om.project1.sms.responseDto.TeacherWithDepartmentDTo(
+          SELECT new com.project1.sms.responseDto.TeacherWithDepartmentDTo(
                       t.id,
-                      CONCAT(t.user.firstName,t.user.midleName),
+                      CONCAT(t.user.firstName,t.user.midlName),
                       t.user.phone,
                       t.department.depName,
                       t.user.isActive)

@@ -1,6 +1,7 @@
 package com.project1.sms.controller;
 
 import com.project1.sms.Service.AssignmentFileService;
+import com.project1.sms.response.GlobalResponse;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ public class AssignmentFileController {
     private final AssignmentFileService assignmentFileService;
 
     @PostMapping("/upload/{assignmentId}")
-    public ResponseEntity<?> uploadAssignment(
+    public  ResponseEntity<GlobalResponse<?>> uploadAssignment(
             @PathVariable Long assignmentId,
             @RequestParam("file") MultipartFile file
     ) throws IOException {
@@ -28,8 +29,7 @@ public class AssignmentFileController {
                         file
                 );
 
-        return ResponseEntity.ok(
-                "Assignment uploaded successfully"
+        return  ResponseEntity.ok(GlobalResponse.success("Assignment uploaded successfully",null)
         );
     }
 

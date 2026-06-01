@@ -1,28 +1,30 @@
 package com.project1.sms.repository;
 
+import com.project1.sms.enumeration.AttendanceStatus;
 import com.project1.sms.model.Attendance;
 import com.project1.sms.model.Student;
 import com.project1.sms.responseDto.AttendanceResponse;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 @Repository
 public interface  AttendanceRepo extends JpaRepository<Attendance,Long> {
     @Query("""
-    SELECT new com.project1.sms.dto.AttendanceReportDTO(
+    SELECT new com.project1.sms.responseDto.AttendanceResponse(
         s.user.userId,
         CONCAT(s.user.firstName, ' ', s.user.midlName, ' ', s.user.lastName),
 
         SUM(CASE 
-                 WHEN a.status = com.project1.sms.enumeration.Attendance.PRESENT 
+                 WHEN a.status = :present
                 THEN 1 
                 ELSE 0 
             END),
 
         SUM(CASE 
-                WHEN a.status = com.project1.sms.enumeration.Attendance.ABSENT 
+                WHEN a.status = :absent
                 THEN 1 
                 ELSE 0 
             END),
@@ -34,7 +36,7 @@ public interface  AttendanceRepo extends JpaRepository<Attendance,Long> {
     WHERE a.offering.id = :offeringId
     GROUP BY s.user.userId, s.user.firstName, s.user.midlName, s.user.lastName
 """)
-    List<AttendanceResponse> getAttendanceReport(Long offeringId);
+    List<AttendanceResponse> getAttendanceReport(Long offeringId, @Param("present") AttendanceStatus present, @Param("absent") AttendanceStatus absent);
 
     @Query("""
     SELECT e.student
@@ -45,7 +47,7 @@ public interface  AttendanceRepo extends JpaRepository<Attendance,Long> {
         FROM Attendance a
         WHERE a.student = e.student
         AND a.offering = e.courseOffering
-        AND a.localDate = CURRENT_DATE
+        AND a.date = CURRENT_DATE
     )
 """)
     List<Student> getStudentsWithoutTodayAttendance(Long offeringId);

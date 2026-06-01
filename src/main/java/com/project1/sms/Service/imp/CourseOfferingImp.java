@@ -38,7 +38,7 @@ public class CourseOfferingImp implements CourseOfferingService {
                 request.getYear(),
                 sem,
                 section,
-                EthiopianCalendar.ethiopianYear()
+               Integer.valueOf(EthiopianCalendar.ethiopianYear())
                 ));
 
         assessmentRepo.save(new Assessment(offering,"Mid",20));

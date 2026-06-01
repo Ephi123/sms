@@ -1,6 +1,7 @@
 package com.project1.sms.repository;
 
 import com.project1.sms.dto.MonthlyPaymentReportDTO;
+import com.project1.sms.enumeration.FinanceOfficerStatus;
 import com.project1.sms.model.Payment;
 import com.project1.sms.model.Student;
 import com.project1.sms.responseDto.FinanceOfficerPaymentSummaryResponse;
@@ -30,23 +31,23 @@ GROUP BY p.month ORDER BY p.month
     @Transactional
     @Query("""
        UPDATE Payment p
-       SET p.officerStatus = com.project1.sms.enumeration.FinaceOfficerStatus.CHECKED
-       WHERE p.createdBy.id = :userId
+       SET p.officerStatus = :checked
+       WHERE p.createdBy = :userId
        """)
-    int updateOfficerStatusToChecked(@Param("userId") Long userId);
+    int updateOfficerStatusToChecked(@Param("userId") Long userId, @Param("checked")FinanceOfficerStatus checked);
 
 
     @Query("""
-       SELECT new com.project1.sms.dto.PaymentSummaryDTO(
+       SELECT new com.project1.sms.responseDto.FinanceOfficerPaymentSummaryResponse(
            u.Id,
-           CONCAT(u.firstName, ' ',u.midleName,' ', u.lastName),
+           CONCAT(u.firstName, ' ',u.midlName,' ', u.lastName),
            SUM(p.payment)
        )
        FROM Payment p
        JOIN UserEntity u ON u.Id = p.createdBy
        WHERE p.officerStatus =
            com.project1.sms.enumeration.FinanceOfficerStatus.PENDING
-       GROUP BY u.Id, u.firstName, u.midleName, u.lastName
+       GROUP BY u.Id, u.firstName, u.midlName, u.lastName
        """)
 
     List<FinanceOfficerPaymentSummaryResponse> getPendingPaymentSummary();

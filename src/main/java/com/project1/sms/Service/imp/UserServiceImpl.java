@@ -116,7 +116,7 @@ public class UserServiceImpl implements UserService {
     //Admin
     @Override
     public List<UserResponse> getUserByRole(Role role) {
-        return userRepo.findByRoleOrderByUsernameAtAsc(role).
+        return userRepo.findByRole(role.name()).
                 stream().map(UserResponse::from).toList();
     }
 

@@ -241,11 +241,10 @@ public class PaymentImpl implements PaymentService {
     //finance Admin
     @Override
     public void updateFinanceOfficerStatus(Long officerId) {
-       int x = paymentRepo.updateOfficerStatusToChecked(officerId);
+       int x = paymentRepo.updateOfficerStatusToChecked(officerId,FinanceOfficerStatus.CHECKED);
         if(x==0)
          throw new ApiException("not updated");
 
-        paymentRepo.updateOfficerStatusToChecked(officerId);
     }
 
     //finance admin and owner
