@@ -6,6 +6,7 @@ import com.project1.sms.model.Program;
 import com.project1.sms.model.Section;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -30,6 +31,23 @@ AND NOT EXISTS (
            int sem,
            Department department
    );
-   int countByAcademicYearAndStudyYearAndSemAndSectionAndProgramAndDepartment(Integer academicYear, Integer studyYear, Integer sem, Section section, Program program, Department department);
+   @Query("""
+    SELECT COUNT(c)
+    FROM CourseOffering c
+    WHERE c.academicYear = :academicYear
+      AND c.studyYear = :studyYear
+      AND c.sem = :sem
+      AND c.section = :section
+      AND c.program = :program
+      AND c.department = :department
+""")
+   int countCourses(
+           @Param("academicYear") Integer academicYear,
+           @Param("studyYear") Integer studyYear,
+           @Param("sem") Integer sem,
+           @Param("section") Section section,
+           @Param("program") Program program,
+           @Param("department") Department department
+   );
 
 }

@@ -13,7 +13,7 @@ public interface ResultRepo extends JpaRepository<Result,Long> {
 
     Result findByStudent(Student student);
 
-    Optional<Result> findByStudentAndAcademicYearAndSemester(
+    Optional<Result> findByStudentAndStudyYearAndSemester(
             Student student,
             Integer academicYear,
             Integer semester

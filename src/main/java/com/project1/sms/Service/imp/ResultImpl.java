@@ -2,15 +2,15 @@ package com.project1.sms.Service.imp;
 
 import com.project1.sms.Service.ResultService;
 import com.project1.sms.apiException.ResourceNotFoundException;
+import com.project1.sms.domain.EthiopianCalendar;
 import com.project1.sms.dto.CourseGradeDto;
 import com.project1.sms.dto.SemesterResultDto;
-import com.project1.sms.model.Course;
-import com.project1.sms.model.Grade;
-import com.project1.sms.model.Result;
-import com.project1.sms.model.Student;
+import com.project1.sms.model.*;
 import com.project1.sms.repository.GradeRepo;
 import com.project1.sms.repository.ResultRepo;
 import com.project1.sms.repository.StudentRepo;
+import com.project1.sms.repository.UserRepo;
+import com.project1.sms.security.CurrentUserService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -30,18 +30,27 @@ public class ResultImpl implements ResultService {
     private final ResultRepo resultRepository;
     private final GradeRepo gradeRepository;
     private final StudentRepo studentRepository;
+    private final CurrentUserService currentUserService;
+    private final UserRepo userRepo;
+
     @Override
     public SemesterResultDto calculateSemesterResult(String studentId, Integer studyYear, Integer semester) {
 
-
         Student student = findStudent(studentId);
         List<Grade> semesterGrades = gradeRepository.findSemesterGrades(student, studyYear, semester);
-        List<Grade> cumulativeGrades = gradeRepository.findGradesThroughSemester(student, studyYear, semester);
+        List<Grade> cumulativeGrades = gradeRepository.findGradesThroughSemester(student, studyYear, semester,EthiopianCalendar.ethiopianYear());
 
         return buildSemesterResult(student, studyYear, semester, semesterGrades, cumulativeGrades);
     }
 
+    @Override
+    public SemesterResultDto calculateSemesterResult() {
+        Student student = studentRepository.findByUserId(currentUserService.getUserId()).orElseThrow(() -> new ResourceNotFoundException("student not found"));
+        List<Grade> semesterGrades = gradeRepository.findSemesterGrades(student, student.getCurrentYear(), student.getCurrentSem());
+        List<Grade> cumulativeGrades = gradeRepository.findGradesThroughSemester(student, student.getCurrentYear(), student.getCurrentSem(), EthiopianCalendar.ethiopianYear());
 
+        return buildSemesterResult(student, student.getCurrentYear(), student.getCurrentYear(), semesterGrades, cumulativeGrades);
+    }
 
 
     @Override
@@ -78,6 +87,12 @@ public class ResultImpl implements ResultService {
                 .toList();
     }
 
+    @Override
+    public List<SemesterResultDto> calculateAllSemesterResults() {
+        UserEntity user =userRepo.findById(currentUserService.getUserId()).orElseThrow(() -> new ResourceNotFoundException("user not found"));
+        return this.calculateAllSemesterResults(user.getUserId());
+    }
+
 
     @Override
     public BigDecimal calculateCgpa(String studentId) {
@@ -87,24 +102,20 @@ public class ResultImpl implements ResultService {
     }
 
     @Override
-    public SemesterResultDto recalculateAndSaveSemesterResult(String studentId, Integer academicYear, Integer semester) {
+    public SemesterResultDto recalculateAndSaveSemesterResult(String studentId) {
         Student student = findStudent(studentId);
-        List<Grade> semesterGrades = gradeRepository.findSemesterGrades(student, academicYear, semester);
-        List<Grade> cumulativeGrades = gradeRepository.findGradesThroughSemester(student, academicYear, semester);
-        SemesterResultDto calculatedResult = buildSemesterResult(
-                student,
-                academicYear,
-                semester,
-                semesterGrades,
-                cumulativeGrades
-        );
+        List<Grade> semesterGrades = gradeRepository.findSemesterGrades(student, student.getCurrentYear(), student.getCurrentSem());
+        List<Grade> cumulativeGrades = gradeRepository.findGradesThroughSemester(student,student.getCurrentYear(), student.getCurrentSem(),EthiopianCalendar.ethiopianYear());
+        SemesterResultDto calculatedResult =  buildSemesterResult(student, student.getCurrentYear(), student.getCurrentYear(), semesterGrades, cumulativeGrades);
+
 
         Result result = resultRepository
-                .findByStudentAndAcademicYearAndSemester(student, academicYear, semester)
+                .findByStudentAndStudyYearAndSemester(student, student.getCurrentYear(), student.getCurrentYear())
                 .orElseGet(Result::new);
         result.setStudent(student);
-        result.setAcademicYear(academicYear);
-        result.setSemester(semester);
+        result.setStudyYear(student.getCurrentYear());
+        result.setAcademicYear(EthiopianCalendar.ethiopianYear());
+        result.setSemester(student.getCurrentYear());
         result.setGpa(calculatedResult.gpa());
         result.setCgpa(calculatedResult.cgpa());
         result.setSemesterCreditHours(calculatedResult.semesterCreditHours());

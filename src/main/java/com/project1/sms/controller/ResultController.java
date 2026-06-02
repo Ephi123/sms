@@ -35,7 +35,7 @@ public class ResultController {
     }
 
     @GetMapping("/students/{studentId}/semesters")
-
+    @PreAuthorize("hasAnyRole('DEPARTMENT_HEAD,REGISTRAR_HEAD,REGISTRAR_OFFICER')")
     public ResponseEntity<GlobalResponse<List<SemesterResultDto>>> calculateAllSemesterResults(@PathVariable String studentId) {
         List<SemesterResultDto> results = resultService.calculateAllSemesterResults(studentId);
         return ResponseEntity.ok(GlobalResponse.success("All semester results calculated successfully", results));
@@ -47,12 +47,27 @@ public class ResultController {
         return ResponseEntity.ok(GlobalResponse.success("CGPA calculated successfully", cgpa));
     }
 
-    @PostMapping("/students/{studentId}/semester/recalculate")
-    public ResponseEntity<GlobalResponse<SemesterResultDto>> recalculateAndSaveSemesterResult(
-            @PathVariable String studentId,
-            @RequestParam Integer academicYear,
-            @RequestParam Integer semester) {
-        SemesterResultDto result = resultService.recalculateAndSaveSemesterResult(studentId, academicYear, semester);
-        return ResponseEntity.ok(GlobalResponse.success("Semester result recalculated successfully", result));
+//    @PostMapping("/students/{studentId}/semester/recalculate")
+//    public ResponseEntity<GlobalResponse<SemesterResultDto>> recalculateAndSaveSemesterResult(
+//            @PathVariable String studentId,
+//            @RequestParam Integer academicYear,
+//            @RequestParam Integer semester) {
+//        SemesterResultDto result = resultService.recalculateAndSaveSemesterResult(studentId, academicYear, semester);
+//        return ResponseEntity.ok(GlobalResponse.success("Semester result recalculated successfully", result));
+//    }
+
+    @GetMapping("/students/semester")
+    @PreAuthorize("hasAnyRole('STUDENT')")
+    public ResponseEntity<GlobalResponse<SemesterResultDto>> calculateSemesterResult() {
+        SemesterResultDto result = resultService.calculateSemesterResult();
+        return ResponseEntity.ok(GlobalResponse.success("Semester result calculated successfully", result));
     }
+    @GetMapping("/students/all-semester")
+    @PreAuthorize("hasAnyRole('STUDENT')")
+    public ResponseEntity<GlobalResponse<List<SemesterResultDto>>> calculateAllSemesterResults() {
+        List<SemesterResultDto> results = resultService.calculateAllSemesterResults();
+        return ResponseEntity.ok(GlobalResponse.success("All semester results calculated successfully", results));
+    }
+
+
 }

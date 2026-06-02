@@ -7,11 +7,13 @@ import java.util.List;
 
 public interface ResultService {
     SemesterResultDto calculateSemesterResult(String studentId, Integer academicYear, Integer semester);
+    SemesterResultDto calculateSemesterResult();
 
     List<SemesterResultDto> calculateAllSemesterResults(String studentId);
+    List<SemesterResultDto> calculateAllSemesterResults();
 
     BigDecimal calculateCgpa(String studentId);
 
-    SemesterResultDto recalculateAndSaveSemesterResult(String studentId, Integer academicYear, Integer semester);
+    SemesterResultDto recalculateAndSaveSemesterResult(String studentId);
 
 }

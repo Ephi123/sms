@@ -51,7 +51,8 @@ public interface GradeRepo extends JpaRepository<Grade,Long> {
     List<Grade> findGradesThroughSemester(
             @Param("student") Student student,
             @Param("studyYear") Integer studyYear,
-            @Param("semester") Integer semester
+            @Param("semester") Integer semester,
+            @Param("academicYear") Integer academicYear
     );
 
 
