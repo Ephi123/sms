@@ -1,10 +1,7 @@
 package com.project1.sms.repository;
 
 import com.project1.sms.enumeration.CourseStatus;
-import com.project1.sms.model.CourseAssignment;
-import com.project1.sms.model.CourseOffering;
-import com.project1.sms.model.Department;
-import com.project1.sms.model.Teacher;
+import com.project1.sms.model.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -28,4 +25,7 @@ public interface CourseAssignmentRepo extends JpaRepository<CourseAssignment,Lon
 
     Optional<CourseAssignment> findByCourseOfferingId(Long courseOfferingId);
     List<CourseAssignment> findByCourseStatus(CourseStatus courseStatus);
+
+
+
 }

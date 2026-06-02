@@ -1,11 +1,12 @@
 package com.project1.sms.controller;
 
 import com.project1.sms.Service.TeacherService;
-import com.project1.sms.response.GlobalResponse;
+import com.project1.sms.globalResponse.GlobalResponse;
 import com.project1.sms.responseDto.TeacherWithDepartmentDTo;
 import com.project1.sms.responseDto.UserResponse;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,13 +22,13 @@ public class TeacherController {
     public TeacherController(TeacherService teacherService) {
         this.teacherService = teacherService;
     }
-
+     @PreAuthorize("hasAnyRole('DEAN,VICE_DEAN')")
     @GetMapping("/unregistered")
     public ResponseEntity<GlobalResponse<List<UserResponse>>> getUnregisteredTeachers() {
         List<UserResponse> teachers = teacherService.getUnregisteredTeachers();
         return ResponseEntity.ok(GlobalResponse.success("Unregistered teachers fetched successfully", teachers));
     }
-
+    @PreAuthorize("hasAnyRole('DEAN,VICE_DEAN')")
     @PostMapping("/users/{userId}/departments/{departmentId}")
     public ResponseEntity<GlobalResponse<?>> registerTeacher(
             @PathVariable Long userId,
@@ -35,7 +36,7 @@ public class TeacherController {
         teacherService.registerTeacher(userId, departmentId);
         return ResponseEntity.ok(GlobalResponse.success("Teacher registered successfully", null));
     }
-
+    @PreAuthorize("hasAnyRole('CEO,DEAN,VICE_DEAN')")
     @GetMapping("/with-departments")
     public ResponseEntity<GlobalResponse<List<TeacherWithDepartmentDTo>>> getAllTeacherWithDepartment() {
         List<TeacherWithDepartmentDTo> teachers = teacherService.getAllTeacherWithDepartment();

@@ -1,6 +1,6 @@
 package com.project1.sms.Service;
 
-import com.project1.sms.apiException.ApiException;
+import com.project1.sms.apiException.ResourceNotFoundException;
 import com.project1.sms.model.UserEntity;
 import com.project1.sms.requestDTO.ChangePasswordRequest;
 import com.project1.sms.requestDTO.LoginRequest;
@@ -44,7 +44,7 @@ public class AuthService {
 //    }
 
     public void restPassword(String userName){
-           UserEntity user = userRepo.findByUserName(userName).orElseThrow(() -> new ApiException("user not found"));
+           UserEntity user = userRepo.findByUserName(userName).orElseThrow(() -> new ResourceNotFoundException("user not found"));
                      user.setPassword(passwordEncoder.encode("default_"+user.getFirstName()));
                      userRepo.save(user);
     }

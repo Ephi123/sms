@@ -3,7 +3,7 @@ package com.project1.sms.Service.imp;
 import com.project1.sms.enumeration.CourseStatus;
 import com.project1.sms.responseDto.AssessmentResultResponse;
 import com.project1.sms.Service.AssessmentResultService;
-import com.project1.sms.apiException.ApiException;
+import com.project1.sms.apiException.ResourceNotFoundException;
 import com.project1.sms.dto.AssessmentResultDetailDTO;
 import com.project1.sms.model.*;
 import com.project1.sms.repository.*;
@@ -28,8 +28,8 @@ public class AssessmentResultImpl implements AssessmentResultService {
     //student
     @Override
     public AssessmentResultResponse getStudentAssessmentResult(Long offeringId,String stdId) {
-        CourseOffering  offering=offeringRepo.findById(offeringId).orElseThrow(() -> new ApiException("offering not found"));
-        Student student = studentRepo.findByUserUserId(stdId).orElseThrow(() -> new ApiException("student is not found"));
+        CourseOffering  offering=offeringRepo.findById(offeringId).orElseThrow(() -> new ResourceNotFoundException("offering not found"));
+        Student student = studentRepo.findByUserUserId(stdId).orElseThrow(() -> new ResourceNotFoundException("student is not found"));
         List<AssessmentResultDetailDTO> results = assessmentResultRepo.findStudentGradeDetails(offeringId,stdId);
 
         int total = 0;
@@ -47,7 +47,7 @@ public class AssessmentResultImpl implements AssessmentResultService {
         resultResponse.setName(results.get(0).getStudentName());
         resultResponse.setStudentId(results.get(0).getStudentId());
 
-        CourseAssignment courseAssignment =courseAssignmentRepo.findByCourseOfferingId(offeringId).orElseThrow(() -> new ApiException("course Not Assigned"));
+        CourseAssignment courseAssignment =courseAssignmentRepo.findByCourseOfferingId(offeringId).orElseThrow(() -> new ResourceNotFoundException("course Not Assigned"));
         if(CourseStatus.APPROVED != courseAssignment.getCourseStatus()){
             resultResponse.setGrade(null);
         }
@@ -65,11 +65,11 @@ public class AssessmentResultImpl implements AssessmentResultService {
     @Override
     public AssessmentResultResponse updateResult(Long resultId, Integer mark) {
 
-        AssessmentResult result =assessmentResultRepo.findById(resultId).orElseThrow(() -> new ApiException("result is not found"));
+        AssessmentResult result =assessmentResultRepo.findById(resultId).orElseThrow(() -> new ResourceNotFoundException("result is not found"));
         CourseOffering courseOffering = result.getAssessment().getCourseOffering();
-        CourseAssignment  courseAssignment =courseAssignmentRepo.findByCourseOfferingId(courseOffering.getId()).orElseThrow(() -> new ApiException("course not assigned yet"));
+        CourseAssignment  courseAssignment =courseAssignmentRepo.findByCourseOfferingId(courseOffering.getId()).orElseThrow(() -> new ResourceNotFoundException("course not assigned yet"));
         if(courseAssignment.getCourseStatus() == CourseStatus.NOT_SUBMITTED){
-            throw new ApiException("you can't insert student mark after Submitting a grade");
+            throw new ResourceNotFoundException("you can't insert student mark after Submitting a grade");
         }
 
         result.setMarksObtained(mark);
@@ -81,13 +81,13 @@ public class AssessmentResultImpl implements AssessmentResultService {
     //Teacher department head and registrar
     @Override
     public List<AssessmentResultResponse> getGradeSheet(Long courseOfferingId) {
-         CourseAssignment courseAssignment =courseAssignmentRepo.findByCourseOfferingId(courseOfferingId).orElseThrow(() -> new ApiException("course not Assigned yet"));
+         CourseAssignment courseAssignment =courseAssignmentRepo.findByCourseOfferingId(courseOfferingId).orElseThrow(() -> new ResourceNotFoundException("course not Assigned yet"));
         CourseStatus courseStatus =courseAssignment.getCourseStatus();
 
         List<AssessmentResultDetailDTO> rawData = assessmentResultRepo.findGradeDetails(courseOfferingId);
-        CourseOffering offering = offeringRepo.findById(courseOfferingId).orElseThrow(() -> new ApiException("course offering is not found"));
+        CourseOffering offering = offeringRepo.findById(courseOfferingId).orElseThrow(() -> new ResourceNotFoundException("course offering is not found"));
         String stdId = rawData.get(0).getStudentId();
-        Student student = studentRepo.findByUserUserId(stdId).orElseThrow(() -> new ApiException("student is not found"));
+        Student student = studentRepo.findByUserUserId(stdId).orElseThrow(() -> new ResourceNotFoundException("student is not found"));
         Map<String, AssessmentResultResponse> tableMap = new LinkedHashMap<>();
 
         for (AssessmentResultDetailDTO detail : rawData) {
@@ -113,7 +113,7 @@ public class AssessmentResultImpl implements AssessmentResultService {
 
             Student std = studentRepo
                     .findByUserUserId(resultResponse.getStudentId())
-                    .orElseThrow(() -> new ApiException("student is not found"));
+                    .orElseThrow(() -> new ResourceNotFoundException("student is not found"));
 
             Grade grade = gradeRepo.findByStudentAndOffering(std, offering);
 
@@ -131,7 +131,7 @@ public class AssessmentResultImpl implements AssessmentResultService {
     //to let a Teacher  give NG|IC|IA
     @Override
     public AssessmentResultResponse gradeUpdate(Long gradeId,String Grade) {
-        Grade grade =gradeRepo.findById(gradeId).orElseThrow(() -> new ApiException("grade is not found"));
+        Grade grade =gradeRepo.findById(gradeId).orElseThrow(() -> new ResourceNotFoundException("grade is not found"));
         grade.setGrade(Grade);
         Grade updatedGrade =gradeRepo.save(grade);
         CourseOffering offering = updatedGrade.getOffering();

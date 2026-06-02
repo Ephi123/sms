@@ -1,7 +1,7 @@
 package com.project1.sms.Service.imp;
 
 import com.project1.sms.Service.TeacherService;
-import com.project1.sms.apiException.ApiException;
+import com.project1.sms.apiException.ResourceNotFoundException;
 import com.project1.sms.model.Department;
 import com.project1.sms.model.Teacher;
 import com.project1.sms.model.UserEntity;
@@ -28,8 +28,8 @@ public class TeacherImpl implements TeacherService {
 
     @Override
     public void registerTeacher(Long userId, Long departmentId) {
-        Department department= departmentRepo.findById(departmentId).orElseThrow(() -> new ApiException("department is not found"));
-       UserEntity user = userRepo.findById(userId).orElseThrow(() -> new ApiException("User not found"));
+        Department department= departmentRepo.findById(departmentId).orElseThrow(() -> new ResourceNotFoundException("department is not found"));
+       UserEntity user = userRepo.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found"));
        Teacher teacher = Teacher.builder().department(department).user(user).build();
            teacherRepo.save(teacher);
 

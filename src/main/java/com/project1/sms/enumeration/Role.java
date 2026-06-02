@@ -1,12 +1,11 @@
 package com.project1.sms.enumeration;
 
 public enum Role {
-    OWNER,
+    CEO,
     ADMIN,
     FINANCE_OFFICER,
     TEACHER,
     STUDENT,
-    REGISTRAR,
     REGISTRAR_HEAD,
     DEPARTMENT_HEAD,
     FINANCE_HEAD,

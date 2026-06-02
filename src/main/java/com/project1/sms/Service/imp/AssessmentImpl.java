@@ -1,7 +1,7 @@
 package com.project1.sms.Service.imp;
 
 import com.project1.sms.Service.AssessmentService;
-import com.project1.sms.apiException.ApiException;
+import com.project1.sms.apiException.ResourceNotFoundException;
 import com.project1.sms.model.Assessment;
 import com.project1.sms.model.CourseOffering;
 import com.project1.sms.model.Enrollment;
@@ -31,12 +31,12 @@ private final AssessmentResultRepo assessmentResultRepo;
 
     @Override
     public Map<String, Object> createAssessment(AssessmentRequest request) {
-   CourseOffering offering = offeringRepo.findById(request.getOfferingId()).orElseThrow(() -> new ApiException("course offering not found"));
+   CourseOffering offering = offeringRepo.findById(request.getOfferingId()).orElseThrow(() -> new ResourceNotFoundException("course offering not found"));
    int total = request.getWeight();
    List<Assessment> assessments =assessmentRepo.findByCourseOffering(offering);
    for(Assessment assessment: assessments){
        if(total>100){
-           throw new ApiException("Total assessment load must be equals  to 100 ");
+           throw new ResourceNotFoundException("Total assessment load must be equals  to 100 ");
        }
 
               total += assessment.getWeightPercent();
@@ -57,8 +57,8 @@ assessmentResultRepo.saveAll(assessmentResults);
 
     @Override
     public Map<String, Object> updateAssessment(AssessmentRequest request,Long assessmentId) {
-        Assessment assessment = assessmentRepo.findById(assessmentId).orElseThrow(() -> new ApiException("Assessment is not found"));
-        CourseOffering offering = offeringRepo.findById(request.getOfferingId()).orElseThrow(() -> new ApiException("course offering not found"));
+        Assessment assessment = assessmentRepo.findById(assessmentId).orElseThrow(() -> new ResourceNotFoundException("Assessment is not found"));
+        CourseOffering offering = offeringRepo.findById(request.getOfferingId()).orElseThrow(() -> new ResourceNotFoundException("course offering not found"));
         List<Assessment>  assessments = assessmentRepo.findByCourseOffering(offering);
         int total = request.getWeight();
         for(Assessment ass:assessments){
@@ -67,7 +67,7 @@ assessmentResultRepo.saveAll(assessmentResults);
             }
                total += ass.getWeightPercent();
             if(total > 100){
-                throw new ApiException("Total assessment load must be equals  to 100 ");
+                throw new ResourceNotFoundException("Total assessment load must be equals  to 100 ");
             }
         }
         assessment.setTitle(request.getTitle());
@@ -82,7 +82,7 @@ assessmentResultRepo.saveAll(assessmentResults);
     @Override
     public void deleteAssessment(Long assessmentId) {
         Assessment assessment = assessmentRepo.
-                findById(assessmentId).orElseThrow(() -> new ApiException("assessment not Found"));
+                findById(assessmentId).orElseThrow(() -> new ResourceNotFoundException("assessment not Found"));
 
         assessmentRepo.delete(assessment);
     }

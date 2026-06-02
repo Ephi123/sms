@@ -2,7 +2,7 @@ package com.project1.sms.controller;
 
 import com.project1.sms.Service.AssignmentService;
 import com.project1.sms.requestDTO.AssignmentUpdateRequest;
-import com.project1.sms.response.GlobalResponse;
+import com.project1.sms.globalResponse.GlobalResponse;
 import com.project1.sms.responseDto.AssignmentResponse;
 import jakarta.validation.Valid;
 import java.util.List;

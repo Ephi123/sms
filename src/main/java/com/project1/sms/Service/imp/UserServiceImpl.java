@@ -2,7 +2,7 @@ package com.project1.sms.Service.imp;
 
 
 import com.project1.sms.Service.UserService;
-import com.project1.sms.apiException.ApiException;
+import com.project1.sms.apiException.ResourceNotFoundException;
 import com.project1.sms.enumeration.Active;
 import com.project1.sms.enumeration.Role;
 import com.project1.sms.model.UserEntity;
@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
    @Override
     public UserResponse getCurrentUser(Authentication authentication) {
         UserEntity user = userRepo.findByUserName(authentication.getName())
-                .orElseThrow(() -> new IllegalArgumentException("Authenticated user not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Authenticated user not found"));
         return UserResponse.from(user);
     }
 
@@ -76,14 +76,14 @@ public class UserServiceImpl implements UserService {
     //admin
     @Override
     public UserResponse getUser(String userId) {
-        return UserResponse.from(userRepo.findByUserId(userId).orElseThrow(() -> new ApiException("user not found")));
+        return UserResponse.from(userRepo.findByUserId(userId).orElseThrow(() -> new ResourceNotFoundException("user not found")));
     }
 
 
 // admin
     @Override
     public void updateUser(String userId , UserUpdateRequest request) {
-        UserEntity user = userRepo.findByUserId(userId).orElseThrow(() -> new ApiException("user Not Found"));
+        UserEntity user = userRepo.findByUserId(userId).orElseThrow(() -> new ResourceNotFoundException("user Not Found"));
         user.setFirstName(request.firstName());
         user.setMidlName(request.fatherName());
         user.setLastName(request.grandFName());
@@ -98,7 +98,7 @@ public class UserServiceImpl implements UserService {
     //admin
     @Override
     public void updateUserActiveStatus(String userId, Active status) {
-        UserEntity user =  userRepo.findByUserId(userId).orElseThrow(() -> new ApiException("user not found"));
+        UserEntity user =  userRepo.findByUserId(userId).orElseThrow(() -> new ResourceNotFoundException("user not found"));
         user.setIsActive(status);
         userRepo.save(user);
 
@@ -106,7 +106,7 @@ public class UserServiceImpl implements UserService {
  //admin
     @Override
     public void addRoles(String userId, RoleRequest request) {
-        UserEntity user = userRepo.findByUserId(userId).orElseThrow(() -> new ApiException("user not found"));
+        UserEntity user = userRepo.findByUserId(userId).orElseThrow(() -> new ResourceNotFoundException("user not found"));
         user.setRoles(request.roles());
         userRepo.save(user);
 

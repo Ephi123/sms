@@ -1,7 +1,7 @@
 package com.project1.sms.controller;
 
 import com.project1.sms.Service.AssignmentFileService;
-import com.project1.sms.response.GlobalResponse;
+import com.project1.sms.globalResponse.GlobalResponse;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

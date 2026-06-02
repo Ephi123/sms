@@ -1,17 +1,10 @@
 package com.project1.sms.seeder;
 
-import com.project1.sms.apiException.ApiException;
-import com.project1.sms.enumeration.Active;
-import com.project1.sms.enumeration.Role;
-import com.project1.sms.model.UserEntity;
 import com.project1.sms.repository.UserRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
-import java.util.Set;
 
 @Component
 @RequiredArgsConstructor

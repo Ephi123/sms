@@ -30,4 +30,6 @@ AND NOT EXISTS (
            int sem,
            Department department
    );
+   int countByAcademicYearAndStudyYearAndSemAndSectionAndProgramAndDepartment(Integer academicYear, Integer studyYear, Integer sem, Section section, Program program, Department department);
+
 }

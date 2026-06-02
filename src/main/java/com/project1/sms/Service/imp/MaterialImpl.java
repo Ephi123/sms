@@ -1,7 +1,7 @@
 package com.project1.sms.Service.imp;
 
 import com.project1.sms.Service.MaterialService;
-import com.project1.sms.apiException.ApiException;
+import com.project1.sms.apiException.ResourceNotFoundException;
 import com.project1.sms.model.CourseOffering;
 import com.project1.sms.model.Material;
 import com.project1.sms.model.Teacher;
@@ -53,7 +53,7 @@ public class MaterialImpl implements MaterialService {
 
     @Override
     public MaterialResponse updateMaterial(Long materialId, UpdateMaterialRequest request) {
-      Material material = materialRepo.findById(materialId).orElseThrow(() -> new ApiException("material not found"));
+      Material material = materialRepo.findById(materialId).orElseThrow(() -> new ResourceNotFoundException("material not found"));
       material.setDescription(request.getDescription());
       material.setTitle(request.getTitle());
       Material savedMaterial = materialRepo.save(material);
@@ -65,7 +65,7 @@ public class MaterialImpl implements MaterialService {
         long MAX_SIZE = 1024 * 1024;
 
         if (file.getSize() > MAX_SIZE) {
-            throw new ApiException(
+            throw new ResourceNotFoundException(
                     "File size must not exceed 1 MB"
             );
         }
@@ -75,12 +75,12 @@ public class MaterialImpl implements MaterialService {
         Teacher teacher = teacherRepo
                 .findByUserId(userId)
                 .orElseThrow(() ->
-                        new ApiException("Teacher not found"));
+                        new ResourceNotFoundException("Teacher not found"));
 
         CourseOffering offering =
                 offeringRepo.findById(offeringId)
                         .orElseThrow(() ->
-                                new ApiException(
+                                new ResourceNotFoundException(
                                         "Course offering not found"
                                 ));
 
@@ -129,7 +129,7 @@ public class MaterialImpl implements MaterialService {
 
     @Override
     public MaterialResponse getMaterial(Long materialId) {
-        Material material = materialRepo.findById(materialId).orElseThrow(() -> new ApiException(",material not found"));
+        Material material = materialRepo.findById(materialId).orElseThrow(() -> new ResourceNotFoundException(",material not found"));
 
         return MaterialResponse.from(material);
     }

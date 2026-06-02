@@ -1,11 +1,12 @@
 package com.project1.sms.controller;
 
 import com.project1.sms.Service.SectionService;
-import com.project1.sms.response.GlobalResponse;
+import com.project1.sms.globalResponse.GlobalResponse;
 import com.project1.sms.responseDto.SectionResponse;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,6 +24,7 @@ public class SectionController {
     }
 
     @PostMapping("/departments/{departmentId}/programs/{programId}")
+    @PreAuthorize("hasAnyRole('ADMIN,REGISTRAR_HEAD')")
     public ResponseEntity<GlobalResponse<?>> createSection(
             @PathVariable Long departmentId,
             @PathVariable Long programId) {
@@ -30,7 +32,7 @@ public class SectionController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(GlobalResponse.success(HttpStatus.CREATED, "Section created successfully", null));
     }
-
+   @PreAuthorize("hasRole('REGISTRAR_HEAD')")
     @GetMapping("/departments/{departmentId}/programs/{programId}")
     public ResponseEntity<GlobalResponse<List<SectionResponse>>> getSectionsByDePAndPro(
             @PathVariable Long departmentId,

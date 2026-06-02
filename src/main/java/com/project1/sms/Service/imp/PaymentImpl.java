@@ -2,7 +2,7 @@ package com.project1.sms.Service.imp;
 
 import com.project1.sms.Service.PaymentService;
 
-import com.project1.sms.apiException.ApiException;
+import com.project1.sms.apiException.ResourceNotFoundException;
 import com.project1.sms.domain.EthiopianCalendar;
 import com.project1.sms.dto.MonthlyPaymentReportDTO;
 import com.project1.sms.enumeration.FinanceOfficerStatus;
@@ -37,8 +37,8 @@ public class PaymentImpl implements PaymentService {
     public Map<String, Object> getPaymentDetailOfStudent(String userId) {
 
         Student  student = studentRepo.findByUserUserId(userId).
-                orElseThrow(()-> new ApiException("Student Not Found"));
-        CurrentSem currentSem =currentSemRepo.findTopByOrderByIdDesc().orElseThrow(() -> new ApiException("sem is not defined"));
+                orElseThrow(()-> new ResourceNotFoundException("Student Not Found"));
+        CurrentSem currentSem =currentSemRepo.findTopByOrderByIdDesc().orElseThrow(() -> new ResourceNotFoundException("sem is not defined"));
 
 
     Enrollment enrollment =enrollRepo.getEnrolledStudent(
@@ -96,7 +96,7 @@ public class PaymentImpl implements PaymentService {
 
          boolean isStudentEnrol = enrollRepo.existsByStudentUserUserId(studentId);
         Student student = studentRepo.findByUserUserId(studentId).
-                orElseThrow(() -> new ApiException("student is not found"));
+                orElseThrow(() -> new ResourceNotFoundException("student is not found"));
 
         int currentSem = currentSemRepo.findAll().get(0).getCurrentSem();
            if(isStudentEnrol && currentSem==1){
@@ -123,7 +123,7 @@ public class PaymentImpl implements PaymentService {
                 student.getDepartment()
         );
         if(offerings == null)
-            throw new ApiException("course not found");
+            throw new ResourceNotFoundException("course not found");
         Student finalStudent = student;
         offerings.forEach(courseOffering -> {
             Enrollment enrollment = new Enrollment();
@@ -142,7 +142,7 @@ public class PaymentImpl implements PaymentService {
 
         });
 
-        PaymentScall scall = paymentScallRepo.findByDepartment(student.getDepartment()).orElseThrow(() -> new ApiException("scall not found"));
+        PaymentScall scall = paymentScallRepo.findByDepartment(student.getDepartment()).orElseThrow(() -> new ResourceNotFoundException("scall not found"));
         Payment payment = new Payment();
         payment.setPayment(calculateMonthPayment(student)+scall.getRegistrationFee());
         payment.setMonth(1);
@@ -166,8 +166,8 @@ public class PaymentImpl implements PaymentService {
     public Map<String, Object> makePaymentAfterEnroll(String studentId) {
 
         Student student = studentRepo.findByUserUserId(studentId).
-                orElseThrow(() -> new ApiException("student is not found"));
-        CurrentSem currentSem = currentSemRepo.findTopByOrderByIdDesc().orElseThrow(() -> new ApiException("sem is not defined"));
+                orElseThrow(() -> new ResourceNotFoundException("student is not found"));
+        CurrentSem currentSem = currentSemRepo.findTopByOrderByIdDesc().orElseThrow(() -> new ResourceNotFoundException("sem is not defined"));
           List<Payment>  payments = paymentRepo.findByStudentAndSemAndAcademicYearOrderByMonthAsc(student,student.getCurrentSem(),EthiopianCalendar.ethiopianYear());
           int month = 0;
           for(Payment payment: payments){
@@ -243,7 +243,7 @@ public class PaymentImpl implements PaymentService {
     public void updateFinanceOfficerStatus(Long officerId) {
        int x = paymentRepo.updateOfficerStatusToChecked(officerId,FinanceOfficerStatus.CHECKED);
         if(x==0)
-         throw new ApiException("not updated");
+         throw new ResourceNotFoundException("not updated");
 
     }
 
@@ -269,7 +269,7 @@ public class PaymentImpl implements PaymentService {
     }
 
     private int calculateMonthPayment(Student student){
- PaymentScall  scall = paymentScallRepo.findByDepartment(student.getDepartment()).orElseThrow(() -> new ApiException("payment not defined"));
+ PaymentScall  scall = paymentScallRepo.findByDepartment(student.getDepartment()).orElseThrow(() -> new ResourceNotFoundException("payment not defined"));
 int months;
 int totalCHR = 0;
  if(student.getCurrentSem() == 3){

@@ -1,6 +1,7 @@
 package com.project1.sms.Service.imp;
 
 import com.project1.sms.Service.ResultService;
+import com.project1.sms.apiException.ResourceNotFoundException;
 import com.project1.sms.dto.CourseGradeDto;
 import com.project1.sms.dto.SemesterResultDto;
 import com.project1.sms.model.Course;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.nio.file.ReadOnlyFileSystemException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -119,7 +121,7 @@ public class ResultImpl implements ResultService {
 
     private Student findStudent(String studentId) {
         return studentRepository.findByUserUserId(studentId)
-                .orElseThrow(() -> new EntityNotFoundException("Student not found: " + studentId));
+                .orElseThrow(() -> new ResourceNotFoundException("Student not found: " + studentId));
     }
 
 

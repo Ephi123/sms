@@ -2,7 +2,7 @@ package com.project1.sms.controller;
 
 import com.project1.sms.Service.CourseAssignmentService;
 import com.project1.sms.requestDTO.CourseOfferingResponse;
-import com.project1.sms.response.GlobalResponse;
+import com.project1.sms.globalResponse.GlobalResponse;
 import java.util.List;
 import java.util.Map;
 

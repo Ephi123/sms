@@ -1,7 +1,7 @@
 package com.project1.sms.Service.imp;
 
 import com.project1.sms.Service.AssignmentFileService;
-import com.project1.sms.apiException.ApiException;
+import com.project1.sms.apiException.ResourceNotFoundException;
 import com.project1.sms.model.Assignment;
 import com.project1.sms.model.AssignmentFile;
 import com.project1.sms.model.Student;
@@ -44,7 +44,7 @@ public class AssignmentFileServiceImpl
         long MAX_SIZE = 1024 * 1024;
 
         if (file.getSize() > MAX_SIZE) {
-            throw  new ApiException(
+            throw  new ResourceNotFoundException(
                     "File size must not exceed 1 MB"
             );
         }

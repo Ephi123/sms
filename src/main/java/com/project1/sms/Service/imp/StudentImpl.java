@@ -1,7 +1,7 @@
 package com.project1.sms.Service.imp;
 
 import com.project1.sms.Service.StudentService;
-import com.project1.sms.apiException.ApiException;
+import com.project1.sms.apiException.ResourceNotFoundException;
 import com.project1.sms.dto.UserDto;
 import com.project1.sms.enumeration.Active;
 import com.project1.sms.enumeration.Role;
@@ -34,9 +34,9 @@ public class StudentImpl implements StudentService {
     private final PasswordEncoder passwordEncoder;
     @Override
     public void studentRegister(StudentRequest request) {
-        Program program = programRepo.findByName(request.Program()).orElseThrow(() -> new ApiException("program is not found"));
-        Department department = departmentRepo.findByDepName(request.department()).orElseThrow(() -> new ApiException("department is not found"));
-        Section section = sectionRepo.findBySection(request.section()).orElseThrow(() -> new ApiException("section is not found"));
+        Program program = programRepo.findByName(request.Program()).orElseThrow(() -> new ResourceNotFoundException("program is not found"));
+        Department department = departmentRepo.findByDepName(request.department()).orElseThrow(() -> new ResourceNotFoundException("department is not found"));
+        Section section = sectionRepo.findBySection(request.section()).orElseThrow(() -> new ResourceNotFoundException("section is not found"));
         int studentNum = studentRepo.countByDepartmentAndProgramAndSectionAndCurrentYear(department,program,section,request.year())+1;
 
 
@@ -70,9 +70,9 @@ public class StudentImpl implements StudentService {
 
     @Override
     public void studentsRegistered(StudentsRequest studentsRequest) {
-        Program program = programRepo.findByName(studentsRequest.Program()).orElseThrow(() -> new ApiException("program is not found"));
-        Department department = departmentRepo.findByDepName(studentsRequest.department()).orElseThrow(() -> new ApiException("department is not found"));
-        Section section = sectionRepo.findBySection(studentsRequest.section()).orElseThrow(() -> new ApiException("section is not found"));
+        Program program = programRepo.findByName(studentsRequest.Program()).orElseThrow(() -> new ResourceNotFoundException("program is not found"));
+        Department department = departmentRepo.findByDepName(studentsRequest.department()).orElseThrow(() -> new ResourceNotFoundException("department is not found"));
+        Section section = sectionRepo.findBySection(studentsRequest.section()).orElseThrow(() -> new ResourceNotFoundException("section is not found"));
         int studentNum = studentRepo.countByDepartmentAndProgramAndSectionAndCurrentYear(department,program,section,studentsRequest.year())+1;
       List<UserEntity> users = new ArrayList<>();
         int temp = studentNum;

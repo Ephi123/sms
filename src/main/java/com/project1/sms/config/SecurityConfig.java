@@ -1,6 +1,8 @@
 package com.project1.sms.config;
 
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
+import com.project1.sms.exceptionHandler.CustomAccessDeniedHandler;
+import com.project1.sms.exceptionHandler.CustomAuthenticationEntryPoint;
 import com.project1.sms.security.CustomUserDetailsService;
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
@@ -42,6 +44,8 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     private final CustomUserDetailsService userDetailsService;
+    private final CustomAuthenticationEntryPoint authenticationEntryPoint;
+    private final CustomAccessDeniedHandler accessDeniedHandler;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -52,6 +56,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**", "/actuator/health").permitAll()
                         .anyRequest().authenticated()
+                ).exceptionHandling(ex->
+                        ex.authenticationEntryPoint(authenticationEntryPoint)
+                                .accessDeniedHandler(accessDeniedHandler)
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())))
                 .authenticationProvider(authenticationProvider())

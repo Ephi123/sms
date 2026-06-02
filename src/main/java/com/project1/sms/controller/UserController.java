@@ -1,7 +1,6 @@
 package com.project1.sms.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import com.project1.sms.Service.imp.UserServiceImpl;
 import com.project1.sms.enumeration.Active;
@@ -9,7 +8,7 @@ import com.project1.sms.enumeration.Role;
 import com.project1.sms.requestDTO.RegisterRequest;
 import com.project1.sms.requestDTO.RoleRequest;
 import com.project1.sms.requestDTO.UserUpdateRequest;
-import com.project1.sms.response.GlobalResponse;
+import com.project1.sms.globalResponse.GlobalResponse;
 import com.project1.sms.responseDto.UserResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

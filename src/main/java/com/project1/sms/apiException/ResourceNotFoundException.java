@@ -1,18 +1,18 @@
 package com.project1.sms.apiException;
 
-public class ApiException extends RuntimeException {
+public class ResourceNotFoundException extends RuntimeException {
     Integer errorStatus;
-    public ApiException(String message) {
+    public ResourceNotFoundException(String message) {
         super(message);
     }
-    public ApiException(String message,int errorStatus) {
+    public ResourceNotFoundException(String message, int errorStatus) {
 
         super(message);
         this.errorStatus = errorStatus;
     }
 
 
-    public ApiException() {
+    public ResourceNotFoundException() {
         super("error occurred");
     }
 

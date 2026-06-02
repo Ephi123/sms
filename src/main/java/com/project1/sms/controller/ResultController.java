@@ -2,10 +2,11 @@ package com.project1.sms.controller;
 
 import com.project1.sms.Service.ResultService;
 import com.project1.sms.dto.SemesterResultDto;
-import com.project1.sms.response.GlobalResponse;
+import com.project1.sms.globalResponse.GlobalResponse;
 import java.math.BigDecimal;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +25,7 @@ public class ResultController {
     }
 
     @GetMapping("/students/{studentId}/semester")
+    @PreAuthorize("hasAnyRole('DEPARTMENT_HEAD,REGISTRAR_HEAD,REGISTRAR_OFFICER')")
     public ResponseEntity<GlobalResponse<SemesterResultDto>> calculateSemesterResult(
             @PathVariable String studentId,
             @RequestParam Integer academicYear,
@@ -33,6 +35,7 @@ public class ResultController {
     }
 
     @GetMapping("/students/{studentId}/semesters")
+
     public ResponseEntity<GlobalResponse<List<SemesterResultDto>>> calculateAllSemesterResults(@PathVariable String studentId) {
         List<SemesterResultDto> results = resultService.calculateAllSemesterResults(studentId);
         return ResponseEntity.ok(GlobalResponse.success("All semester results calculated successfully", results));

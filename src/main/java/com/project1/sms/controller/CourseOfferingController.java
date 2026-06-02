@@ -2,7 +2,7 @@ package com.project1.sms.controller;
 
 import com.project1.sms.Service.CourseOfferingService;
 import com.project1.sms.requestDTO.CourseOfferingRequest;
-import com.project1.sms.response.GlobalResponse;
+import com.project1.sms.globalResponse.GlobalResponse;
 import jakarta.validation.Valid;
 import java.util.Map;
 import org.springframework.http.HttpStatus;

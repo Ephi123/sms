@@ -1,4 +1,4 @@
-package com.project1.sms.response;
+package com.project1.sms.globalResponse;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.http.HttpStatus;
@@ -26,7 +26,7 @@ public record GlobalResponse<T>(
         return success(HttpStatus.OK, message, data);
     }
 
-    public static GlobalResponse<Void> failure(HttpStatus status, String message) {
+    public static GlobalResponse<Object> failure(HttpStatus status, String message) {
         return new GlobalResponse<>(Instant.now(), status.value(), message, null, null);
     }
 

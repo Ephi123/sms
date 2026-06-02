@@ -4,7 +4,7 @@ import com.project1.sms.Service.BookService;
 import com.project1.sms.model.Books;
 import com.project1.sms.requestDTO.BookRequest;
 import com.project1.sms.requestDTO.CategoryRequest;
-import com.project1.sms.response.GlobalResponse;
+import com.project1.sms.globalResponse.GlobalResponse;
 import com.project1.sms.responseDto.CategoryResponse;
 import jakarta.validation.Valid;
 import java.util.List;

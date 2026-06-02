@@ -1,7 +1,7 @@
 package com.project1.sms.controller;
 
 import com.project1.sms.Service.DepartmentService;
-import com.project1.sms.response.GlobalResponse;
+import com.project1.sms.globalResponse.GlobalResponse;
 import com.project1.sms.responseDto.DepartmentResponse;
 import com.project1.sms.responseDto.DepartmentWithHeadResponse;
 import java.util.List;

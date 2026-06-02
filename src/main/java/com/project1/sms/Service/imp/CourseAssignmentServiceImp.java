@@ -1,7 +1,7 @@
 package com.project1.sms.Service.imp;
 
 import com.project1.sms.Service.CourseAssignmentService;
-import com.project1.sms.apiException.ApiException;
+import com.project1.sms.apiException.ResourceNotFoundException;
 import com.project1.sms.domain.EthiopianCalendar;
 import com.project1.sms.enumeration.CourseStatus;
 import com.project1.sms.model.*;
@@ -28,8 +28,8 @@ public class CourseAssignmentServiceImp implements CourseAssignmentService {
     private  final CurrentSemRepo semRepo;
     @Override
     public Map<String, Object> assignCourse(Long offeringId, String teacherId) {
-        CourseOffering courseOffering = offeringRepo.findById(offeringId).orElseThrow(() -> new ApiException("course offering not found "));
-        Teacher teacher = teacherRepo.findByUserUserId(teacherId).orElseThrow(() -> new ApiException("teacher is ot found"));
+        CourseOffering courseOffering = offeringRepo.findById(offeringId).orElseThrow(() -> new ResourceNotFoundException("course offering not found "));
+        Teacher teacher = teacherRepo.findByUserUserId(teacherId).orElseThrow(() -> new ResourceNotFoundException("teacher is ot found"));
 
         CourseAssignment assignment = assignmentRepo.save( new CourseAssignment(courseOffering,teacher, CourseStatus.NOT_SUBMITTED));
         return Map.of();
@@ -38,10 +38,10 @@ public class CourseAssignmentServiceImp implements CourseAssignmentService {
     @Override
     public List<CourseOfferingResponse> getUnassignedCourses() {
         Long userId = currentUserService.getUserId();
-        Teacher teacher = teacherRepo.findByUserId(userId).orElseThrow(() -> new ApiException("teacher is not found"));
-        Department department = departmentRepo.findByHead(teacher).orElseThrow(() -> new ApiException("Department is not found"));
+        Teacher teacher = teacherRepo.findByUserId(userId).orElseThrow(() -> new ResourceNotFoundException("teacher is not found"));
+        Department department = departmentRepo.findByHead(teacher).orElseThrow(() -> new ResourceNotFoundException("Department is not found"));
         CurrentSem semester = semRepo.findTopByOrderByIdDesc()
-                .orElseThrow(() -> new ApiException("Semester not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Semester not found"));
         int sem = semester.getCurrentSem();
 
         List<CourseOffering> offerings =

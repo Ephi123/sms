@@ -1,7 +1,7 @@
 package com.project1.sms.Service.imp;
 
 import com.project1.sms.Service.AttendanceService;
-import com.project1.sms.apiException.ApiException;
+import com.project1.sms.apiException.ResourceNotFoundException;
 import com.project1.sms.enumeration.AttendanceStatus;
 import com.project1.sms.model.Attendance;
 import com.project1.sms.model.CourseOffering;
@@ -40,9 +40,9 @@ public class AttendanceIml implements AttendanceService {
     @Override
     public void createAttendance(Long offeringId, String studentId, int attendanceStatus) {
         Long teacherId = userService.getUserId();
-        Teacher teacher = teacherRepo.findById(teacherId).orElseThrow(() -> new ApiException("teacher is not found"));
+        Teacher teacher = teacherRepo.findById(teacherId).orElseThrow(() -> new ResourceNotFoundException("teacher is not found"));
         Student student = studentRepo.findByUserUserId(studentId).orElseThrow(() -> new UsernameNotFoundException("student not found"));
-        CourseOffering offering = offeringRepo.findById(offeringId).orElseThrow(() -> new ApiException("offering is not found"));
+        CourseOffering offering = offeringRepo.findById(offeringId).orElseThrow(() -> new ResourceNotFoundException("offering is not found"));
         AttendanceStatus status = attendanceStatus == 1? AttendanceStatus.PRESENT: AttendanceStatus.ABSENT;
         Attendance attendance =Attendance.builder()
                 .offering(offering).

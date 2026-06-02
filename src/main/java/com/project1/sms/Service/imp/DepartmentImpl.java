@@ -1,7 +1,7 @@
 package com.project1.sms.Service.imp;
 
 import com.project1.sms.Service.DepartmentService;
-import com.project1.sms.apiException.ApiException;
+import com.project1.sms.apiException.ResourceNotFoundException;
 import com.project1.sms.model.Department;
 import com.project1.sms.model.Teacher;
 import com.project1.sms.repository.DepartmentRepo;
@@ -28,7 +28,7 @@ public class DepartmentImpl implements DepartmentService {
 
     @Override
     public DepartmentResponse getDepartment(Long departmentId) {
-       Department department = departmentRepo.findById(departmentId).orElseThrow(() -> new ApiException("department is not found"));
+       Department department = departmentRepo.findById(departmentId).orElseThrow(() -> new ResourceNotFoundException("department is not found"));
 
         return DepartmentResponse.from(department);
     }
@@ -42,7 +42,7 @@ public class DepartmentImpl implements DepartmentService {
 
     @Override
     public void updateDepartment(Long depId,String depName) {
-       Department department = departmentRepo.findById(depId).orElseThrow(() -> new ApiException("department is not found"));
+       Department department = departmentRepo.findById(depId).orElseThrow(() -> new ResourceNotFoundException("department is not found"));
        department.setDepName(depName);
        departmentRepo.save(department);
     }
@@ -56,8 +56,8 @@ public class DepartmentImpl implements DepartmentService {
 
     @Override
     public void setDepartmentHead(Long departmentId, Long teacherId) {
-        Teacher teacher = teacherRepo.findById(teacherId).orElseThrow(() -> new ApiException("Teacher is not found"));
-        Department department = departmentRepo.findById(departmentId).orElseThrow(() -> new ApiException("department id not found"));
+        Teacher teacher = teacherRepo.findById(teacherId).orElseThrow(() -> new ResourceNotFoundException("Teacher is not found"));
+        Department department = departmentRepo.findById(departmentId).orElseThrow(() -> new ResourceNotFoundException("department id not found"));
         department.setHead(teacher);
         departmentRepo.save(department);
     }

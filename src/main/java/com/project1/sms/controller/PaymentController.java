@@ -1,7 +1,7 @@
 package com.project1.sms.controller;
 
 import com.project1.sms.Service.PaymentService;
-import com.project1.sms.response.GlobalResponse;
+import com.project1.sms.globalResponse.GlobalResponse;
 import java.util.List;
 import java.util.Map;
 

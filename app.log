@@ -494,3 +494,227 @@ Caused by: java.io.IOException: Exec failed, error: 2 (No such file or directory
 	at java.base/java.lang.ProcessBuilder.start(ProcessBuilder.java:1078) ~[na:na]
 	... 33 common frames omitted
 
+2026-06-02T09:56:07.575+03:00  INFO 7799 --- [restartedMain] com.project1.sms.SmsApplication          : Starting SmsApplication using Java 22.0.2 with PID 7799 (/home/ephi/Desktop/studentManegmentSystem/sms/target/classes started by ephi in /home/ephi/Desktop/studentManegmentSystem/sms)
+2026-06-02T09:56:07.623+03:00  INFO 7799 --- [restartedMain] com.project1.sms.SmsApplication          : The following 1 profile is active: "dev"
+2026-06-02T09:56:08.171+03:00  INFO 7799 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-06-02T09:56:08.172+03:00  INFO 7799 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-06-02T09:56:08.234+03:00  INFO 7799 --- [restartedMain] .s.b.d.c.l.DockerComposeLifecycleManager : Using Docker Compose file /home/ephi/Desktop/studentManegmentSystem/sms/compose.yaml
+2026-06-02T09:56:46.349+03:00  INFO 7799 --- [restartedMain] .s.b.d.c.l.DockerComposeLifecycleManager : There are already Docker Compose services running, skipping startup
+2026-06-02T09:56:51.589+03:00  INFO 7799 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-06-02T09:56:51.848+03:00  INFO 7799 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 219 ms. Found 23 JPA repository interfaces.
+2026-06-02T09:56:59.214+03:00  INFO 7799 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8085 (http)
+2026-06-02T09:56:59.476+03:00  INFO 7799 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-02T09:56:59.477+03:00  INFO 7799 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.20]
+2026-06-02T09:56:59.665+03:00  INFO 7799 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 13289 ms
+2026-06-02T09:57:04.198+03:00  INFO 7799 --- [restartedMain] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-06-02T09:57:08.063+03:00  INFO 7799 --- [restartedMain] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.7.Final
+2026-06-02T09:57:16.877+03:00  INFO 7799 --- [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-06-02T09:57:17.491+03:00  INFO 7799 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-06-02T09:57:24.631+03:00  INFO 7799 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@219654ce
+2026-06-02T09:57:24.650+03:00  INFO 7799 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-06-02T09:57:25.802+03:00  WARN 7799 --- [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-06-02T09:57:26.093+03:00  INFO 7799 --- [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://127.0.0.1:5433/sms]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 16.1
+	Default catalog/schema: sms/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-06-02T09:57:35.595+03:00  INFO 7799 --- [restartedMain] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-06-02T09:57:36.899+03:00  INFO 7799 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-06-02T09:57:37.296+03:00  INFO 7799 --- [restartedMain] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-06-02T09:57:40.040+03:00  INFO 7799 --- [restartedMain] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2026-06-02T09:57:40.041+03:00  WARN 7799 --- [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-06-02T09:57:45.539+03:00 DEBUG 7799 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, CorsFilter, LogoutFilter, OAuth2ProtectedResourceMetadataFilter, BearerTokenAuthenticationFilter, AuthenticationFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, SessionManagementFilter, ExceptionTranslationFilter, AuthorizationFilter
+2026-06-02T09:57:46.603+03:00  INFO 7799 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8085 (http) with context path '/'
+2026-06-02T09:57:46.626+03:00  INFO 7799 --- [restartedMain] com.project1.sms.SmsApplication          : Started SmsApplication in 101.914 seconds (process running for 112.554)
+2026-06-02T09:58:40.095+03:00  INFO 7799 --- [http-nio-8085-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-06-02T09:58:40.113+03:00  INFO 7799 --- [http-nio-8085-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-06-02T09:58:40.116+03:00  INFO 7799 --- [http-nio-8085-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2026-06-02T09:58:40.182+03:00 DEBUG 7799 --- [http-nio-8085-exec-2] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/login
+2026-06-02T09:58:40.214+03:00  WARN 7799 --- [http-nio-8085-exec-2] o.s.w.s.h.HandlerMappingIntrospector     : Cache miss for REQUEST dispatch to '/api/auth/login' (previous null). Performing CorsConfiguration lookup. This is logged once only at WARN level, and every time at TRACE.
+2026-06-02T09:58:40.345+03:00 DEBUG 7799 --- [http-nio-8085-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-06-02T09:58:40.348+03:00 DEBUG 7799 --- [http-nio-8085-exec-2] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/login
+2026-06-02T09:58:40.787+03:00 DEBUG 7799 --- [http-nio-8085-exec-2] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity com.project1.sms.controller.AuthController.login(com.project1.sms.requestDTO.LoginRequest); target is of class [com.project1.sms.controller.AuthController]
+2026-06-02T09:58:40.869+03:00 DEBUG 7799 --- [http-nio-8085-exec-2] horizationManagerBeforeMethodInterceptor : Authorized method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity com.project1.sms.controller.AuthController.login(com.project1.sms.requestDTO.LoginRequest); target is of class [com.project1.sms.controller.AuthController]
+2026-06-02T09:58:43.561+03:00 DEBUG 7799 --- [http-nio-8085-exec-2] o.s.s.a.dao.DaoAuthenticationProvider    : Failed to find user 'ephre'
+2026-06-02T09:58:43.562+03:00 DEBUG 7799 --- [http-nio-8085-exec-2] o.s.s.authentication.ProviderManager     : Authentication failed with provider DaoAuthenticationProvider since Bad credentials
+2026-06-02T09:58:43.937+03:00  WARN 7799 --- [http-nio-8085-exec-2] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [org.springframework.security.authentication.BadCredentialsException: Bad credentials]
+2026-06-02T09:59:04.490+03:00  INFO 7799 --- [SpringApplicationShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-02T09:59:04.544+03:00  INFO 7799 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-02T09:59:04.612+03:00  INFO 7799 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-06-02T09:59:04.658+03:00  INFO 7799 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-06-02T09:59:04.666+03:00  INFO 7799 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-06-02T10:01:36.338+03:00  INFO 8258 --- [restartedMain] com.project1.sms.SmsApplication          : Starting SmsApplication using Java 22.0.2 with PID 8258 (/home/ephi/Desktop/studentManegmentSystem/sms/target/classes started by ephi in /home/ephi/Desktop/studentManegmentSystem/sms)
+2026-06-02T10:01:36.348+03:00  INFO 8258 --- [restartedMain] com.project1.sms.SmsApplication          : The following 1 profile is active: "dev"
+2026-06-02T10:01:37.357+03:00  INFO 8258 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-06-02T10:01:37.358+03:00  INFO 8258 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-06-02T10:01:37.418+03:00  INFO 8258 --- [restartedMain] .s.b.d.c.l.DockerComposeLifecycleManager : Using Docker Compose file /home/ephi/Desktop/studentManegmentSystem/sms/compose.yaml
+2026-06-02T10:01:52.256+03:00  INFO 8258 --- [restartedMain] .s.b.d.c.l.DockerComposeLifecycleManager : There are already Docker Compose services running, skipping startup
+2026-06-02T10:01:54.871+03:00  INFO 8258 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-06-02T10:01:55.052+03:00  INFO 8258 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 166 ms. Found 23 JPA repository interfaces.
+2026-06-02T10:01:57.694+03:00  INFO 8258 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8085 (http)
+2026-06-02T10:01:57.758+03:00  INFO 8258 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-02T10:01:57.759+03:00  INFO 8258 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.20]
+2026-06-02T10:01:57.843+03:00  INFO 8258 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 5575 ms
+2026-06-02T10:01:58.461+03:00  INFO 8258 --- [restartedMain] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-06-02T10:01:58.774+03:00  INFO 8258 --- [restartedMain] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.7.Final
+2026-06-02T10:02:00.354+03:00  INFO 8258 --- [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-06-02T10:02:00.520+03:00  INFO 8258 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-06-02T10:02:01.300+03:00  INFO 8258 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@6f668913
+2026-06-02T10:02:01.303+03:00  INFO 8258 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-06-02T10:02:01.420+03:00  WARN 8258 --- [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-06-02T10:02:01.476+03:00  INFO 8258 --- [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://127.0.0.1:5433/sms]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 16.1
+	Default catalog/schema: sms/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-06-02T10:02:09.665+03:00  INFO 8258 --- [restartedMain] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-06-02T10:02:09.817+03:00  INFO 8258 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-06-02T10:02:10.202+03:00  INFO 8258 --- [restartedMain] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-06-02T10:02:15.861+03:00  INFO 8258 --- [restartedMain] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2026-06-02T10:02:15.862+03:00  WARN 8258 --- [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-06-02T10:02:21.034+03:00 DEBUG 8258 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, CorsFilter, LogoutFilter, OAuth2ProtectedResourceMetadataFilter, BearerTokenAuthenticationFilter, AuthenticationFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, SessionManagementFilter, ExceptionTranslationFilter, AuthorizationFilter
+2026-06-02T10:02:22.094+03:00  INFO 8258 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8085 (http) with context path '/'
+2026-06-02T10:02:22.101+03:00  INFO 8258 --- [restartedMain] com.project1.sms.SmsApplication          : Started SmsApplication in 51.254 seconds (process running for 59.354)
+2026-06-02T10:02:47.987+03:00  INFO 8258 --- [http-nio-8085-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-06-02T10:02:47.988+03:00  INFO 8258 --- [http-nio-8085-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-06-02T10:02:47.993+03:00  INFO 8258 --- [http-nio-8085-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 4 ms
+2026-06-02T10:02:48.032+03:00 DEBUG 8258 --- [http-nio-8085-exec-1] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/login
+2026-06-02T10:02:48.049+03:00  WARN 8258 --- [http-nio-8085-exec-1] o.s.w.s.h.HandlerMappingIntrospector     : Cache miss for REQUEST dispatch to '/api/auth/login' (previous null). Performing CorsConfiguration lookup. This is logged once only at WARN level, and every time at TRACE.
+2026-06-02T10:02:48.158+03:00 DEBUG 8258 --- [http-nio-8085-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-06-02T10:02:48.161+03:00 DEBUG 8258 --- [http-nio-8085-exec-1] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/login
+2026-06-02T10:02:48.474+03:00 DEBUG 8258 --- [http-nio-8085-exec-1] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity com.project1.sms.controller.AuthController.login(com.project1.sms.requestDTO.LoginRequest); target is of class [com.project1.sms.controller.AuthController]
+2026-06-02T10:02:48.528+03:00 DEBUG 8258 --- [http-nio-8085-exec-1] horizationManagerBeforeMethodInterceptor : Authorized method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity com.project1.sms.controller.AuthController.login(com.project1.sms.requestDTO.LoginRequest); target is of class [com.project1.sms.controller.AuthController]
+2026-06-02T10:02:49.064+03:00 DEBUG 8258 --- [http-nio-8085-exec-1] o.s.s.a.dao.DaoAuthenticationProvider    : Failed to find user 'ephre'
+2026-06-02T10:02:49.065+03:00 DEBUG 8258 --- [http-nio-8085-exec-1] o.s.s.authentication.ProviderManager     : Authentication failed with provider DaoAuthenticationProvider since Bad credentials
+2026-06-02T10:02:49.475+03:00  WARN 8258 --- [http-nio-8085-exec-1] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [org.springframework.security.authentication.BadCredentialsException: Bad credentials]
+2026-06-02T10:03:23.018+03:00  INFO 8258 --- [SpringApplicationShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-02T10:03:23.035+03:00  INFO 8258 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-02T10:03:23.046+03:00  INFO 8258 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-06-02T10:03:23.050+03:00  INFO 8258 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-06-02T10:03:23.057+03:00  INFO 8258 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-06-02T10:21:16.511+03:00  INFO 10421 --- [restartedMain] com.project1.sms.SmsApplication          : Starting SmsApplication using Java 22.0.2 with PID 10421 (/home/ephi/Desktop/studentManegmentSystem/sms/target/classes started by ephi in /home/ephi/Desktop/studentManegmentSystem/sms)
+2026-06-02T10:21:16.629+03:00  INFO 10421 --- [restartedMain] com.project1.sms.SmsApplication          : The following 1 profile is active: "dev"
+2026-06-02T10:21:17.502+03:00  INFO 10421 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-06-02T10:21:17.503+03:00  INFO 10421 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-06-02T10:21:17.566+03:00  INFO 10421 --- [restartedMain] .s.b.d.c.l.DockerComposeLifecycleManager : Using Docker Compose file /home/ephi/Desktop/studentManegmentSystem/sms/compose.yaml
+2026-06-02T10:21:50.909+03:00  INFO 10421 --- [restartedMain] .s.b.d.c.l.DockerComposeLifecycleManager : There are already Docker Compose services running, skipping startup
+2026-06-02T10:21:55.893+03:00  INFO 10421 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-06-02T10:21:56.231+03:00  INFO 10421 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 273 ms. Found 23 JPA repository interfaces.
+2026-06-02T10:21:58.930+03:00  INFO 10421 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8085 (http)
+2026-06-02T10:21:58.997+03:00  INFO 10421 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-02T10:21:58.998+03:00  INFO 10421 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.20]
+2026-06-02T10:21:59.073+03:00  INFO 10421 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 8129 ms
+2026-06-02T10:21:59.877+03:00  INFO 10421 --- [restartedMain] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-06-02T10:22:00.297+03:00  INFO 10421 --- [restartedMain] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.7.Final
+2026-06-02T10:22:02.873+03:00  INFO 10421 --- [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-06-02T10:22:03.110+03:00  INFO 10421 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-06-02T10:22:05.225+03:00  INFO 10421 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@58b1c78
+2026-06-02T10:22:05.227+03:00  INFO 10421 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-06-02T10:22:06.318+03:00  WARN 10421 --- [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-06-02T10:22:06.620+03:00  INFO 10421 --- [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://127.0.0.1:5433/sms]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 16.1
+	Default catalog/schema: sms/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-06-02T10:22:10.329+03:00  INFO 10421 --- [restartedMain] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-06-02T10:22:10.783+03:00  INFO 10421 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-06-02T10:22:11.198+03:00  INFO 10421 --- [restartedMain] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-06-02T10:22:13.018+03:00  INFO 10421 --- [restartedMain] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2026-06-02T10:22:13.019+03:00  WARN 10421 --- [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-06-02T10:22:18.618+03:00 DEBUG 10421 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, CorsFilter, LogoutFilter, OAuth2ProtectedResourceMetadataFilter, BearerTokenAuthenticationFilter, AuthenticationFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, SessionManagementFilter, ExceptionTranslationFilter, AuthorizationFilter
+2026-06-02T10:22:19.405+03:00  INFO 10421 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8085 (http) with context path '/'
+2026-06-02T10:22:19.412+03:00  INFO 10421 --- [restartedMain] com.project1.sms.SmsApplication          : Started SmsApplication in 68.098 seconds (process running for 78.714)
+2026-06-02T10:26:39.414+03:00  INFO 10421 --- [http-nio-8085-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-06-02T10:26:39.486+03:00  INFO 10421 --- [http-nio-8085-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-06-02T10:26:39.494+03:00  INFO 10421 --- [http-nio-8085-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 7 ms
+2026-06-02T10:26:40.077+03:00 DEBUG 10421 --- [http-nio-8085-exec-2] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/login
+2026-06-02T10:26:40.378+03:00  WARN 10421 --- [http-nio-8085-exec-2] o.s.w.s.h.HandlerMappingIntrospector     : Cache miss for REQUEST dispatch to '/api/auth/login' (previous null). Performing CorsConfiguration lookup. This is logged once only at WARN level, and every time at TRACE.
+2026-06-02T10:26:41.284+03:00 DEBUG 10421 --- [http-nio-8085-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-06-02T10:26:41.288+03:00 DEBUG 10421 --- [http-nio-8085-exec-2] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/login
+2026-06-02T10:26:43.204+03:00 DEBUG 10421 --- [http-nio-8085-exec-2] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity com.project1.sms.controller.AuthController.login(com.project1.sms.requestDTO.LoginRequest); target is of class [com.project1.sms.controller.AuthController]
+2026-06-02T10:26:43.592+03:00 DEBUG 10421 --- [http-nio-8085-exec-2] horizationManagerBeforeMethodInterceptor : Authorized method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity com.project1.sms.controller.AuthController.login(com.project1.sms.requestDTO.LoginRequest); target is of class [com.project1.sms.controller.AuthController]
+2026-06-02T10:26:47.989+03:00 DEBUG 10421 --- [http-nio-8085-exec-2] o.s.s.a.dao.DaoAuthenticationProvider    : Failed to find user 'ephre'
+2026-06-02T10:26:47.990+03:00 DEBUG 10421 --- [http-nio-8085-exec-2] o.s.s.authentication.ProviderManager     : Authentication failed with provider DaoAuthenticationProvider since Bad credentials
+2026-06-02T10:26:49.440+03:00  WARN 10421 --- [http-nio-8085-exec-2] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [org.springframework.security.authentication.BadCredentialsException: Bad credentials]
+2026-06-02T10:28:17.948+03:00  INFO 10421 --- [SpringApplicationShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-02T10:28:18.253+03:00  INFO 10421 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-02T10:28:18.446+03:00  INFO 10421 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-06-02T10:28:18.633+03:00  INFO 10421 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-06-02T10:28:18.639+03:00  INFO 10421 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-06-02T11:06:44.233+03:00  INFO 12147 --- [restartedMain] com.project1.sms.SmsApplication          : Starting SmsApplication using Java 22.0.2 with PID 12147 (/home/ephi/Desktop/studentManegmentSystem/sms/target/classes started by ephi in /home/ephi/Desktop/studentManegmentSystem/sms)
+2026-06-02T11:06:44.274+03:00  INFO 12147 --- [restartedMain] com.project1.sms.SmsApplication          : The following 1 profile is active: "dev"
+2026-06-02T11:06:44.665+03:00  INFO 12147 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2026-06-02T11:06:44.667+03:00  INFO 12147 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2026-06-02T11:06:44.775+03:00  INFO 12147 --- [restartedMain] .s.b.d.c.l.DockerComposeLifecycleManager : Using Docker Compose file /home/ephi/Desktop/studentManegmentSystem/sms/compose.yaml
+2026-06-02T11:07:17.744+03:00  INFO 12147 --- [restartedMain] .s.b.d.c.l.DockerComposeLifecycleManager : There are already Docker Compose services running, skipping startup
+2026-06-02T11:07:23.736+03:00  INFO 12147 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-06-02T11:07:24.504+03:00  INFO 12147 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 690 ms. Found 23 JPA repository interfaces.
+2026-06-02T11:07:28.311+03:00  INFO 12147 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8085 (http)
+2026-06-02T11:07:28.440+03:00  INFO 12147 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-06-02T11:07:28.442+03:00  INFO 12147 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.20]
+2026-06-02T11:07:28.549+03:00  INFO 12147 --- [restartedMain] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 10775 ms
+2026-06-02T11:07:29.525+03:00  INFO 12147 --- [restartedMain] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-06-02T11:07:32.047+03:00  INFO 12147 --- [restartedMain] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.7.Final
+2026-06-02T11:07:38.137+03:00  INFO 12147 --- [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-06-02T11:07:38.609+03:00  INFO 12147 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-06-02T11:07:43.253+03:00  INFO 12147 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@2d6a751d
+2026-06-02T11:07:43.288+03:00  INFO 12147 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-06-02T11:07:46.079+03:00  WARN 12147 --- [restartedMain] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-06-02T11:07:47.317+03:00  INFO 12147 --- [restartedMain] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:postgresql://127.0.0.1:5433/sms]
+	Database driver: PostgreSQL JDBC Driver
+	Database dialect: PostgreSQLDialect
+	Database version: 16.1
+	Default catalog/schema: sms/public
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-06-02T11:07:52.872+03:00  INFO 12147 --- [restartedMain] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-06-02T11:07:55.519+03:00  INFO 12147 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-06-02T11:07:59.220+03:00  INFO 12147 --- [restartedMain] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-06-02T11:08:03.669+03:00  INFO 12147 --- [restartedMain] eAuthenticationProviderManagerConfigurer : Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2026-06-02T11:08:03.672+03:00  WARN 12147 --- [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-06-02T11:08:28.100+03:00 DEBUG 12147 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with filters: DisableEncodeUrlFilter, WebAsyncManagerIntegrationFilter, SecurityContextHolderFilter, HeaderWriterFilter, CorsFilter, LogoutFilter, OAuth2ProtectedResourceMetadataFilter, BearerTokenAuthenticationFilter, AuthenticationFilter, RequestCacheAwareFilter, SecurityContextHolderAwareRequestFilter, AnonymousAuthenticationFilter, SessionManagementFilter, ExceptionTranslationFilter, AuthorizationFilter
+2026-06-02T11:09:01.228+03:00  INFO 12147 --- [restartedMain] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8085 (http) with context path '/'
+2026-06-02T11:09:01.710+03:00  INFO 12147 --- [restartedMain] com.project1.sms.SmsApplication          : Started SmsApplication in 143.238 seconds (process running for 153.521)
+2026-06-02T11:11:07.103+03:00  INFO 12147 --- [http-nio-8085-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-06-02T11:11:07.105+03:00  INFO 12147 --- [http-nio-8085-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-06-02T11:11:07.111+03:00  INFO 12147 --- [http-nio-8085-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 6 ms
+2026-06-02T11:11:07.435+03:00 DEBUG 12147 --- [http-nio-8085-exec-1] o.s.security.web.FilterChainProxy        : Securing POST /api/auth/login
+2026-06-02T11:11:07.631+03:00  WARN 12147 --- [http-nio-8085-exec-1] o.s.w.s.h.HandlerMappingIntrospector     : Cache miss for REQUEST dispatch to '/api/auth/login' (previous null). Performing CorsConfiguration lookup. This is logged once only at WARN level, and every time at TRACE.
+2026-06-02T11:11:07.953+03:00 DEBUG 12147 --- [http-nio-8085-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2026-06-02T11:11:07.956+03:00 DEBUG 12147 --- [http-nio-8085-exec-1] o.s.security.web.FilterChainProxy        : Secured POST /api/auth/login
+2026-06-02T11:11:09.828+03:00 DEBUG 12147 --- [http-nio-8085-exec-1] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity com.project1.sms.controller.AuthController.login(com.project1.sms.requestDTO.LoginRequest); target is of class [com.project1.sms.controller.AuthController]
+2026-06-02T11:11:10.220+03:00 DEBUG 12147 --- [http-nio-8085-exec-1] horizationManagerBeforeMethodInterceptor : Authorized method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity com.project1.sms.controller.AuthController.login(com.project1.sms.requestDTO.LoginRequest); target is of class [com.project1.sms.controller.AuthController]
+2026-06-02T11:11:42.146+03:00 DEBUG 12147 --- [http-nio-8085-exec-1] o.s.s.a.dao.DaoAuthenticationProvider    : Failed to find user 'ephre'
+2026-06-02T11:11:42.147+03:00 DEBUG 12147 --- [http-nio-8085-exec-1] o.s.s.authentication.ProviderManager     : Authentication failed with provider DaoAuthenticationProvider since Bad credentials
+2026-06-02T11:11:53.732+03:00  WARN 12147 --- [http-nio-8085-exec-1] .m.m.a.ExceptionHandlerExceptionResolver : Resolved [org.springframework.security.authentication.BadCredentialsException: Bad credentials]
+2026-06-02T11:15:10.924+03:00  INFO 12147 --- [SpringApplicationShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-06-02T11:15:10.973+03:00  INFO 12147 --- [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-06-02T11:15:11.033+03:00  INFO 12147 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-06-02T11:15:11.264+03:00  INFO 12147 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-06-02T11:15:11.273+03:00  INFO 12147 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

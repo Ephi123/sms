@@ -1,7 +1,7 @@
 package com.project1.sms.Service.imp;
 
 import com.project1.sms.Service.AssignmentService;
-import com.project1.sms.apiException.ApiException;
+import com.project1.sms.apiException.ResourceNotFoundException;
 import com.project1.sms.model.Assignment;
 import com.project1.sms.repository.AssignmentRepo;
 import com.project1.sms.requestDTO.AssignmentUpdateRequest;
@@ -32,7 +32,7 @@ public class AssignmentImpl implements AssignmentService {
 
     @Override
     public void updateAssignmentId(Long assignmentId,AssignmentUpdateRequest request) {
-        Assignment assignment =assignmentRepo.findById(assignmentId).orElseThrow(() -> new ApiException("assignment not found"));
+        Assignment assignment =assignmentRepo.findById(assignmentId).orElseThrow(() -> new ResourceNotFoundException("assignment not found"));
         assignment.setTitle(request.title());
         assignment.setDescription(request.description());
         assignmentRepo.save(assignment);

@@ -1,7 +1,7 @@
 package com.project1.sms.Service.imp;
 
 import com.project1.sms.Service.CourseOfferingService;
-import com.project1.sms.apiException.ApiException;
+import com.project1.sms.apiException.ResourceNotFoundException;
 import com.project1.sms.domain.EthiopianCalendar;
 import com.project1.sms.model.*;
 import com.project1.sms.repository.*;
@@ -25,10 +25,10 @@ public class CourseOfferingImp implements CourseOfferingService {
 
     @Override
     public Map<String, Object> createCourseOffering(CourseOfferingRequest request) {
-        Department department = departmentRepo.findByDepName(request.getDepartment()).orElseThrow(() -> new ApiException("Department is not found"));
-        Section section = sectionRepo.findById(request.getSectionId()).orElseThrow(() -> new ApiException("section os not found"));
-        Course course = courseRepo.findByCourseCode(request.getCourseCode()).orElseThrow(() -> new ApiException("Course not Found"));
-        Program program = programRepo.findByName(request.getProgram()).orElseThrow(() -> new ApiException("program is not found"));
+        Department department = departmentRepo.findByDepName(request.getDepartment()).orElseThrow(() -> new ResourceNotFoundException("Department is not found"));
+        Section section = sectionRepo.findById(request.getSectionId()).orElseThrow(() -> new ResourceNotFoundException("section os not found"));
+        Course course = courseRepo.findByCourseCode(request.getCourseCode()).orElseThrow(() -> new ResourceNotFoundException("Course not Found"));
+        Program program = programRepo.findByName(request.getProgram()).orElseThrow(() -> new ResourceNotFoundException("program is not found"));
         int sem = semRepo.findAll().get(0).getCurrentSem();
 
         CourseOffering offering =offeringRepo.save(new CourseOffering(

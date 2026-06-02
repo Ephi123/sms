@@ -1,7 +1,7 @@
 package com.project1.sms.controller;
 
 import com.project1.sms.Service.AttendanceService;
-import com.project1.sms.response.GlobalResponse;
+import com.project1.sms.globalResponse.GlobalResponse;
 import com.project1.sms.responseDto.AttendanceResponse;
 import com.project1.sms.responseDto.StudentToAttendanceResponse;
 import java.util.List;

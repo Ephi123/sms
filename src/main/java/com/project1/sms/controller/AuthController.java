@@ -4,7 +4,7 @@ package com.project1.sms.controller;
 import com.project1.sms.Service.AuthService;
 import com.project1.sms.requestDTO.ChangePasswordRequest;
 import com.project1.sms.requestDTO.LoginRequest;
-import com.project1.sms.response.GlobalResponse;
+import com.project1.sms.globalResponse.GlobalResponse;
 import com.project1.sms.responseDto.AuthResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

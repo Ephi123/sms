@@ -1,8 +1,9 @@
 package com.project1.sms.controller;
 
 import com.project1.sms.Service.SemsterService;
-import com.project1.sms.response.GlobalResponse;
+import com.project1.sms.globalResponse.GlobalResponse;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +21,7 @@ public class SemsterController {
     }
 
     @PatchMapping("/{id}")
+    @PreAuthorize("hasRole('REGISTRAR_HEAD')")
     public ResponseEntity<GlobalResponse<Void>> updateSemster(
             @PathVariable Long id,
             @RequestParam int sem) {
