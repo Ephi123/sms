@@ -1,5 +1,6 @@
 package com.project1.sms.Service;
 
+import com.project1.sms.responseDto.TeacherResponse;
 import com.project1.sms.responseDto.TeacherWithDepartmentDTo;
 import com.project1.sms.responseDto.UserResponse;
 
@@ -9,6 +10,6 @@ public interface TeacherService {
     List<UserResponse>  getUnregisteredTeachers();
     void registerTeacher(Long userId,Long departmentId);
     List<TeacherWithDepartmentDTo> getAllTeacherWithDepartment();
-    List<TeacherWithDepartmentDTo> getTeacherWithTheirDepartment();
+    List<TeacherResponse> getTeacherWithTheirDepartment();
 
 }

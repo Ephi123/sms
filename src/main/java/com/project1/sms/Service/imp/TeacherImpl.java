@@ -8,6 +8,7 @@ import com.project1.sms.model.UserEntity;
 import com.project1.sms.repository.DepartmentRepo;
 import com.project1.sms.repository.TeacherRepo;
 import com.project1.sms.repository.UserRepo;
+import com.project1.sms.responseDto.TeacherResponse;
 import com.project1.sms.responseDto.TeacherWithDepartmentDTo;
 import com.project1.sms.responseDto.UserResponse;
 import com.project1.sms.security.CurrentUserService;
@@ -46,12 +47,12 @@ public class TeacherImpl implements TeacherService {
     }
 
     @Override
-    public List<TeacherWithDepartmentDTo> getTeacherWithTheirDepartment() {
+    public List<TeacherResponse> getTeacherWithTheirDepartment() {
         Department department = departmentRepo.findByHeadUserId(currentUserService.getUserId()).
                 orElseThrow(() -> new ResourceNotFoundException("Department is not found"));
         List<Teacher> teachers =teacherRepo.findByDepartment(department);
         return teachers.stream().
-                map(TeacherWithDepartmentDTo::)
+                map(TeacherResponse::from).toList();
     }
 
 }
