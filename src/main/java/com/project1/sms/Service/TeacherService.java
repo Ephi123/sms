@@ -9,4 +9,6 @@ public interface TeacherService {
     List<UserResponse>  getUnregisteredTeachers();
     void registerTeacher(Long userId,Long departmentId);
     List<TeacherWithDepartmentDTo> getAllTeacherWithDepartment();
+    List<TeacherWithDepartmentDTo> getTeacherWithTheirDepartment();
+
 }

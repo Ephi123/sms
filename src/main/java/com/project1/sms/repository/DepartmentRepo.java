@@ -1,7 +1,6 @@
 package com.project1.sms.repository;
 
 import com.project1.sms.model.Department;
-import com.project1.sms.model.Teacher;
 import com.project1.sms.responseDto.DepartmentWithHeadResponse;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,7 +13,7 @@ import java.util.Optional;
 public interface DepartmentRepo extends JpaRepository<Department,Long> {
 
     Optional<Department> findByDepName(String name);
-    Optional<Department> findByHead(Teacher teacher);
+    Optional<Department> findByHeadUserId(Long userId);
     List<Department> findByHeadIsNotNullOrderByDepNameAsc();
     List<Department> findByHeadIsNullOrderByDepNameAsc();
 

@@ -14,4 +14,5 @@ public interface DepartmentService {
     List<DepartmentResponse> getDepartmentsWithNullHead();
     void setDepartmentHead(Long departmentId,Long teacherId);
     List<DepartmentWithHeadResponse> getAllDepartmentWithHead();
+
 }

@@ -10,16 +10,20 @@ import com.project1.sms.repository.TeacherRepo;
 import com.project1.sms.repository.UserRepo;
 import com.project1.sms.responseDto.TeacherWithDepartmentDTo;
 import com.project1.sms.responseDto.UserResponse;
+import com.project1.sms.security.CurrentUserService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
 @RequiredArgsConstructor
+@Transactional(rollbackOn = Exception.class)
 public class TeacherImpl implements TeacherService {
     private final TeacherRepo teacherRepo;
     private final UserRepo userRepo;
     private final DepartmentRepo departmentRepo;
+    private final CurrentUserService currentUserService;
     @Override
     public List<UserResponse> getUnregisteredTeachers() {
         List<UserEntity> users =userRepo.getUnregisteredTeachers();
@@ -39,6 +43,15 @@ public class TeacherImpl implements TeacherService {
     @Override
     public List<TeacherWithDepartmentDTo> getAllTeacherWithDepartment() {
         return teacherRepo.getAllTeacherWithDepartment();
+    }
+
+    @Override
+    public List<TeacherWithDepartmentDTo> getTeacherWithTheirDepartment() {
+        Department department = departmentRepo.findByHeadUserId(currentUserService.getUserId()).
+                orElseThrow(() -> new ResourceNotFoundException("Department is not found"));
+        List<Teacher> teachers =teacherRepo.findByDepartment(department);
+        return teachers.stream().
+                map(TeacherWithDepartmentDTo::)
     }
 
 }

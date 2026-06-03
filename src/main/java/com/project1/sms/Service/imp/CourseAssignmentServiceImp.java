@@ -38,8 +38,7 @@ public class CourseAssignmentServiceImp implements CourseAssignmentService {
     @Override
     public List<CourseOfferingResponse> getUnassignedCourses() {
         Long userId = currentUserService.getUserId();
-        Teacher teacher = teacherRepo.findByUserId(userId).orElseThrow(() -> new ResourceNotFoundException("teacher is not found"));
-        Department department = departmentRepo.findByHead(teacher).orElseThrow(() -> new ResourceNotFoundException("Department is not found"));
+       Department department = departmentRepo.findByHeadUserId(userId).orElseThrow(() -> new ResourceNotFoundException("Department is not found"));
         CurrentSem semester = semRepo.findTopByOrderByIdDesc()
                 .orElseThrow(() -> new ResourceNotFoundException("Semester not found"));
         int sem = semester.getCurrentSem();

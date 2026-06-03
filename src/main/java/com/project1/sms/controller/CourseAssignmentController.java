@@ -9,6 +9,7 @@ import java.util.Map;
 import com.project1.sms.responseDto.SubmittedCourseResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +27,7 @@ public class CourseAssignmentController {
     }
 
     @PostMapping("/offerings/{offeringId}/teachers/{teacherId}")
+    @PreAuthorize("hasRole('DEPARTMENT_HEAD')")
     public ResponseEntity<GlobalResponse<Map<String,Object>>> assignCourse(
             @PathVariable Long offeringId,
             @PathVariable String teacherId) {
@@ -35,12 +37,14 @@ public class CourseAssignmentController {
     }
 
     @GetMapping("/unassigned")
+    @PreAuthorize("hasRole('DEPARTMENT_HEAD')")
     public ResponseEntity<GlobalResponse<List<CourseOfferingResponse>>> getUnassignedCourses() {
         List<CourseOfferingResponse>courses = courseAssignmentService.getUnassignedCourses();
         return ResponseEntity.ok(GlobalResponse.success("Unassigned courses fetched successfully", courses));
     }
 
     @GetMapping("/submitted")
+    @PreAuthorize("hasRole('DEPARTMENT_HEAD')")
     public ResponseEntity<GlobalResponse<List<SubmittedCourseResponse>>> getSubmittedCourse() {
         List<SubmittedCourseResponse> courses = courseAssignmentService.getSubmittedCourse();
         return ResponseEntity.ok(GlobalResponse.success("Submitted courses fetched successfully", courses));
