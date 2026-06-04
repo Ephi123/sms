@@ -20,4 +20,5 @@ public class AssessmentResultResponse {
     @Enumerated(EnumType.STRING)
     private CourseStatus courseStatus;
 
+
 }

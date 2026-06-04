@@ -5,9 +5,12 @@ import com.project1.sms.responseDto.AssessmentResultResponse;
 import java.util.List;
 
 public interface AssessmentResultService {
-    AssessmentResultResponse getStudentAssessmentResult(Long offeringId,String studentId);
+    AssessmentResultResponse getStudentAssessmentResult(Long offeringId);
     AssessmentResultResponse updateResult(Long resultId, Integer mark);
     List<AssessmentResultResponse> getGradeSheet(Long courseOfferingId);
     AssessmentResultResponse gradeUpdate(Long gradeId, String Grade);
+    List<AssessmentResultResponse> getGradeSheetAfterSubmitted(Long courseOfferingId);
+    List<AssessmentResultResponse> getGradeSheetAfterApproved(Long courseOfferingId);
+
 
 }

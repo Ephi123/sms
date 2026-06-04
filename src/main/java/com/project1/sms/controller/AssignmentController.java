@@ -7,6 +7,7 @@ import com.project1.sms.responseDto.AssignmentResponse;
 import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +26,7 @@ public class AssignmentController {
     }
 
     @GetMapping("/offerings/{offeringId}/active")
+    @PreAuthorize("hasRole('STUDENT')")
     public ResponseEntity<GlobalResponse<List<AssignmentResponse>>> getAssignmentBeforeDueDate(
             @PathVariable Long offeringId) {
         List<AssignmentResponse> assignments = assignmentService.getAssignmentBeforeDueDate(offeringId);
@@ -32,6 +34,7 @@ public class AssignmentController {
     }
 
     @GetMapping("/offerings/{offeringId}/submitted")
+    @PreAuthorize("hasRole('TEACHER')")
     public ResponseEntity<GlobalResponse<List<AssignmentResponse>>> getAssignmentAfterSubmission(
             @PathVariable Long offeringId) {
         List<AssignmentResponse> assignments = assignmentService.getAssignmentAfterSubmission(offeringId);
@@ -39,6 +42,7 @@ public class AssignmentController {
     }
 
     @PatchMapping("/{assignmentId}")
+    @PreAuthorize("hasRole('TEACHER')")
     public ResponseEntity<GlobalResponse<Void>> updateAssignmentId(
             @PathVariable Long assignmentId,
             @Valid @RequestBody AssignmentUpdateRequest request) {

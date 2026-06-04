@@ -7,6 +7,7 @@ import com.project1.sms.responseDto.StudentToAttendanceResponse;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +26,7 @@ public class AttendanceController {
     }
 
     @GetMapping("/offerings/{offeringId}/report")
+    @PreAuthorize("hasAnyRole('DEPARTMENT_HEAD,TEACHER')")
     public ResponseEntity<GlobalResponse<List<AttendanceResponse>>> getAttendanceReport(
             @PathVariable Long offeringId) {
         List<AttendanceResponse> report = attendanceService.getAttendanceReport(offeringId);
@@ -32,6 +34,7 @@ public class AttendanceController {
     }
 
     @PostMapping("/offerings/{offeringId}/students/{studentId}")
+    @PreAuthorize("hasRole('TEACHER')")
     public ResponseEntity<GlobalResponse<Void>> createAttendance(
             @PathVariable Long offeringId,
             @PathVariable String studentId,
@@ -42,6 +45,7 @@ public class AttendanceController {
     }
 
     @GetMapping("/offerings/{offeringId}/students/pending")
+    @PreAuthorize("hasRole('TEACHER')")
     public ResponseEntity<GlobalResponse<List<StudentToAttendanceResponse>>> getStudentToAttendance(
             @PathVariable Long offeringId) {
         List<StudentToAttendanceResponse> students = attendanceService.getStudentToAttendance(offeringId);

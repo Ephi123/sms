@@ -1,6 +1,7 @@
 package com.project1.sms.repository;
 
 import com.project1.sms.dto.AssessmentResultDetailDTO;
+import com.project1.sms.enumeration.CourseStatus;
 import com.project1.sms.model.CourseOffering;
 import com.project1.sms.model.AssessmentResult;
 import com.project1.sms.model.Student;
@@ -49,4 +50,24 @@ public interface AssessmentResultRepo extends JpaRepository<AssessmentResult,Lon
             @Param("id") Long offeringId,
             @Param("stdId") String stdId
     );
+
+
+
+    @Query("""
+SELECT DISTINCT new com.project1.sms.dto.AssessmentResultDetailDTO(
+    ar.student.user.userId,
+    CONCAT(ar.student.user.firstName, ' ', ar.student.user.midlName),
+    ar.marksObtained,
+    ar.id,
+    CONCAT(ar.assessment.title, '(', ar.assessment.weightPercent, '%)')
+)
+FROM AssessmentResult ar
+JOIN CourseAssigmnet ca
+    ON ca.courseOffering.id = ar.assessment.courseOffering.id
+WHERE ar.assessment.courseOffering.id = :id
+AND ca.courseStatus = :status
+ORDER BY ar.student.user.firstName ASC
+""")
+    List<AssessmentResultDetailDTO> findGradeDetailsByStatus(@Param("id") Long offeringId, @Param("status")CourseStatus status);
+
 }

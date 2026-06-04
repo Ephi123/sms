@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +27,7 @@ public class AssessmentController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('TEACHER')")
     public ResponseEntity<GlobalResponse<Map<String,Object>>> createAssessment(@Valid @RequestBody AssessmentRequest request) {
         Map<String,Object> assessment = assessmentService.createAssessment(request);
         return ResponseEntity.status(HttpStatus.CREATED)
@@ -33,6 +35,7 @@ public class AssessmentController {
     }
 
     @PutMapping("/{assessmentId}")
+    @PreAuthorize("hasRole('TEACHER')")
     public ResponseEntity<GlobalResponse<Map<String,Object>>> updateAssessment(
             @PathVariable Long assessmentId,
             @Valid @RequestBody AssessmentRequest request) {
@@ -41,6 +44,7 @@ public class AssessmentController {
     }
 
     @DeleteMapping("/{assessmentId}")
+    @PreAuthorize("hasRole('TEACHER')")
     public ResponseEntity<GlobalResponse<Void>> deleteAssessment(@PathVariable Long assessmentId) {
         assessmentService.deleteAssessment(assessmentId);
         return ResponseEntity.ok(GlobalResponse.<Void>success("Assessment deleted successfully", null));

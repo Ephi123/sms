@@ -5,6 +5,7 @@ import com.project1.sms.globalResponse.GlobalResponse;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,6 +19,7 @@ public class AssignmentFileController {
     private final AssignmentFileService assignmentFileService;
 
     @PostMapping("/upload/{assignmentId}")
+    @PreAuthorize("hasRole('STUDENT')")
     public  ResponseEntity<GlobalResponse<?>> uploadAssignment(
             @PathVariable Long assignmentId,
             @RequestParam("file") MultipartFile file
@@ -34,6 +36,7 @@ public class AssignmentFileController {
     }
 
     @GetMapping("/download-all/{assignmentId}")
+    @PreAuthorize("hasRole('TEACHER')")
     public void downloadAllFiles(
             @PathVariable Long assignmentId,
             HttpServletResponse response

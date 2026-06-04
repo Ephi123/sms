@@ -2,7 +2,9 @@ package com.project1.sms.responseDto;
 
 import com.project1.sms.model.CourseAssignment;
 
-public record SubmittedCourseResponse(String teacherFullName,
+public record SubmittedCourseResponse(
+                                      Long offeringId,
+                                      String teacherFullName,
                                       String CourseName,
                                       Integer year,
                                       Integer sem,
@@ -17,6 +19,7 @@ public record SubmittedCourseResponse(String teacherFullName,
 
     public static SubmittedCourseResponse from(CourseAssignment  assignment){
         return new SubmittedCourseResponse(
+                assignment.getCourseOffering().getId(),
                assignment.getTeacher().getUser().getFirstName()+" "+assignment.getTeacher().getUser().getMidlName(),
                 assignment.getCourseOffering().getCourse().getCourseName(),
                 assignment.getCourseOffering().getStudyYear(),
