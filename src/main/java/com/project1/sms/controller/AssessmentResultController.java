@@ -55,13 +55,13 @@ public class AssessmentResultController {
         return ResponseEntity.ok(GlobalResponse.success("Grade updated successfully", result));
     }
 
-    @GetMapping("/grade-sheets/{courseOfferingId}")
+    @GetMapping("/grade-sheets/submitted/{courseOfferingId}")
     @PreAuthorize("hasRole('DEPARTMENT_HEAD')")
     public ResponseEntity<GlobalResponse<List<AssessmentResultResponse>>> getGradeSheetAfterSubmitted(@PathVariable Long courseOfferingId) {
         List<AssessmentResultResponse> gradeSheet = assessmentResultService.getGradeSheetAfterSubmitted(courseOfferingId);
         return ResponseEntity.ok(GlobalResponse.success("Grade sheet fetched successfully", gradeSheet));
     }
-    @GetMapping("/grade-sheets/{courseOfferingId}")
+    @GetMapping("/grade-sheets/aproved/{courseOfferingId}")
     @PreAuthorize("hasAnyRole('REGISTRAR_HEAD,REGISTRAR_OFFICER')")
     public ResponseEntity<GlobalResponse<List<AssessmentResultResponse>>> getGradeSheetAfterApproved(@PathVariable Long courseOfferingId) {
         List<AssessmentResultResponse> gradeSheet = assessmentResultService.getGradeSheetAfterApproved(courseOfferingId);

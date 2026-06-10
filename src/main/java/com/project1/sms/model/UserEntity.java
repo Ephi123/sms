@@ -50,44 +50,20 @@ public class UserEntity extends Auditable {
     @Builder.Default
     private Boolean firstLogin = true;
 
-    @NotNull
-    @Builder.Default
-    @Convert(converter = RolesConverter.class)
-    @Column(name = "roles", nullable = false, length = 512)
-    private Set<Role> roles = EnumSet.noneOf(Role.class);
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Enumerated(EnumType.STRING)
+    @CollectionTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id")
+    )
+    @Column(name = "role")
+    private Set<Role> roles;
 
     @Convert(converter = ActiveConverter.class)
     @Builder.Default
     private Active isActive = Active.ACTIVE;
 
 
-    public static class RolesConverter implements jakarta.persistence.AttributeConverter<Set<Role>, String> {
-        private static final String DELIMITER = ",";
-
-        @Override
-        public String convertToDatabaseColumn(Set<Role> attribute) {
-            if (attribute == null || attribute.isEmpty()) {
-                return "";
-            }
-            return attribute.stream()
-                    .map(Role::name)
-                    .sorted()
-                    .collect(Collectors.joining(DELIMITER));
-        }
-
-        @Override
-        public Set<Role> convertToEntityAttribute(String dbData) {
-            if (dbData == null || dbData.isBlank()) {
-                return EnumSet.noneOf(Role.class);
-            }
-            return Arrays.stream(dbData.split(DELIMITER))
-                    .map(String::trim)
-                    .filter(value -> !value.isEmpty())
-                    .map(Role::valueOf)
-                    .collect(Collectors.collectingAndThen(Collectors.toSet(), roles ->
-                            roles.isEmpty() ? EnumSet.noneOf(Role.class) : EnumSet.copyOf(roles)));
-        }
-    }
 
 
 }

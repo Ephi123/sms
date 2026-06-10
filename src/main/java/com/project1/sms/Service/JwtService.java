@@ -22,7 +22,7 @@ public class JwtService {
     @Value("${app.jwt.issuer:sms-api}")
     private String issuer;
 
-    @Value("${app.jwt.expiration-minutes:60}")
+    @Value("${app.jwt.expiration-minutes:52560000}")
     private long expirationMinutes;
 
     public TokenResult generateToken(UserEntity user) {

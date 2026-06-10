@@ -4,6 +4,7 @@ import com.project1.sms.apiException.ResourceNotFoundException;
 import com.project1.sms.globalResponse.GlobalResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -42,13 +43,26 @@ public class GlobalExceptionHandler {
                 ));
     }
 
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<GlobalResponse<Object>> badCreditioal(
+            BadCredentialsException ex) {
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(GlobalResponse.failure(
+                        HttpStatus.UNAUTHORIZED,
+                        "userName or Password incorrect"
+
+                ));
+    }
+
+
 
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<GlobalResponse<?>> handleUnhandled(Exception exception) {
+    public ResponseEntity<GlobalResponse<?>> handleUnhandled(Exception ex) {
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(GlobalResponse.failure(HttpStatus.INTERNAL_SERVER_ERROR, "internal server error"));
+                .body(GlobalResponse.failure(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage()+" :internal server error"));
 
 
     }

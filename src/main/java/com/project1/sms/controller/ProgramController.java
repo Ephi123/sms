@@ -35,7 +35,7 @@ public class ProgramController {
 
     @GetMapping
     @PostMapping
-    @PreAuthorize("hasRole('REGISTRAR_HEAD,REGISTRAR_OFFICER')")
+    @PreAuthorize("hasAnyRole('REGISTRAR_HEAD','REGISTRAR_OFFICER')")
     public ResponseEntity<GlobalResponse<List<ProgramRespons>>> getAllProgram() {
         List<ProgramRespons> programs = programService.getAllProgram();
         return ResponseEntity.ok(GlobalResponse.success("Programs fetched successfully", programs));

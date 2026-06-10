@@ -35,12 +35,12 @@ private final PasswordEncoder  passwordEncoder;
                                             Department department,
                                             Section section,
                                             int studentNum){
-
+        System.out.println("the student id generator");
         String pro = program.getName().getLabel().toUpperCase().substring(0,2)+"-";
         String dep = department.getDepName().toUpperCase().substring(0,2)+"-";
-        String year = EthiopianCalendar.ethiopianYear()+"".substring(2)+"-";
+        String year = String.valueOf(EthiopianCalendar.ethiopianYear()).substring(2)+"-";
         String sec = section.getSection()+"-";
-
+       System.out.println("the problem is not student id generator");
         return "ZC-"+dep+pro+year+sec+studentNum;
 
     }

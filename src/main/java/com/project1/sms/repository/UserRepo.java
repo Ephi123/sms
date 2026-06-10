@@ -32,24 +32,36 @@ public interface UserRepo extends JpaRepository<UserEntity, Long> {
     );
 
     Optional<UserEntity> findByUserId(String userId);
-    @Query(value = """
-  SELECT *
-    FROM user u
-    WHERE CONCAT(',', u.roles, ',')
-          LIKE CONCAT('%,', :roleName, ',%')
-    ORDER BY u.user_name ASC
-""", nativeQuery = true)
-    List<UserEntity> findByRole(@Param("roleName") String roleName);
-    @Query(value = """
+    @Query("""
+    SELECT u
+    FROM UserEntity u
+    WHERE :role MEMBER OF u.roles
+    ORDER BY u.userName ASC
+""")
+
+    List<UserEntity> findByRole(@Param("role") Role role);  @Query(value = """
 SELECT *
-FROM user u
-WHERE CONCAT(',', u.roles, ',') LIKE '%,TEACHER,%'
+FROM "user" u
+WHERE ',' || u.roles || ',' LIKE '%,TEACHER,%'
 AND NOT EXISTS (
     SELECT 1
-    FROM teacher t
-    WHERE t.teacher_id = u.id
+    FROM "Teacher" t
+    WHERE t.Teacher_id = u.id
 )
 """, nativeQuery = true)
-    List<UserEntity> getUnregisteredTeachers();
+    List<UserEntity> getUnregisteredTeacherss();
 
+    @Query("""
+    SELECT u
+    FROM UserEntity u
+    WHERE com.project1.sms.enumeration.Role.TEACHER MEMBER OF u.roles
+    AND NOT EXISTS (
+        SELECT t
+        FROM Teacher t
+        WHERE t.user.id = u.id
+    )
+""")
+    List<UserEntity> getUnregisteredTeachers();
 }
+
+

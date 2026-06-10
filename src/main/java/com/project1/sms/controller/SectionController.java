@@ -24,7 +24,7 @@ public class SectionController {
     }
 
     @PostMapping("/departments/{departmentId}/programs/{programId}")
-    @PreAuthorize("hasAnyRole('ADMIN,REGISTRAR_HEAD')")
+    @PreAuthorize("hasAnyRole('ADMIN','REGISTRAR_HEAD')")
     public ResponseEntity<GlobalResponse<?>> createSection(
             @PathVariable Long departmentId,
             @PathVariable Long programId) {

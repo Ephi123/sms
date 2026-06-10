@@ -63,6 +63,7 @@ public class StudentImpl implements StudentService {
                   studentStatus(StudentStatus.UNENROLL).build();
 
          studentRepo.save(std);
+         System.out.println("student saved");
 
 
 

@@ -27,7 +27,7 @@ public class StudentController {
     }
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('REGISTRAR_OFFICER,REGISTRAR_HEAD')")
+    @PreAuthorize("hasAnyRole('REGISTRAR_OFFICER','REGISTRAR_HEAD')")
     public ResponseEntity<GlobalResponse<?>> studentRegister(@Valid @RequestBody StudentRequest request) {
         studentService.studentRegister(request);
         return ResponseEntity.status(HttpStatus.CREATED)
@@ -35,7 +35,7 @@ public class StudentController {
     }
 
     @PostMapping("/with-section")
-    @PreAuthorize("hasAnyRole('REGISTRAR_OFFICER,REGISTRAR_HEAD')")
+    @PreAuthorize("hasAnyRole('REGISTRAR_OFFICER','REGISTRAR_HEAD')")
     public ResponseEntity<GlobalResponse<?>> studentsRegistered(@Valid @RequestBody StudentsRequest request) {
         studentService.studentsRegistered(request);
         return ResponseEntity.status(HttpStatus.CREATED)
@@ -43,7 +43,7 @@ public class StudentController {
     }
 
     @GetMapping("/new")
-    @PreAuthorize("hasAnyRole('FINANCE_OFFICER,REGISTRAR_OFFICER,REGISTRAR_HEAD')")
+    @PreAuthorize("hasAnyRole('FINANCE_OFFICER','REGISTRAR_OFFICER','REGISTRAR_HEAD')")
     public ResponseEntity<GlobalResponse<List<NewStudent>>> getNewStudent() {
         List<NewStudent> students = studentService.getNewStudent();
         return ResponseEntity.ok(GlobalResponse.success("New students fetched successfully", students));

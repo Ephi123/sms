@@ -52,22 +52,22 @@ public interface AssessmentResultRepo extends JpaRepository<AssessmentResult,Lon
     );
 
 
-
-    @Query("""
-SELECT DISTINCT new com.project1.sms.dto.AssessmentResultDetailDTO(
-    ar.student.user.userId,
-    CONCAT(ar.student.user.firstName, ' ', ar.student.user.midlName),
-    ar.marksObtained,
-    ar.id,
-    CONCAT(ar.assessment.title, '(', ar.assessment.weightPercent, '%)')
-)
-FROM AssessmentResult ar
-JOIN CourseAssigmnet ca
-    ON ca.courseOffering.id = ar.assessment.courseOffering.id
-WHERE ar.assessment.courseOffering.id = :id
-AND ca.courseStatus = :status
-ORDER BY ar.student.user.firstName ASC
-""")
-    List<AssessmentResultDetailDTO> findGradeDetailsByStatus(@Param("id") Long offeringId, @Param("status")CourseStatus status);
+    @Query(""" 
+SELECT new com.project1.sms.dto.AssessmentResultDetailDTO( 
+ar.student.user.userId, 
+CONCAT(ar.student.user.firstName, ' ', ar.student.user.midlName),
+ ar.marksObtained, ar.id, 
+ CONCAT(ar.assessment.title, '(', ar.assessment.weightPercent, '%)') )
+  FROM AssessmentResult ar
+   WHERE ar.assessment.courseOffering.id = :id
+    AND 
+    EXISTS(
+    SELECT 1
+    FROM CourseAssignment ca
+     WHERE ca.courseOffering.id = ar.assessment.courseOffering.id 
+     AND 
+     ca.courseStatus = :status )
+      ORDER BY ar.student.user.firstName ASC 
+""") List<AssessmentResultDetailDTO> findGradeDetailsByStatus(@Param("id") Long offeringId, @Param("status")CourseStatus status);
 
 }

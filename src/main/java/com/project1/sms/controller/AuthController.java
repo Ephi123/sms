@@ -37,7 +37,9 @@ public class AuthController {
     @PostMapping("/change-password")
     @PreAuthorize("permitAll()")
     public ResponseEntity<GlobalResponse<AuthResponse>> change(@Valid @RequestBody ChangePasswordRequest request) {
-       AuthResponse authResponse = authService.changePassword(request);
+        System.out.println("Controller entered");
+        AuthResponse authResponse = authService.changePassword(request);
+        System.out.println("service returned");
        return ResponseEntity.ok(GlobalResponse.success("Password successfully Changed",authResponse));
 
   }

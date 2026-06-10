@@ -9,7 +9,7 @@ public record SectionResponse(
     public static SectionResponse from(Section section){
         return new SectionResponse(
                 section.getId(),
-                "Section-1"+section.getSection()
+                "Section-"+section.getSection()
         );
     }
 }

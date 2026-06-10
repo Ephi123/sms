@@ -27,7 +27,10 @@ public class Assessment extends Auditable{
             orphanRemoval = true)
     private List<AssessmentResult> assessmentResults = new ArrayList<>();
 
-    public Assessment(CourseOffering offering, String title, Integer weight) {
-        super();
+    public Assessment(CourseOffering courseOffering, String title, Integer weight)
+    {
+        this.courseOffering= courseOffering;
+       this.title = title;
+      this.weightPercent = weight;
     }
 }

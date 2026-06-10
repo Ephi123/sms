@@ -22,22 +22,25 @@ public class TeacherController {
     public TeacherController(TeacherService teacherService) {
         this.teacherService = teacherService;
     }
-     @PreAuthorize("hasAnyRole('DEAN,VICE_DEAN')")
+
     @GetMapping("/unregistered")
+    @PreAuthorize("hasAnyRole('DEAN','VICE_DEAN')")
     public ResponseEntity<GlobalResponse<List<UserResponse>>> getUnregisteredTeachers() {
         List<UserResponse> teachers = teacherService.getUnregisteredTeachers();
         return ResponseEntity.ok(GlobalResponse.success("Unregistered teachers fetched successfully", teachers));
     }
-    @PreAuthorize("hasAnyRole('DEAN,VICE_DEAN')")
+
     @PostMapping("/users/{userId}/departments/{departmentId}")
+    @PreAuthorize("hasAnyRole('DEAN','VICE_DEAN')")
     public ResponseEntity<GlobalResponse<?>> registerTeacher(
             @PathVariable Long userId,
             @PathVariable Long departmentId) {
         teacherService.registerTeacher(userId, departmentId);
         return ResponseEntity.ok(GlobalResponse.success("Teacher registered successfully", null));
     }
-    @PreAuthorize("hasAnyRole('CEO,DEAN,VICE_DEAN')")
+
     @GetMapping("/with-departments")
+    @PreAuthorize("hasAnyRole('CEO','DEAN','VICE_DEAN')")
     public ResponseEntity<GlobalResponse<List<TeacherWithDepartmentDTo>>> getAllTeacherWithDepartment() {
         List<TeacherWithDepartmentDTo> teachers = teacherService.getAllTeacherWithDepartment();
         return ResponseEntity.ok(GlobalResponse.success("Teachers with departments fetched successfully", teachers));
