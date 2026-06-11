@@ -26,7 +26,7 @@ public class PaymentController {
     }
 
     @GetMapping("/students/{userId}")
-    @PreAuthorize("hasAnyRole('FINANCE_HEAD,FINANCE_OFFICER')")
+    @PreAuthorize("hasAnyRole('FINANCE_HEAD','FINANCE_OFFICER')")
     public ResponseEntity<GlobalResponse<Map<String,Object>>> getPaymentDetailOfStudent(@PathVariable String userId) {
         Map<String,Object> paymentDetail = paymentService.getPaymentDetailOfStudent(userId);
         return ResponseEntity.ok(GlobalResponse.success("Student payment detail fetched successfully", paymentDetail));
@@ -47,7 +47,7 @@ public class PaymentController {
     }
 
     @GetMapping("/monthly-report")
-    @PreAuthorize("hasAnyRole('CEO,FINANCE_HEAD')")
+    @PreAuthorize("hasAnyRole('CEO','FINANCE_HEAD')")
     public ResponseEntity<GlobalResponse<Map<String,Object>>> monthlyReport() {
         Map<String,Object> report = paymentService.monthlyReport();
         return ResponseEntity.ok(GlobalResponse.success("Monthly payment report fetched successfully", report));

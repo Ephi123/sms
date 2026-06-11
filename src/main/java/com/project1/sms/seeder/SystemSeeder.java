@@ -4,12 +4,8 @@ import com.project1.sms.apiException.ResourceNotFoundException;
 import com.project1.sms.enumeration.Active;
 import com.project1.sms.enumeration.ProgramEnum;
 import com.project1.sms.enumeration.Role;
-import com.project1.sms.model.Department;
-import com.project1.sms.model.Program;
-import com.project1.sms.model.UserEntity;
-import com.project1.sms.repository.DepartmentRepo;
-import com.project1.sms.repository.ProgramRepo;
-import com.project1.sms.repository.UserRepo;
+import com.project1.sms.model.*;
+import com.project1.sms.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,6 +22,8 @@ public class SystemSeeder implements CommandLineRunner {
     private final PasswordEncoder passwordEncoder;
     private final DepartmentRepo departmentRepo;
     private final ProgramRepo programRepo;
+    private final PaymentScallRepo paymentScallRepo;
+    private final CurrentSemRepo currentSemRepo;
     @Override
     public void run(String... args) throws Exception {
 //           UserEntity user = UserEntity.builder().
@@ -65,6 +63,11 @@ public class SystemSeeder implements CommandLineRunner {
 //        programRepo.deleteById(163L);
 //        programRepo.deleteById(164L);
 
+//      Department department = departmentRepo.findById(104L).
+//              orElseThrow(() -> new ResourceNotFoundException("department not found"));
+//      PaymentScall paymentScall = new PaymentScall(department,70,250);
+//      paymentScallRepo.save(paymentScall);
 
+//      currentSemRepo.save(new CurrentSem(1));
     }
 }

@@ -12,6 +12,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
+@Builder
 public class Course extends Auditable {
 
     @Column(nullable = false)
@@ -22,7 +23,7 @@ public class Course extends Auditable {
     @Column(nullable = false)
    private Integer creditHour;
 
-   @ManyToOne
+   @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "department_id")
     private Department department;
 

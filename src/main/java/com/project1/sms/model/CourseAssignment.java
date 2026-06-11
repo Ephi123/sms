@@ -19,7 +19,7 @@ public class CourseAssignment extends Auditable{
  @JoinColumn(name = "course_offering_id")
  private CourseOffering courseOffering;
 
- @ManyToOne
+ @ManyToOne(fetch = FetchType.LAZY)
  @JoinColumn(name = "teacher_id")
  private Teacher teacher;
  @Enumerated(EnumType.STRING)

@@ -11,10 +11,12 @@ import com.project1.sms.model.*;
 import com.project1.sms.repository.*;
 import com.project1.sms.responseDto.FinanceOfficerPaymentSummaryResponse;
 import com.project1.sms.responseDto.MonthPaymentResponse;
+import com.project1.sms.responseDto.PaymentResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -122,7 +124,7 @@ public class PaymentImpl implements PaymentService {
                 student.getProgram(),
                 student.getDepartment()
         );
-        if(offerings == null)
+        if(offerings == null||offerings.isEmpty())
             throw new ResourceNotFoundException("course not found");
         Student finalStudent = student;
         offerings.forEach(courseOffering -> {
@@ -153,12 +155,13 @@ public class PaymentImpl implements PaymentService {
 
 
         Payment savedPayment =paymentRepo.save(payment);
+        PaymentResponse paymentResponse = PaymentResponse.from(savedPayment);
 
 
 
 
         return Map.of(
-                "paymentDetail",savedPayment
+                "paymentDetail",paymentResponse
         );
     }
 
@@ -180,8 +183,10 @@ public class PaymentImpl implements PaymentService {
 
           Payment savedPayment =paymentRepo.save(payment);
 
+        PaymentResponse paymentResponse = PaymentResponse.from(savedPayment);
 
-        return Map.of("paymentDetail",savedPayment);
+
+        return Map.of("paymentDetail",paymentResponse);
 
     }
 
